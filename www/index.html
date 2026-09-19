@@ -2,652 +2,1185 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>ZEN 6.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ZEN 7.0</title>
+
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;font-family:Arial,sans-serif;background:#07111f;color:white;
- min-height:100vh;overflow-x:hidden;
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#111827,#312e81,#0f766e);
+color:white;
+min-height:100vh;
 }
-button{border:0;border-radius:16px;padding:14px 16px;font-weight:bold;color:white;
- background:#172942;font-size:15px;cursor:pointer}
-button:active{transform:scale(.96)}
-.app{max-width:600px;margin:auto;padding:18px}
-.screen{display:none}.screen.active{display:block}
-.logo{text-align:center;font-size:55px;font-weight:900;margin:35px 0 5px}
-.subtitle{text-align:center;color:#9db0c9;margin-bottom:30px}
+
+.app{
+max-width:520px;
+margin:auto;
+padding:18px;
+}
+
+header{
+text-align:center;
+padding:18px 0;
+}
+
+.logo{
+font-size:44px;
+font-weight:900;
+letter-spacing:4px;
+}
+
+.subtitle{
+opacity:.75;
+}
+
 .card{
- background:#101e31;border:1px solid #203653;border-radius:22px;
- padding:18px;margin:12px 0;box-shadow:0 10px 30px #0003
+background:rgba(255,255,255,.1);
+border:1px solid rgba(255,255,255,.15);
+border-radius:24px;
+padding:20px;
+margin-bottom:16px;
+backdrop-filter:blur(10px);
+box-shadow:0 12px 35px rgba(0,0,0,.2);
 }
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.stat{background:#14263d;border-radius:15px;padding:10px;text-align:center}
-.stat b{display:block;font-size:19px;margin-top:4px}
-.small{font-size:12px;color:#9db0c9}
-h1,h2,h3{margin-top:5px}
-.primary{width:100%;background:#00a884;font-size:18px}
-.gold{background:#b77b00}
-.red{background:#a83245}
-.blue{background:#2459a6}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.mode.selected,.cat.selected{outline:3px solid #00c997}
-.progress{height:10px;background:#1d3048;border-radius:20px;overflow:hidden}
-.progress i{display:block;height:100%;background:#00c997;width:0}
-.word{
- display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:25px 0
+
+h2{
+margin-top:0;
 }
-.box{
- width:48px;height:55px;border-radius:12px;background:#172942;
- display:flex;align-items:center;justify-content:center;
- font-size:25px;font-weight:bold
+
+button{
+width:100%;
+border:0;
+border-radius:16px;
+padding:15px;
+margin:7px 0;
+font-size:16px;
+font-weight:bold;
+background:white;
+color:#172033;
+cursor:pointer;
+transition:.2s;
 }
-.letters{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-.letter{font-size:22px;background:#1b3452}
-.letter.used{opacity:.2}
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
-.back{padding:9px 13px}
-.item{display:flex;justify-content:space-between;align-items:center;
- padding:13px;background:#14263d;border-radius:15px;margin:8px 0}
-.badge{font-size:35px}
-.center{text-align:center}
-.big{font-size:45px;font-weight:900}
-.modal{
- position:fixed;inset:0;background:#000b;display:none;
- align-items:center;justify-content:center;padding:20px;z-index:20
+
+button:active{
+transform:scale(.97);
 }
-.modal.show{display:flex}
-.modalbox{max-width:430px;width:100%;background:#102137;border-radius:25px;
- padding:25px;text-align:center}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
- background:#00a884;color:#001d17;padding:12px 20px;border-radius:20px;
- display:none;z-index:30;font-weight:bold}
-nav{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:15px}
-nav button{font-size:11px;padding:10px 4px}
+
+.option{
+background:rgba(255,255,255,.12);
+color:white;
+border:1px solid rgba(255,255,255,.15);
+}
+
+.option.correct{
+background:#16a34a;
+}
+
+.option.wrong{
+background:#dc2626;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.small{
+font-size:13px;
+opacity:.7;
+}
+
+.hidden{
+display:none;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+text-align:center;
+}
+
+.stat{
+background:rgba(255,255,255,.08);
+padding:12px;
+border-radius:15px;
+}
+
+.value{
+font-size:22px;
+font-weight:bold;
+}
+
+.progress{
+height:9px;
+background:rgba(255,255,255,.15);
+border-radius:20px;
+overflow:hidden;
+margin:12px 0;
+}
+
+.progress div{
+height:100%;
+background:#facc15;
+width:0%;
+transition:.3s;
+}
+
+.timer{
+text-align:center;
+font-size:30px;
+font-weight:bold;
+}
+
+#question{
+font-size:22px;
+line-height:1.4;
+}
+
+.message{
+text-align:center;
+font-weight:bold;
+min-height:25px;
+margin-top:10px;
+}
+
+.badge{
+display:inline-block;
+background:#facc15;
+color:#111827;
+padding:6px 10px;
+border-radius:20px;
+font-weight:bold;
+}
+
+.mode-selected,
+.category-selected{
+outline:3px solid #facc15;
+}
+
+.levelBox{
+text-align:center;
+font-size:14px;
+opacity:.85;
+}
 </style>
 </head>
 
 <body>
+
 <div class="app">
 
+<header>
+<div class="logo">ZEN</div>
+<div class="subtitle">Réfléchis. Réponds. Progresse.</div>
+</header>
+
+
 <!-- ACCUEIL -->
-<section id="home" class="screen active">
- <div class="logo">ZEN</div>
- <div class="subtitle">Le jeu de mots qui évolue avec toi</div>
 
- <div class="stats">
-  <div class="stat">🏆<b id="homeScore">0</b><span class="small">Score</span></div>
-  <div class="stat">🪙<b id="homeCoins">100</b><span class="small">Pièces</span></div>
-  <div class="stat">⭐<b id="homeLevel">1</b><span class="small">Niveau</span></div>
-  <div class="stat">🔥<b id="homeBest">0</b><span class="small">Combo</span></div>
- </div>
+<section id="home">
 
- <div class="card">
-  <h3>🗺️ Progression</h3>
-  <div class="progress"><i id="homeProgress"></i></div>
-  <p id="progressText" class="small">0 / 100 XP</p>
- </div>
+<div class="card">
 
- <button class="primary" onclick="startGame()">🎮 JOUER</button>
+<h2>🎮 Catégorie</h2>
 
- <div class="grid" style="margin-top:10px">
-  <button onclick="showScreen('modes')">⚡ Modes</button>
-  <button onclick="showScreen('categories')">📚 Catégories</button>
-  <button onclick="showScreen('missions')">🎯 Missions</button>
-  <button onclick="showScreen('badges')">🏆 Badges</button>
-  <button onclick="showScreen('shop')">🛒 Boutique</button>
-  <button onclick="showScreen('stats')">📊 Stats</button>
- </div>
+<div class="grid">
+
+<button id="catCulture" onclick="selectCategory('culture')">
+🌍 Culture
+</button>
+
+<button id="catScience" onclick="selectCategory('science')">
+🔬 Science
+</button>
+
+<button id="catSport" onclick="selectCategory('sport')">
+⚽ Sport
+</button>
+
+<button id="catLogique" onclick="selectCategory('logique')">
+🧠 Logique
+</button>
+
+</div>
+
+<p id="categoryName" class="small">
+Catégorie : Toutes
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>⚡ Mode</h2>
+
+<button id="modeClassic" onclick="selectMode('classic')">
+🎯 Classique
+</button>
+
+<button id="modeChrono" onclick="selectMode('chrono')">
+⏱️ Chrono
+</button>
+
+<button id="modeSurvie" onclick="selectMode('survie')">
+🔥 Survie
+</button>
+
+<button id="modeChallenge" onclick="selectMode('challenge')">
+💥 Défi
+</button>
+
+<p id="modeName" class="small">
+Mode : Classique
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="levelBox">
+Niveau <strong id="homeLevel">1</strong>
+<br>
+<span id="homeXP">0</span> XP
+</div>
+
+<br>
+
+<div class="stats">
+
+<div class="stat">
+<div class="value" id="homeCoins">0</div>
+💰
+</div>
+
+<div class="stat">
+<div class="value" id="homeGames">0</div>
+Parties
+</div>
+
+<div class="stat">
+<div class="value" id="homeBest">0</div>
+Record
+</div>
+
+</div>
+
+</div>
+
+
+<button onclick="startGame()">
+🚀 COMMENCER
+</button>
+
+<button onclick="showStats()">
+📊 Mes statistiques
+</button>
+
 </section>
 
-<!-- MODES -->
-<section id="modes" class="screen">
- <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>⚡ Modes</h2><span></span></div>
- <div id="modeList"></div>
-</section>
 
-<!-- CATEGORIES -->
-<section id="categories" class="screen">
- <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>📚 Catégories</h2><span></span></div>
- <div id="catList" class="grid"></div>
-</section>
 
 <!-- JEU -->
-<section id="game" class="screen">
- <div class="topbar">
-  <button class="back" onclick="leaveGame()">←</button>
-  <b id="gameMode">CLASSIQUE</b>
-  <b>⏱️ <span id="timer">30</span></b>
- </div>
 
- <div class="stats">
-  <div class="stat">❤️<b id="lives">3</b></div>
-  <div class="stat">🪙<b id="coins">100</b></div>
-  <div class="stat">🔥<b id="combo">0</b></div>
-  <div class="stat">⭐<b id="score">0</b></div>
- </div>
+<section id="game" class="hidden">
 
- <div class="card center">
-  <span class="small" id="categoryName">Toutes</span>
-  <h2 id="levelTitle">Niveau 1</h2>
-  <div class="progress"><i id="levelProgress"></i></div>
- </div>
+<div class="card">
 
- <div id="wordBoxes" class="word"></div>
- <div id="letters" class="letters"></div>
+<div style="display:flex;justify-content:space-between;align-items:center">
 
- <div class="grid" style="margin-top:14px">
-  <button onclick="useHint()">💡 Indice <span id="hintPrice">20</span></button>
-  <button onclick="shuffleLetters()">🔀 Mélanger</button>
- </div>
+<span id="questionNumber">
+Question 1
+</span>
+
+<span class="badge">
+🔥 <span id="combo">0</span>
+</span>
+
+</div>
+
+
+<div class="progress">
+<div id="progress"></div>
+</div>
+
+
+<div id="timer" class="timer hidden">
+15
+</div>
+
+
+<p id="question"></p>
+
+<div id="answers"></div>
+
+<div id="message" class="message"></div>
+
+</div>
+
+
+<button onclick="quitGame()">
+⬅️ Quitter
+</button>
+
 </section>
 
-<!-- MISSIONS -->
-<section id="missions" class="screen">
- <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>🎯 Missions</h2><span></span></div>
- <div id="missionList"></div>
+
+
+<!-- RESULTAT -->
+
+<section id="result" class="hidden">
+
+<div class="card" style="text-align:center">
+
+<h2>🎉 Partie terminée !</h2>
+
+<p>Score</p>
+
+<div id="finalScore"
+style="font-size:48px;font-weight:bold">
+0
+</div>
+
+<p id="finalMessage"></p>
+
+<div class="stats">
+
+<div class="stat">
+<div class="value" id="finalXP">0</div>
+XP
+</div>
+
+<div class="stat">
+<div class="value" id="finalCoins">0</div>
+💰
+</div>
+
+<div class="stat">
+<div class="value" id="finalCorrect">0</div>
+✓
+</div>
+
+</div>
+
+</div>
+
+
+<button onclick="startGame()">
+🔄 Rejouer
+</button>
+
+<button onclick="goHome()">
+🏠 Accueil
+</button>
+
 </section>
 
-<!-- BADGES -->
-<section id="badges" class="screen">
- <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>🏆 Badges</h2><span></span></div>
- <div id="badgeList"></div>
-</section>
 
-<!-- BOUTIQUE -->
-<section id="shop" class="screen">
- <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>🛒 Boutique</h2><span></span></div>
- <div class="card center">🪙 <b id="shopCoins">100</b> pièces</div>
- <div id="shopList"></div>
-</section>
 
-<!-- STATS -->
-<section id="stats" class="screen">
- <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>📊 Statistiques</h2><span></span></div>
- <div id="statsContent"></div>
+<!-- STATISTIQUES -->
+
+<section id="statistics" class="hidden">
+
+<div class="card">
+
+<h2>📊 Tes statistiques</h2>
+
+<div class="stats">
+
+<div class="stat">
+<div class="value" id="sGames">0</div>
+Parties
+</div>
+
+<div class="stat">
+<div class="value" id="sCorrect">0</div>
+Bonnes
+</div>
+
+<div class="stat">
+<div class="value" id="sBest">0</div>
+Record
+</div>
+
+</div>
+
+<br>
+
+<div class="stats">
+
+<div class="stat">
+<div class="value" id="sLevel">1</div>
+Niveau
+</div>
+
+<div class="stat">
+<div class="value" id="sXP">0</div>
+XP
+</div>
+
+<div class="stat">
+<div class="value" id="sCoins">0</div>
+💰
+</div>
+
+</div>
+
+</div>
+
+
+<button onclick="goHome()">
+🏠 Retour
+</button>
+
+<button onclick="resetData()">
+🗑️ Réinitialiser
+</button>
+
 </section>
 
 </div>
 
-<div id="modal" class="modal">
- <div class="modalbox">
-  <div id="modalIcon" class="big">🎉</div>
-  <h2 id="modalTitle">Bravo !</h2>
-  <p id="modalText"></p>
-  <button class="primary" onclick="closeModal()">CONTINUER</button>
- </div>
-</div>
 
-<div id="toast" class="toast"></div>
 
 <script>
-/* =========================
-   DONNÉES
-========================= */
 
-const WORDS={
-"Football":["BALLON","BUT","JOUEUR","ARBITRE","STADE","PASSE","DRIBBLE","TIR","EQUIPE","COACH","GARDIEN","DEFENSE","ATTAQUE","MILIEU","MATCH"],
-"Animaux":["LION","TIGRE","CHAT","CHIEN","ELEPHANT","GIRAFE","ZEBRE","SINGE","AIGLE","SERPENT","REQUIN","CHEVAL","VACHE","LAPIN"],
-"Nourriture":["RIZ","PAIN","PIZZA","POULET","POISSON","MANGUE","BANANE","ANANAS","ORANGE","IGNAME","ATIEKE","ALLoco","CAFE","CHOCOLAT"],
-"Côte d'Ivoire":["ABIDJAN","BOUAKE","YAMOUSSOUKRO","KORHOGO","BASSAM","IVOIRE","ELEPHANTS","LAGUNE","COMOE","SASSANDRA"],
-"Technologie":["TELEPHONE","ORDINATEUR","INTERNET","APPLICATION","CLAVIER","ECRAN","CAMERA","ROBOT","SERVEUR","CODE","ANDROID","RESEAU"],
-"Nature":["SOLEIL","LUNE","ETOILE","FORET","RIVIERE","MONTAGNE","PLUIE","VENT","NUAGE","OCEAN","FLEUR","ARBRE"],
-"Musique":["MUSIQUE","CHANT","DANSE","RYTHME","GUITARE","PIANO","BATTERIE","MICRO","CONCERT","ARTISTE"],
-"Cinéma":["FILM","ACTEUR","SCENE","CAMERA","CINEMA","HISTOIRE","HEROS","SERIE","ACTION","DRAME"],
-"Voyage":["AVION","TRAIN","BUS","VOYAGE","PASSEPORT","VALISE","HOTEL","PLAGE","PAYS","CARTE"],
-"Science":["ATOM","CELLULE","ESPACE","PLANETE","ENERGIE","LUMIERE","FORCE","SCIENCE","GENIE","MOLECULE"],
-"École":["ECOLE","LIVRE","CLASSE","ELEVE","PROFESSEUR","EXAMEN","CAHIER","STYLO","LECON","DIPLOME"],
-"Afrique":["AFRIQUE","SAVANE","BAOBAB","NIGER","GHANA","SENEGAL","KENYA","RWANDA","CAMEROUN","MALI"]
-};
 
-WORDS["Toutes"]=Object.values(WORDS).flat();
+// ================================
+// QUESTIONS
+// ================================
 
-const MODES={
-CLASSIQUE:{name:"Classique",icon:"🎮",time:35,mult:1},
-RAPIDE:{name:"Rapide",icon:"⚡",time:15,mult:2},
-COMBO:{name:"Combo",icon:"🔥",time:25,mult:1.5},
-DEFI:{name:"Défi",icon:"💀",time:20,mult:3}
-};
+const questions=[
 
-const BADGES=[
- ["🌱","Premier mot","Trouver 1 mot","first"],
- ["🔥","Combo 5","Atteindre un combo de 5","combo5"],
- ["🪙","Riche","Posséder 500 pièces","coins500"],
- ["⭐","Centenaire","Obtenir 1000 points","score1000"],
- ["🎯","Mission accomplie","Terminer 3 missions","missions3"],
- ["🧠","Connaisseur","Trouver 50 mots","words50"],
- ["🏆","Maître ZEN","Atteindre le niveau 10","level10"],
- ["👑","Légende","Atteindre le niveau 20","level20"]
+{
+c:"culture",
+q:"Quelle est la capitale de la Côte d’Ivoire ?",
+a:["Bouaké","Yamoussoukro","Abidjan","Korhogo"],
+x:1
+},
+
+{
+c:"culture",
+q:"Combien de continents compte-t-on généralement ?",
+a:["5","6","7","8"],
+x:2
+},
+
+{
+c:"culture",
+q:"Quelle langue est principalement parlée au Brésil ?",
+a:["Espagnol","Portugais","Français","Anglais"],
+x:1
+},
+
+{
+c:"culture",
+q:"Quel océan borde la Côte d’Ivoire ?",
+a:["Atlantique","Pacifique","Indien","Arctique"],
+x:0
+},
+
+{
+c:"science",
+q:"Quelle planète est la plus proche du Soleil ?",
+a:["Mars","Vénus","Mercure","Jupiter"],
+x:2
+},
+
+{
+c:"science",
+q:"Combien de pattes possède une araignée ?",
+a:["6","8","10","12"],
+x:1
+},
+
+{
+c:"science",
+q:"Quel organe pompe le sang dans le corps humain ?",
+a:["Poumon","Foie","Cœur","Rein"],
+x:2
+},
+
+{
+c:"science",
+q:"Quelle est la formule chimique de l’eau ?",
+a:["CO2","H2O","O2","NaCl"],
+x:1
+},
+
+{
+c:"sport",
+q:"Combien de joueurs une équipe de football a-t-elle sur le terrain ?",
+a:["9","10","11","12"],
+x:2
+},
+
+{
+c:"sport",
+q:"Quel sport utilise un panier ?",
+a:["Football","Basketball","Tennis","Rugby"],
+x:1
+},
+
+{
+c:"sport",
+q:"Combien de minutes dure normalement un match de football ?",
+a:["60","80","90","100"],
+x:2
+},
+
+{
+c:"sport",
+q:"Dans quel sport utilise-t-on une raquette ?",
+a:["Tennis","Football","Boxe","Natation"],
+x:0
+},
+
+{
+c:"logique",
+q:"Quel nombre vient ensuite : 2, 4, 6, 8, ?",
+a:["9","10","11","12"],
+x:1
+},
+
+{
+c:"logique",
+q:"Si 5 + 5 = 10, combien font 10 + 10 ?",
+a:["15","20","25","30"],
+x:1
+},
+
+{
+c:"logique",
+q:"Quel nombre est différent des autres ?",
+a:["2","4","6","9"],
+x:3
+},
+
+{
+c:"logique",
+q:"Tous les chats sont des animaux. Mimi est un chat. Mimi est-elle un animal ?",
+a:["Oui","Non","Impossible","Seulement parfois"],
+x:0
+}
+
 ];
 
-let state=JSON.parse(localStorage.getItem("ZEN6_STATE")||"null")||{
- score:0,coins:100,level:1,xp:0,lives:3,combo:0,bestCombo:0,
- words:0,missionsDone:0,hints:3,mode:"CLASSIQUE",
- category:"Toutes",inventory:{},daily:0
+
+// ================================
+// DONNÉES
+// ================================
+
+let data=JSON.parse(
+localStorage.getItem("zenData")
+)||{
+level:1,
+xp:0,
+coins:0,
+games:0,
+correct:0,
+best:0
 };
 
-let currentWord="";
-let selected=[];
-let timerInterval=null;
-let timeLeft=30;
-let wordPool=[];
 
-/* =========================
-   SAUVEGARDE
-========================= */
+// ================================
+// VARIABLES DU JEU
+// ================================
+
+let category="all";
+let mode="classic";
+
+let gameQuestions=[];
+
+let current=0;
+let score=0;
+let correct=0;
+let combo=0;
+
+let timer=null;
+let time=15;
+
+
+// ================================
+// SAUVEGARDE
+// ================================
 
 function save(){
- localStorage.setItem("ZEN6_STATE",JSON.stringify(state));
- updateHome();
+
+localStorage.setItem(
+"zenData",
+JSON.stringify(data)
+);
+
+updateHome();
+
 }
+
+
+// ================================
+// ACCUEIL
+// ================================
 
 function updateHome(){
- document.getElementById("homeScore").textContent=state.score;
- document.getElementById("homeCoins").textContent=state.coins;
- document.getElementById("homeLevel").textContent=state.level;
- document.getElementById("homeBest").textContent=state.bestCombo;
- document.getElementById("homeProgress").style.width=Math.min(100,state.xp)+"%";
- document.getElementById("progressText").textContent=state.xp+" / 100 XP";
+
+document.getElementById("homeLevel")
+.textContent=data.level;
+
+document.getElementById("homeXP")
+.textContent=data.xp;
+
+document.getElementById("homeCoins")
+.textContent=data.coins;
+
+document.getElementById("homeGames")
+.textContent=data.games;
+
+document.getElementById("homeBest")
+.textContent=data.best;
+
 }
 
-/* =========================
-   NAVIGATION
-========================= */
 
-function showScreen(id){
- document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
- document.getElementById(id).classList.add("active");
+// ================================
+// CATÉGORIE
+// ================================
 
- if(id==="home")updateHome();
- if(id==="modes")renderModes();
- if(id==="categories")renderCategories();
- if(id==="missions")renderMissions();
- if(id==="badges")renderBadges();
- if(id==="shop")renderShop();
- if(id==="stats")renderStats();
+function selectCategory(c){
+
+category=c;
+
+document.querySelectorAll(
+".grid button"
+).forEach(b=>{
+b.classList.remove("category-selected");
+});
+
+const ids={
+culture:"catCulture",
+science:"catScience",
+sport:"catSport",
+logique:"catLogique"
+};
+
+document
+.getElementById(ids[c])
+.classList.add("category-selected");
+
+const names={
+culture:"🌍 Culture",
+science:"🔬 Science",
+sport:"⚽ Sport",
+logique:"🧠 Logique"
+};
+
+document.getElementById("categoryName")
+.textContent="Catégorie : "+names[c];
+
 }
 
-/* =========================
-   MODES
-========================= */
 
-function renderModes(){
- const box=document.getElementById("modeList");
- box.innerHTML="";
- Object.entries(MODES).forEach(([id,m])=>{
-  const b=document.createElement("button");
-  b.className="card mode "+(state.mode===id?"selected":"");
-  b.style.width="100%";
-  b.innerHTML="<span style='font-size:30px'>"+m.icon+"</span><h3>"+m.name+"</h3><p class='small'>"+m.time+" secondes • x"+m.mult+" points</p>";
-  b.onclick=()=>{state.mode=id;save();renderModes();toast("Mode "+m.name+" sélectionné")};
-  box.appendChild(b);
- });
+// ================================
+// MODE
+// ================================
+
+function selectMode(m){
+
+mode=m;
+
+document.querySelectorAll(
+'[id^="mode"]'
+).forEach(b=>{
+b.classList.remove("mode-selected");
+});
+
+const ids={
+classic:"modeClassic",
+chrono:"modeChrono",
+survie:"modeSurvie",
+challenge:"modeChallenge"
+};
+
+document
+.getElementById(ids[m])
+.classList.add("mode-selected");
+
+const names={
+classic:"🎯 Classique",
+chrono:"⏱️ Chrono",
+survie:"🔥 Survie",
+challenge:"💥 Défi"
+};
+
+document.getElementById("modeName")
+.textContent="Mode : "+names[m];
+
 }
 
-/* =========================
-   CATÉGORIES
-========================= */
 
-function renderCategories(){
- const box=document.getElementById("catList");
- box.innerHTML="";
- Object.keys(WORDS).forEach(cat=>{
-  const b=document.createElement("button");
-  b.className="cat "+(state.category===cat?"selected":"");
-  b.textContent=cat;
-  b.onclick=()=>{
-   state.category=cat;save();renderCategories();
-   toast("Catégorie : "+cat);
-  };
-  box.appendChild(b);
- });
+// ================================
+// AFFICHAGE DES SECTIONS
+// ================================
+
+function hideAll(){
+
+[
+"home",
+"game",
+"result",
+"statistics"
+].forEach(id=>{
+document
+.getElementById(id)
+.classList.add("hidden");
+});
+
 }
 
-/* =========================
-   JEU
-========================= */
+
+// ================================
+// QUESTIONS DISPONIBLES
+// ================================
+
+function getQuestions(){
+
+let list=questions.filter(q=>
+category==="all"||q.c===category
+);
+
+return [...list].sort(
+()=>Math.random()-.5
+);
+
+}
+
+
+// ================================
+// COMMENCER
+// ================================
 
 function startGame(){
- state.lives=3;
- showScreen("game");
- document.getElementById("gameMode").textContent=MODES[state.mode].name.toUpperCase();
- nextWord();
+
+hideAll();
+
+document
+.getElementById("game")
+.classList.remove("hidden");
+
+current=0;
+score=0;
+correct=0;
+combo=0;
+
+// IMPORTANT : on prépare les questions
+// à chaque nouvelle partie
+gameQuestions=getQuestions();
+
+showQuestion();
+
 }
 
-function leaveGame(){
- clearInterval(timerInterval);
- save();
- showScreen("home");
+
+// ================================
+// AFFICHER QUESTION
+// ================================
+
+function showQuestion(){
+
+if(current>=gameQuestions.length){
+
+endGame();
+return;
+
 }
 
-function nextWord(){
- const list=WORDS[state.category]||WORDS.Toutes;
- currentWord=list[Math.floor(Math.random()*list.length)].toUpperCase();
- selected=[];
- wordPool=currentWord.split("");
- renderWord();
- renderLetters();
- startTimer();
- updateGameUI();
+const q=gameQuestions[current];
+
+document.getElementById("questionNumber")
+.textContent=
+"Question "+
+(current+1)+
+" / "+
+gameQuestions.length;
+
+document.getElementById("progress")
+.style.width=
+((current/gameQuestions.length)*100)+"%";
+
+document.getElementById("combo")
+.textContent=combo;
+
+document.getElementById("question")
+.textContent=q.q;
+
+
+const answers=
+document.getElementById("answers");
+
+answers.innerHTML="";
+
+
+q.a.forEach((answer,i)=>{
+
+const button=
+document.createElement("button");
+
+button.className="option";
+
+button.textContent=answer;
+
+button.onclick=()=>{
+answerQuestion(i,button);
+};
+
+answers.appendChild(button);
+
+});
+
+
+document.getElementById("message")
+.textContent="";
+
+
+if(
+mode==="chrono"||
+mode==="challenge"
+){
+
+document
+.getElementById("timer")
+.classList.remove("hidden");
+
+time=
+mode==="challenge"
+?10
+:15;
+
+document.getElementById("timer")
+.textContent=time;
+
+clearInterval(timer);
+
+timer=setInterval(()=>{
+
+time--;
+
+document.getElementById("timer")
+.textContent=time;
+
+if(time<=0){
+
+clearInterval(timer);
+
+answerQuestion(-1,null);
+
 }
 
-function renderWord(){
- const box=document.getElementById("wordBoxes");
- box.innerHTML="";
- for(let i=0;i<currentWord.length;i++){
-  const d=document.createElement("div");
-  d.className="box";
-  d.textContent=selected[i]||"";
-  box.appendChild(d);
- }
+},1000);
+
+}else{
+
+document
+.getElementById("timer")
+.classList.add("hidden");
+
 }
 
-function renderLetters(){
- const box=document.getElementById("letters");
- box.innerHTML="";
- let arr=currentWord.split("");
-
- while(arr.length<Math.max(8,currentWord.length+3)){
-  arr.push(String.fromCharCode(65+Math.floor(Math.random()*26)));
- }
-
- arr.sort(()=>Math.random()-.5);
-
- arr.forEach((letter,index)=>{
-  const b=document.createElement("button");
-  b.className="letter";
-  b.textContent=letter;
-  b.onclick=()=>{
-   if(b.classList.contains("used"))return;
-   if(selected.length>=currentWord.length)return;
-   b.classList.add("used");
-   selected.push(letter);
-   renderWord();
-   if(selected.join("")===currentWord)correctWord();
-   else if(selected.length===currentWord.length)wrongWord();
-  };
-  box.appendChild(b);
- });
 }
 
-function shuffleLetters(){renderLetters()}
 
-function startTimer(){
- clearInterval(timerInterval);
- timeLeft=MODES[state.mode].time;
- document.getElementById("timer").textContent=timeLeft;
+// ================================
+// RÉPONSE
+// ================================
 
- timerInterval=setInterval(()=>{
-  timeLeft--;
-  document.getElementById("timer").textContent=timeLeft;
-  if(timeLeft<=0){
-   clearInterval(timerInterval);
-   wrongWord(true);
-  }
- },1000);
+function answerQuestion(index,button){
+
+clearInterval(timer);
+
+const q=gameQuestions[current];
+
+const buttons=
+document.querySelectorAll(".option");
+
+buttons.forEach(b=>{
+b.disabled=true;
+});
+
+
+if(index===q.x){
+
+correct++;
+
+combo++;
+
+let points=
+100+(combo*20);
+
+if(mode==="chrono")
+points+=50;
+
+if(mode==="challenge")
+points+=100;
+
+score+=points;
+
+data.xp+=points;
+
+data.coins+=Math.max(
+1,
+Math.floor(points/100)
+);
+
+if(button)
+button.classList.add("correct");
+
+document.getElementById("message")
+.textContent=
+"✅ Bonne réponse ! +"+
+points+
+" XP";
+
+}else{
+
+combo=0;
+
+if(button)
+button.classList.add("wrong");
+
+if(buttons[q.x])
+buttons[q.x].classList.add("correct");
+
+document.getElementById("message")
+.textContent=
+"❌ Pas cette fois !";
+
 }
 
-function correctWord(){
- clearInterval(timerInterval);
+checkLevel();
 
- const mode=MODES[state.mode];
- const gained=Math.round((10+currentWord.length*2+state.combo*2)*mode.mult);
+setTimeout(()=>{
 
- state.score+=gained;
- state.coins+=5+Math.min(state.combo,10);
- state.combo++;
- state.bestCombo=Math.max(state.bestCombo,state.combo);
- state.words++;
- state.xp+=10;
+current++;
 
- if(state.mode==="DEFI")state.xp+=5;
+if(
+mode==="survie" &&
+index!==q.x
+){
 
- if(state.xp>=100){
-  state.xp-=100;
-  state.level++;
-  state.coins+=25;
-  showModal("🎉","NIVEAU "+state.level+" !","Tu viens de monter de niveau et tu gagnes 25 pièces.");
- }else{
-  toast("+"+gained+" points • 🔥 Combo "+state.combo);
- }
+endGame();
 
- checkBadges();
- save();
- updateGameUI();
+}else{
 
- setTimeout(nextWord,650);
+showQuestion();
+
 }
 
-function wrongWord(timeout=false){
- clearInterval(timerInterval);
- state.lives--;
- state.combo=0;
+},700);
 
- if(state.lives<=0){
-  save();
-  showModal("💔","Partie terminée","Score : "+state.score+"<br>Meilleur combo : "+state.bestCombo);
-  return;
- }
-
- toast(timeout?"⏰ Temps écoulé !":"❌ Mauvaise réponse !");
- save();
- updateGameUI();
- setTimeout(nextWord,700);
 }
 
-function updateGameUI(){
- document.getElementById("score").textContent=state.score;
- document.getElementById("coins").textContent=state.coins;
- document.getElementById("lives").textContent=state.lives;
- document.getElementById("combo").textContent=state.combo;
- document.getElementById("levelTitle").textContent="Niveau "+state.level;
- document.getElementById("categoryName").textContent=state.category;
- document.getElementById("levelProgress").style.width=state.xp+"%";
+
+// ================================
+// NIVEAU
+// ================================
+
+function checkLevel(){
+
+const newLevel=
+Math.floor(data.xp/500)+1;
+
+if(newLevel>data.level){
+
+data.level=newLevel;
+
 }
 
-/* =========================
-   INDICE
-========================= */
-
-function useHint(){
- if(state.coins<20){
-  toast("Pas assez de pièces !");
-  return;
- }
-
- if(selected.length>=currentWord.length){
-  toast("Aucun indice nécessaire");
-  return;
- }
-
- state.coins-=20;
-
- const target=currentWord[selected.length];
- const buttons=[...document.querySelectorAll(".letter")];
-
- const b=buttons.find(x=>x.textContent===target&&!x.classList.contains("used"));
-
- if(b){
-  b.classList.add("used");
-  selected.push(target);
-  renderWord();
-
-  if(selected.join("")===currentWord)correctWord();
-  else toast("💡 Lettre révélée !");
- }else{
-  state.coins+=20;
- }
-
- save();
- updateGameUI();
 }
 
-/* =========================
-   MISSIONS
-========================= */
 
-const MISSIONS=[
- ["🔥","Faire un combo de 5","Atteindre 5 de combo",()=>state.bestCombo>=5],
- ["🧠","Trouver 10 mots","Trouver 10 mots",()=>state.words>=10],
- ["⭐","Gagner 1000 points","Obtenir 1000 points",()=>state.score>=1000],
- ["🪙","Économiser","Posséder 300 pièces",()=>state.coins>=300],
- ["🏆","Niveau supérieur","Atteindre le niveau 5",()=>state.level>=5]
-];
+// ================================
+// FIN DE PARTIE
+// ================================
 
-function renderMissions(){
- const box=document.getElementById("missionList");
- box.innerHTML="";
- MISSIONS.forEach((m,i)=>{
-  const done=m[3]();
-  const d=document.createElement("div");
-  d.className="item";
-  d.innerHTML="<div><span style='font-size:30px'>"+m[0]+"</span><br><b>"+m[1]+"</b><br><span class='small'>"+m[2]+"</span></div><strong>"+(done?"✅":"🔒")+"</strong>";
-  box.appendChild(d);
- });
+function endGame(){
+
+clearInterval(timer);
+
+hideAll();
+
+document
+.getElementById("result")
+.classList.remove("hidden");
+
+
+data.games++;
+
+data.correct+=correct;
+
+if(score>data.best){
+
+data.best=score;
+
 }
 
-/* =========================
-   BADGES
-========================= */
+const earnedCoins=
+Math.max(
+1,
+Math.floor(score/100)
+);
 
-function badgeUnlocked(key){
- return {
-  first:state.words>=1,
-  combo5:state.bestCombo>=5,
-  coins500:state.coins>=500,
-  score1000:state.score>=1000,
-  missions3:MISSIONS.filter(x=>x[3]()).length>=3,
-  words50:state.words>=50,
-  level10:state.level>=10,
-  level20:state.level>=20
- }[key];
+
+data.coins+=earnedCoins;
+
+
+save();
+
+
+document.getElementById("finalScore")
+.textContent=score;
+
+document.getElementById("finalXP")
+.textContent=score;
+
+document.getElementById("finalCoins")
+.textContent=earnedCoins;
+
+document.getElementById("finalCorrect")
+.textContent=correct;
+
+
+let message;
+
+if(score>=700){
+
+message="🔥 Excellent ! Tu maîtrises ZEN !";
+
+}else if(score>=400){
+
+message="👏 Très bon travail !";
+
+}else{
+
+message="💪 Continue, tu vas progresser !";
+
 }
 
-function renderBadges(){
- const box=document.getElementById("badgeList");
- box.innerHTML="";
- BADGES.forEach(b=>{
-  const unlocked=badgeUnlocked(b[3]);
-  const d=document.createElement("div");
-  d.className="item";
-  d.innerHTML="<div class='badge'>"+b[0]+"</div><div style='flex:1'><b>"+b[1]+"</b><br><span class='small'>"+b[2]+"</span></div><strong>"+(unlocked?"🏆":"🔒")+"</strong>";
-  box.appendChild(d);
- });
+document.getElementById("finalMessage")
+.textContent=message;
+
 }
 
-function checkBadges(){
- save();
+
+// ================================
+// STATISTIQUES
+// ================================
+
+function showStats(){
+
+hideAll();
+
+document
+.getElementById("statistics")
+.classList.remove("hidden");
+
+
+document.getElementById("sGames")
+.textContent=data.games;
+
+document.getElementById("sCorrect")
+.textContent=data.correct;
+
+document.getElementById("sBest")
+.textContent=data.best;
+
+document.getElementById("sLevel")
+.textContent=data.level;
+
+document.getElementById("sXP")
+.textContent=data.xp;
+
+document.getElementById("sCoins")
+.textContent=data.coins;
+
 }
 
-/* =========================
-   BOUTIQUE
-========================= */
 
-const SHOP=[
- ["❤️","Vie supplémentaire",50,"life"],
- ["💡","3 indices",60,"hint"],
- ["🔥","Boost combo",100,"boost"],
- ["🪙","Bonus 100 pièces",0,"bonus"]
-];
+// ================================
+// QUITTER
+// ================================
 
-function renderShop(){
- document.getElementById("shopCoins").textContent=state.coins;
- const box=document.getElementById("shopList");
- box.innerHTML="";
+function quitGame(){
 
- SHOP.forEach(item=>{
-  const d=document.createElement("div");
-  d.className="item";
+clearInterval(timer);
 
-  const price=item[3]==="bonus"?200:item[2];
+goHome();
 
-  d.innerHTML="<div style='font-size:28px'>"+item[0]+"</div><div style='flex:1'><b>"+item[1]+"</b><br><span class='small'>"+(item[3]==="bonus"?"Prix 200":"Prix "+price+" 🪙")+"</span></div>";
-
-  const b=document.createElement("button");
-  b.textContent="Acheter";
-  b.onclick=()=>buyItem(item[3],price);
-
-  d.appendChild(b);
-  box.appendChild(d);
- });
 }
 
-function buyItem(type,price){
- if(state.coins<price){
-  toast("Pas assez de pièces !");
-  return;
- }
 
- state.coins-=price;
+// ================================
+// ACCUEIL
+// ================================
 
- if(type==="life")state.lives=Math.min(5,state.lives+1);
- if(type==="hint")state.hints+=3;
- if(type==="bonus")state.coins+=100;
- if(type==="boost")state.combo+=2;
+function goHome(){
 
- save();
- renderShop();
- toast("✅ Achat effectué !");
-}
+clearInterval(timer);
 
-/* =========================
-   STATS
-========================= */
+hideAll();
 
-function renderStats(){
- document.getElementById("statsContent").innerHTML=`
- <div class="card center">
-  <div class="big">⭐ ${state.score}</div>
-  <p>Score total</p>
- </div>
- <div class="grid">
-  <div class="card center">🧩<h2>${state.words}</h2><span class="small">Mots trouvés</span></div>
-  <div class="card center">🔥<h2>${state.bestCombo}</h2><span class="small">Meilleur combo</span></div>
-  <div class="card center">🏆<h2>${state.level}</h2><span class="small">Niveau</span></div>
-  <div class="card center">🪙<h2>${state.coins}</h2><span class="small">Pièces</span></div>
- </div>
- <div class="card">
-  <h3>🎮 Mode préféré</h3>
-  <p>${MODES[state.mode].icon} ${MODES[state.mode].name}</p>
- </div>
- <button class="red" style="width:100%" onclick="resetGame()">Réinitialiser la progression</button>
- `;
-}
+document
+.getElementById("home")
+.classList.remove("hidden");
 
-function resetGame(){
- if(confirm("Réinitialiser toute la progression ?")){
-  localStorage.removeItem("ZEN6_STATE");
-  location.reload();
- }
-}
-
-/* =========================
-   MODALE / TOAST
-========================= */
-
-function showModal(icon,title,text){
- document.getElementById("modalIcon").textContent=icon;
- document.getElementById("modalTitle").textContent=title;
- document.getElementById("modalText").innerHTML=text;
- document.getElementById("modal").classList.add("show");
-}
-
-function closeModal(){
- document.getElementById("modal").classList.remove("show");
- showScreen("home");
-}
-
-function toast(text){
- const t=document.getElementById("toast");
- t.textContent=text;
- t.style.display="block";
- setTimeout(()=>t.style.display="none",1800);
-}
-
-/* INITIALISATION */
 updateHome();
-renderModes();
-renderCategories();
+
+}
+
+
+// ================================
+// RÉINITIALISER
+// ================================
+
+function resetData(){
+
+if(
+confirm(
+"Réinitialiser toute ta progression ?"
+)
+){
+
+data={
+level:1,
+xp:0,
+coins:0,
+games:0,
+correct:0,
+best:0
+};
+
+save();
+
+showStats();
+
+}
+
+}
+
+
+// ================================
+// INITIALISATION
+// ================================
+
+updateHome();
+
+selectMode("classic");
+
 </script>
+
 </body>
  </html>
