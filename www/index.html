@@ -2,341 +2,169 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-<title>ZEN 5.0</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>ZEN 6.0</title>
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
 body{
- margin:0;font-family:Arial,sans-serif;
- background:linear-gradient(145deg,#071b16,#0d3027,#123f33);
- color:white;min-height:100vh;overflow-x:hidden
+ margin:0;font-family:Arial,sans-serif;background:#07111f;color:white;
+ min-height:100vh;overflow-x:hidden;
 }
-button{
- border:0;border-radius:18px;padding:15px 18px;
- font-size:16px;font-weight:bold;color:white;
- background:#176b55;box-shadow:0 5px 15px #0005
-}
-button:active{transform:scale(.95)}
-.app{max-width:520px;margin:auto;min-height:100vh;padding:18px}
-.screen{display:none}
-.screen.active{display:block}
-.logo{
- text-align:center;font-size:58px;font-weight:900;
- letter-spacing:8px;margin-top:25px
-}
-.subtitle{text-align:center;color:#9ed8c7;margin-bottom:25px}
+button{border:0;border-radius:16px;padding:14px 16px;font-weight:bold;color:white;
+ background:#172942;font-size:15px;cursor:pointer}
+button:active{transform:scale(.96)}
+.app{max-width:600px;margin:auto;padding:18px}
+.screen{display:none}.screen.active{display:block}
+.logo{text-align:center;font-size:55px;font-weight:900;margin:35px 0 5px}
+.subtitle{text-align:center;color:#9db0c9;margin-bottom:30px}
 .card{
- background:#ffffff12;border:1px solid #ffffff18;
- border-radius:24px;padding:18px;margin:12px 0;
- backdrop-filter:blur(10px)
+ background:#101e31;border:1px solid #203653;border-radius:22px;
+ padding:18px;margin:12px 0;box-shadow:0 10px 30px #0003
 }
-.primary{
- width:100%;background:linear-gradient(135deg,#20a77d,#126b55);
- margin:8px 0
-}
-.secondary{background:#ffffff12;width:100%;margin:6px 0}
-.stats{
- display:grid;grid-template-columns:repeat(4,1fr);
- gap:8px;margin:15px 0
-}
-.stat{
- background:#ffffff10;border-radius:15px;padding:10px 4px;
- text-align:center;font-size:12px
-}
-.stat b{display:block;font-size:20px;margin-bottom:3px}
-.title{text-align:center;font-size:28px;margin:10px 0 20px}
-.grid{
- display:grid;grid-template-columns:1fr 1fr;gap:10px
-}
-.category,.mode{
- min-height:90px;background:#ffffff0d;
- border:1px solid #ffffff15;border-radius:20px;
- padding:12px;text-align:center
-}
-.category span,.mode span{font-size:30px;display:block;margin-bottom:6px}
-.category small,.mode small{color:#a8d9cc}
-.selected{border:2px solid #4de0ad;background:#20a77d25}
-.topbar{
- display:flex;justify-content:space-between;align-items:center;
- gap:8px;margin-bottom:12px
-}
-.back{background:#ffffff12;padding:10px 14px}
-.badge{
- display:flex;align-items:center;gap:12px;
- padding:14px;background:#ffffff0d;border-radius:18px;margin:9px 0
-}
-.badge.locked{opacity:.38}
-.badgeIcon{font-size:32px}
-.progress{
- height:10px;background:#ffffff15;border-radius:10px;
- overflow:hidden;margin:10px 0
-}
-.progress i{
- display:block;height:100%;
- background:linear-gradient(90deg,#27d99b,#8affd4);
- width:0%;transition:.5s
-}
-.levelmap{position:relative;padding:8px 0}
-.levelnode{
- display:flex;align-items:center;gap:14px;
- padding:12px;margin:8px 0;border-radius:18px;
- background:#ffffff0b
-}
-.levelcircle{
- width:46px;height:46px;border-radius:50%;
- display:grid;place-items:center;
- background:#ffffff15;font-weight:bold
-}
-.levelnode.current{border:1px solid #40dba8;background:#20a77d18}
-.levelnode.done .levelcircle{background:#1f9e77}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stat{background:#14263d;border-radius:15px;padding:10px;text-align:center}
+.stat b{display:block;font-size:19px;margin-top:4px}
+.small{font-size:12px;color:#9db0c9}
+h1,h2,h3{margin-top:5px}
+.primary{width:100%;background:#00a884;font-size:18px}
+.gold{background:#b77b00}
+.red{background:#a83245}
+.blue{background:#2459a6}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.mode.selected,.cat.selected{outline:3px solid #00c997}
+.progress{height:10px;background:#1d3048;border-radius:20px;overflow:hidden}
+.progress i{display:block;height:100%;background:#00c997;width:0}
 .word{
- display:flex;justify-content:center;align-items:center;
- min-height:85px;font-size:35px;font-weight:900;
- letter-spacing:5px;margin:15px 0
+ display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:25px 0
 }
-.letters{
- display:grid;grid-template-columns:repeat(4,1fr);gap:10px
+.box{
+ width:48px;height:55px;border-radius:12px;background:#172942;
+ display:flex;align-items:center;justify-content:center;
+ font-size:25px;font-weight:bold
 }
-.letter{
- font-size:23px;padding:17px 5px;
- background:#ffffff10
-}
-.letter.used{opacity:.18;transform:scale(.9)}
-.answer{
- display:flex;justify-content:center;gap:8px;
- min-height:58px;margin:8px 0 18px;flex-wrap:wrap
-}
-.slot{
- width:45px;height:50px;border-radius:12px;
- background:#ffffff10;border:2px dashed #ffffff35;
- display:grid;place-items:center;font-size:24px;font-weight:bold
-}
-.gameinfo{
- display:grid;grid-template-columns:repeat(4,1fr);gap:7px
-}
-.gameinfo div{
- background:#ffffff0c;padding:8px 3px;border-radius:12px;
- text-align:center;font-size:11px
-}
-.gameinfo b{display:block;font-size:17px}
-.timer{
- height:9px;background:#ffffff12;border-radius:10px;
- overflow:hidden;margin:12px 0
-}
-.timer i{
- display:block;height:100%;width:100%;
- background:#49dca9;transition:width .1s linear
-}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.hint{background:#6f58d9}
+.letters{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.letter{font-size:22px;background:#1b3452}
+.letter.used{opacity:.2}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.back{padding:9px 13px}
+.item{display:flex;justify-content:space-between;align-items:center;
+ padding:13px;background:#14263d;border-radius:15px;margin:8px 0}
+.badge{font-size:35px}
+.center{text-align:center}
+.big{font-size:45px;font-weight:900}
 .modal{
- position:fixed;inset:0;background:#000b;
- display:none;align-items:center;justify-content:center;
- z-index:20;padding:20px
+ position:fixed;inset:0;background:#000b;display:none;
+ align-items:center;justify-content:center;padding:20px;z-index:20
 }
 .modal.show{display:flex}
-.modalbox{
- width:min(430px,100%);background:#123a30;
- border:1px solid #ffffff20;border-radius:28px;
- padding:28px;text-align:center;
- animation:pop .3s ease
-}
-.modalbox h2{font-size:32px;margin:8px}
-.big{font-size:55px}
-.reward{font-size:22px;color:#8affd4;margin:15px}
-.toast{
- position:fixed;top:20px;left:50%;
- transform:translateX(-50%) translateY(-100px);
- background:#20a77d;color:white;padding:14px 22px;
- border-radius:18px;z-index:50;font-weight:bold;
- transition:.35s
-}
-.toast.show{transform:translateX(-50%) translateY(0)}
-#splash{
- position:fixed;inset:0;background:#071b16;
- z-index:100;display:flex;align-items:center;justify-content:center;
- flex-direction:column
-}
-#splash .logo{margin:0}
-.splashbar{width:180px;height:6px;background:#ffffff15;border-radius:10px;overflow:hidden}
-.splashbar i{display:block;height:100%;width:0;background:#49dca9;animation:load 1.3s forwards}
-@keyframes load{to{width:100%}}
-@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
-@keyframes flash{0%{background:#20a77d55}100%{background:transparent}}
-.win{animation:bounce .5s ease 2}
-.flash{animation:flash .6s}
-small{color:#9bcfc0}
+.modalbox{max-width:430px;width:100%;background:#102137;border-radius:25px;
+ padding:25px;text-align:center}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+ background:#00a884;color:#001d17;padding:12px 20px;border-radius:20px;
+ display:none;z-index:30;font-weight:bold}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:15px}
+nav button{font-size:11px;padding:10px 4px}
 </style>
 </head>
 
 <body>
-
-<div id="splash">
- <div class="logo">ZEN</div>
- <p>LE JEU DES MOTS</p>
- <div class="splashbar"><i></i></div>
-</div>
-
 <div class="app">
 
 <!-- ACCUEIL -->
 <section id="home" class="screen active">
  <div class="logo">ZEN</div>
- <div class="subtitle">Trouve. Progresse. Maîtrise.</div>
+ <div class="subtitle">Le jeu de mots qui évolue avec toi</div>
 
- <div class="card">
-  <div class="stats">
-   <div class="stat">⭐<b id="homeScore">0</b>Score</div>
-   <div class="stat">🪙<b id="homeCoins">100</b>Pièces</div>
-   <div class="stat">🏆<b id="homeLevel">1</b>Niveau</div>
-   <div class="stat">🔥<b id="homeCombo">0</b>Combo</div>
-  </div>
-  <button class="primary" onclick="ouvrirModes()">▶ JOUER</button>
+ <div class="stats">
+  <div class="stat">🏆<b id="homeScore">0</b><span class="small">Score</span></div>
+  <div class="stat">🪙<b id="homeCoins">100</b><span class="small">Pièces</span></div>
+  <div class="stat">⭐<b id="homeLevel">1</b><span class="small">Niveau</span></div>
+  <div class="stat">🔥<b id="homeBest">0</b><span class="small">Combo</span></div>
  </div>
 
- <div class="grid">
-  <button class="secondary" onclick="ouvrirCategories()">🗂️<br>Catégories</button>
-  <button class="secondary" onclick="ouvrirProgression()">🗺️<br>Progression</button>
-  <button class="secondary" onclick="ouvrirStats()">📊<br>Statistiques</button>
-  <button class="secondary" onclick="ouvrirBadges()">🏅<br>Badges</button>
+ <div class="card">
+  <h3>🗺️ Progression</h3>
+  <div class="progress"><i id="homeProgress"></i></div>
+  <p id="progressText" class="small">0 / 100 XP</p>
+ </div>
+
+ <button class="primary" onclick="startGame()">🎮 JOUER</button>
+
+ <div class="grid" style="margin-top:10px">
+  <button onclick="showScreen('modes')">⚡ Modes</button>
+  <button onclick="showScreen('categories')">📚 Catégories</button>
+  <button onclick="showScreen('missions')">🎯 Missions</button>
+  <button onclick="showScreen('badges')">🏆 Badges</button>
+  <button onclick="showScreen('shop')">🛒 Boutique</button>
+  <button onclick="showScreen('stats')">📊 Stats</button>
  </div>
 </section>
 
 <!-- MODES -->
 <section id="modes" class="screen">
- <div class="topbar">
-  <button class="back" onclick="show('home')">←</button>
-  <b>CHOISIS TON MODE</b>
-  <span>🎮</span>
- </div>
-
- <div class="card">
-  <h2 id="selectedCategoryTitle">Toutes les catégories</h2>
-  <small>Catégorie actuelle</small>
- </div>
-
- <div class="mode selected" id="modeCLASSIQUE" onclick="choisirMode('CLASSIQUE')">
-  <span>🧘</span><b>CLASSIQUE</b><br>
-  <small>Le rythme ZEN</small>
- </div>
-
- <div class="mode" id="modeRAPIDE" onclick="choisirMode('RAPIDE')">
-  <span>⚡</span><b>RAPIDE</b><br>
-  <small>Le temps est limité</small>
- </div>
-
- <div class="mode" id="modeCOMBO" onclick="choisirMode('COMBO')">
-  <span>🔥</span><b>COMBO</b><br>
-  <small>Enchaîne les bonnes réponses</small>
- </div>
-
- <div class="mode" id="modeDEFI" onclick="choisirMode('DEFI')">
-  <span>🎯</span><b>DÉFI</b><br>
-  <small>5 mots à trouver</small>
- </div>
-
- <button class="primary" onclick="demarrerJeu()">🚀 COMMENCER</button>
+ <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>⚡ Modes</h2><span></span></div>
+ <div id="modeList"></div>
 </section>
 
 <!-- CATEGORIES -->
 <section id="categories" class="screen">
- <div class="topbar">
-  <button class="back" onclick="show('home')">←</button>
-  <b>CATÉGORIES</b>
-  <span>🗂️</span>
- </div>
- <div id="catGrid" class="grid"></div>
-</section>
-
-<!-- PROGRESSION -->
-<section id="progression" class="screen">
- <div class="topbar">
-  <button class="back" onclick="show('home')">←</button>
-  <b>PROGRESSION</b>
-  <span>🗺️</span>
- </div>
-
- <div class="card">
-  <h2>Niveau <span id="progressLevel">1</span></h2>
-  <p><span id="levelWords">0</span> / <span id="nextGoal">5</span> mots</p>
-  <div class="progress"><i id="levelBar"></i></div>
- </div>
-
- <div id="levelMap" class="levelmap"></div>
-</section>
-
-<!-- STATS -->
-<section id="stats" class="screen">
- <div class="topbar">
-  <button class="back" onclick="show('home')">←</button>
-  <b>STATISTIQUES</b>
-  <span>📊</span>
- </div>
-
- <div class="card">
-  <div class="stats">
-   <div class="stat">⭐<b id="statScore">0</b>Meilleur score</div>
-   <div class="stat">🧩<b id="statWords">0</b>Mots</div>
-   <div class="stat">🔥<b id="statCombo">0</b>Meilleur combo</div>
-   <div class="stat">🎮<b id="statGames">0</b>Parties</div>
-  </div>
- </div>
-
- <div class="card">
-  <h3>📚 Catégorie favorite</h3>
-  <p id="favoriteCat">Aucune donnée</p>
- </div>
-
- <div class="card">
-  <h3>🎮 Mode préféré</h3>
-  <p id="favoriteMode">Aucune donnée</p>
- </div>
-</section>
-
-<!-- BADGES -->
-<section id="badges" class="screen">
- <div class="topbar">
-  <button class="back" onclick="show('home')">←</button>
-  <b>BADGES</b>
-  <span>🏅</span>
- </div>
- <div id="badgeList"></div>
+ <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>📚 Catégories</h2><span></span></div>
+ <div id="catList" class="grid"></div>
 </section>
 
 <!-- JEU -->
 <section id="game" class="screen">
-
  <div class="topbar">
-  <button class="back" onclick="quitterJeu()">←</button>
-  <b id="gameModeTitle">CLASSIQUE</b>
-  <span id="gameCategory">TOUTES</span>
+  <button class="back" onclick="leaveGame()">←</button>
+  <b id="gameMode">CLASSIQUE</b>
+  <b>⏱️ <span id="timer">30</span></b>
  </div>
 
- <div class="gameinfo">
-  <div>⭐<b id="score">0</b>Score</div>
-  <div>🪙<b id="coins">100</b>Pièces</div>
-  <div>❤️<b id="lives">3</b>Vies</div>
-  <div>🔥<b id="combo">0</b>Combo</div>
+ <div class="stats">
+  <div class="stat">❤️<b id="lives">3</b></div>
+  <div class="stat">🪙<b id="coins">100</b></div>
+  <div class="stat">🔥<b id="combo">0</b></div>
+  <div class="stat">⭐<b id="score">0</b></div>
  </div>
 
- <div class="timer"><i id="timerBar"></i></div>
-
- <div class="card">
-  <div id="wordNumber">Mot 1</div>
-  <div id="scrambled" class="word">ZEN</div>
-  <div id="answer" class="answer"></div>
-  <div id="letters" class="letters"></div>
+ <div class="card center">
+  <span class="small" id="categoryName">Toutes</span>
+  <h2 id="levelTitle">Niveau 1</h2>
+  <div class="progress"><i id="levelProgress"></i></div>
  </div>
 
- <div class="actions">
-  <button class="hint" onclick="indice()">💡 Indice -20 🪙</button>
-  <button onclick="melanger()">🔀 Mélanger</button>
+ <div id="wordBoxes" class="word"></div>
+ <div id="letters" class="letters"></div>
+
+ <div class="grid" style="margin-top:14px">
+  <button onclick="useHint()">💡 Indice <span id="hintPrice">20</span></button>
+  <button onclick="shuffleLetters()">🔀 Mélanger</button>
  </div>
+</section>
 
- <button class="secondary" onclick="passerMot()">⏭️ Passer</button>
+<!-- MISSIONS -->
+<section id="missions" class="screen">
+ <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>🎯 Missions</h2><span></span></div>
+ <div id="missionList"></div>
+</section>
 
+<!-- BADGES -->
+<section id="badges" class="screen">
+ <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>🏆 Badges</h2><span></span></div>
+ <div id="badgeList"></div>
+</section>
+
+<!-- BOUTIQUE -->
+<section id="shop" class="screen">
+ <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>🛒 Boutique</h2><span></span></div>
+ <div class="card center">🪙 <b id="shopCoins">100</b> pièces</div>
+ <div id="shopList"></div>
+</section>
+
+<!-- STATS -->
+<section id="stats" class="screen">
+ <div class="topbar"><button class="back" onclick="showScreen('home')">←</button><h2>📊 Statistiques</h2><span></span></div>
+ <div id="statsContent"></div>
 </section>
 
 </div>
@@ -346,784 +174,480 @@ small{color:#9bcfc0}
   <div id="modalIcon" class="big">🎉</div>
   <h2 id="modalTitle">Bravo !</h2>
   <p id="modalText"></p>
-  <div id="modalReward" class="reward"></div>
-  <button class="primary" onclick="fermerModal()">CONTINUER</button>
+  <button class="primary" onclick="closeModal()">CONTINUER</button>
  </div>
 </div>
 
 <div id="toast" class="toast"></div>
 
 <script>
-
 /* =========================
    DONNÉES
 ========================= */
 
-const donnees = {
-
-FOOTBALL:[
-"BUT","BALLON","STADE","JOUEUR","EQUIPE","MATCH","PASSE","TIR",
-"DRIBBLE","COACH","ARBITRE","DEFENSE","ATTAQUE","GARDIEN","CORNER",
-"CHAMPION","COUPE","LIGUE","PELOUSE","SUPPORTER","CAPITAINE","MILIEU",
-"VITESSE","TACTIQUE","VICTOIRE"
-],
-
-ANIMAUX:[
-"CHAT","CHIEN","LION","TIGRE","ZEBRE","SINGE","GIRAFE","ELEPHANT",
-"SERPENT","AIGLE","REQUIN","BALEINE","CHEVAL","VACHE","MOUTON",
-"CHEVRE","POULE","CANARD","LAPIN","FOURMI","ABEILLE","PAPILLON",
-"CROCODILE","TORTUE","GORILLE"
-],
-
-NOURRITURE:[
-"RIZ","PAIN","POULET","POISSON","BANANE","MANGUE","ORANGE","ANANAS",
-"PATATE","IGNAME","MAIS","HARICOT","TOMATE","OIGNON","CAROTTE",
-"BEURRE","FROMAGE","CHOCOLAT","PIZZA","BURGER","SOUPE","SALADE",
-"NOIX","CAFE","CITRON"
-],
-
-CI:[
-"ABIDJAN","BOUAKE","YAMOUSSOUKRO","KORHOGO","MAN","DALOA","DIVO",
-"BONDOUKOU","SANPEDRO","LAGUNE","IVOIRE","ELEPHANTS","CACAO",
-"CAFE","ATTIEKE","ALLOCO","FOUTOU","GARBA","ORANGE","BAOULE",
-"SENOUFO","DAN","BETE","AGNI","NZI"
-],
-
-TECH:[
-"TELEPHONE","ORDINATEUR","ECRAN","CLAVIER","SOURIS","INTERNET",
-"APPLICATION","ANDROID","ROBOT","CAMERA","SERVEUR","CODE","LOGICIEL",
-"RESEAU","WIFI","BLUETOOTH","CHARGEUR","BATTERIE","CAPTEUR","PIXEL",
-"PROGRAMME","DONNEE","IA","ALGORITHME","MOBILE"
-],
-
-NATURE:[
-"SOLEIL","LUNE","ETOILE","CIEL","NUAGE","PLUIE","RIVIERE","MER",
-"OCEAN","MONTAGNE","FORET","ARBRE","FLEUR","HERBE","VENT","FEU",
-"TERRE","PIERRE","SABLE","DESERT","VOLCAN","FLEUVE","LAC","SOURCE",
-"ORAGE"
-],
-
-MUSIQUE:[
-"CHANT","SON","RYTHME","BATTERIE","GUITARE","PIANO","MICRO","DANSE",
-"ARTISTE","CONCERT","ALBUM","MELODIE","DJ","RAP","AFROBEAT","JAZZ",
-"POP","STUDIO","MUSICIEN","CHANTEUR","TAMBOUR","FLUTE","NOTE","SCENE",
-"PUBLIC"
-],
-
-CULTURE:[
-"HISTOIRE","LANGUE","LIVRE","CULTURE","TRADITION","PATRIMOINE",
-"PEUPLE","ROYAUME","CHEF","ROI","VILLAGE","DANSE","MASQUE","ART",
-"POESIE","CONTE","SAGESSE","FAMILLE","NATION","CITOYEN"
-],
-
-ESPACE:[
-"PLANETE","SOLEIL","LUNE","ETOILE","MARS","TERRE","JUPITER","SATURNE",
-"NEPTUNE","GALAXIE","UNIVERS","FUSEE","ASTRONAUTE","ORBITRE",
-"COMETE","METEORE","ESPACE","COSMOS","SATELLITE","ROCKET"
-],
-
-MAISON:[
-"TABLE","CHAISE","PORTE","FENETRE","LIT","CHAMBRE","CUISINE","SALON",
-"CANAPE","LAMPE","MIROIR","RIDEAU","TOIT","MUR","SOL","ESCALIER",
-"JARDIN","FRIGO","FOUR","ASSIETTE"
-],
-
-ECOLE:[
-"ECOLE","CLASSE","ELEVE","PROFESSEUR","LIVRE","CAHIER","STYLO",
-"CRAYON","TABLEAU","EXAMEN","LECON","MATHEMATIQUE","FRANCAIS",
-"SCIENCE","HISTOIRE","GEOGRAPHIE","NOTE","DIPLOME","COLLEGE","ETUDE"
-]
-
+const WORDS={
+"Football":["BALLON","BUT","JOUEUR","ARBITRE","STADE","PASSE","DRIBBLE","TIR","EQUIPE","COACH","GARDIEN","DEFENSE","ATTAQUE","MILIEU","MATCH"],
+"Animaux":["LION","TIGRE","CHAT","CHIEN","ELEPHANT","GIRAFE","ZEBRE","SINGE","AIGLE","SERPENT","REQUIN","CHEVAL","VACHE","LAPIN"],
+"Nourriture":["RIZ","PAIN","PIZZA","POULET","POISSON","MANGUE","BANANE","ANANAS","ORANGE","IGNAME","ATIEKE","ALLoco","CAFE","CHOCOLAT"],
+"Côte d'Ivoire":["ABIDJAN","BOUAKE","YAMOUSSOUKRO","KORHOGO","BASSAM","IVOIRE","ELEPHANTS","LAGUNE","COMOE","SASSANDRA"],
+"Technologie":["TELEPHONE","ORDINATEUR","INTERNET","APPLICATION","CLAVIER","ECRAN","CAMERA","ROBOT","SERVEUR","CODE","ANDROID","RESEAU"],
+"Nature":["SOLEIL","LUNE","ETOILE","FORET","RIVIERE","MONTAGNE","PLUIE","VENT","NUAGE","OCEAN","FLEUR","ARBRE"],
+"Musique":["MUSIQUE","CHANT","DANSE","RYTHME","GUITARE","PIANO","BATTERIE","MICRO","CONCERT","ARTISTE"],
+"Cinéma":["FILM","ACTEUR","SCENE","CAMERA","CINEMA","HISTOIRE","HEROS","SERIE","ACTION","DRAME"],
+"Voyage":["AVION","TRAIN","BUS","VOYAGE","PASSEPORT","VALISE","HOTEL","PLAGE","PAYS","CARTE"],
+"Science":["ATOM","CELLULE","ESPACE","PLANETE","ENERGIE","LUMIERE","FORCE","SCIENCE","GENIE","MOLECULE"],
+"École":["ECOLE","LIVRE","CLASSE","ELEVE","PROFESSEUR","EXAMEN","CAHIER","STYLO","LECON","DIPLOME"],
+"Afrique":["AFRIQUE","SAVANE","BAOBAB","NIGER","GHANA","SENEGAL","KENYA","RWANDA","CAMEROUN","MALI"]
 };
 
-const categories=[
- ["TOUTES","🌍","Toutes"],
- ["FOOTBALL","⚽","Football"],
- ["ANIMAUX","🦁","Animaux"],
- ["NOURRITURE","🍍","Nourriture"],
- ["CI","🇨🇮","Côte d'Ivoire"],
- ["TECH","📱","Technologie"],
- ["NATURE","🌿","Nature"],
- ["MUSIQUE","🎵","Musique"],
- ["CULTURE","🎭","Culture"],
- ["ESPACE","🚀","Espace"],
- ["MAISON","🏠","Maison"],
- ["ECOLE","📚","École"]
+WORDS["Toutes"]=Object.values(WORDS).flat();
+
+const MODES={
+CLASSIQUE:{name:"Classique",icon:"🎮",time:35,mult:1},
+RAPIDE:{name:"Rapide",icon:"⚡",time:15,mult:2},
+COMBO:{name:"Combo",icon:"🔥",time:25,mult:1.5},
+DEFI:{name:"Défi",icon:"💀",time:20,mult:3}
+};
+
+const BADGES=[
+ ["🌱","Premier mot","Trouver 1 mot","first"],
+ ["🔥","Combo 5","Atteindre un combo de 5","combo5"],
+ ["🪙","Riche","Posséder 500 pièces","coins500"],
+ ["⭐","Centenaire","Obtenir 1000 points","score1000"],
+ ["🎯","Mission accomplie","Terminer 3 missions","missions3"],
+ ["🧠","Connaisseur","Trouver 50 mots","words50"],
+ ["🏆","Maître ZEN","Atteindre le niveau 10","level10"],
+ ["👑","Légende","Atteindre le niveau 20","level20"]
 ];
 
-/* =========================
-   ETAT DU JEU
-========================= */
-
-let score=Number(localStorage.getItem("zen_score"))||0;
-let coins=Number(localStorage.getItem("zen_coins"));
-if(!localStorage.getItem("zen_coins")) coins=100;
-
-let lives=Number(localStorage.getItem("zen_lives"))||3;
-let combo=Number(localStorage.getItem("zen_combo"))||0;
-let niveau=Number(localStorage.getItem("zen_niveau"))||1;
-let motsTrouves=Number(localStorage.getItem("zen_mots"))||0;
-
-let bestScore=Number(localStorage.getItem("zen_best_score"))||0;
-let bestCombo=Number(localStorage.getItem("zen_best_combo"))||0;
-let games=Number(localStorage.getItem("zen_games"))||0;
-
-let categorie=localStorage.getItem("zen_categorie")||"TOUTES";
-let mode=localStorage.getItem("zen_mode")||"CLASSIQUE";
+let state=JSON.parse(localStorage.getItem("ZEN6_STATE")||"null")||{
+ score:0,coins:100,level:1,xp:0,lives:3,combo:0,bestCombo:0,
+ words:0,missionsDone:0,hints:3,mode:"CLASSIQUE",
+ category:"Toutes",inventory:{},daily:0
+};
 
 let currentWord="";
-let currentLetters=[];
-let answer=[];
-let used=[];
-let timer=null;
-let timeLeft=0;
-let maxTime=22;
-
-let sessionWords=0;
-let sessionGoal=0;
-let sessionStart=0;
-
-let catCount=JSON.parse(localStorage.getItem("zen_cat_count")||"{}");
-let modeCount=JSON.parse(localStorage.getItem("zen_mode_count")||"{}");
+let selected=[];
+let timerInterval=null;
+let timeLeft=30;
+let wordPool=[];
 
 /* =========================
-   UTILITAIRES
+   SAUVEGARDE
 ========================= */
 
 function save(){
- localStorage.setItem("zen_score",score);
- localStorage.setItem("zen_coins",coins);
- localStorage.setItem("zen_lives",lives);
- localStorage.setItem("zen_combo",combo);
- localStorage.setItem("zen_niveau",niveau);
- localStorage.setItem("zen_mots",motsTrouves);
- localStorage.setItem("zen_best_score",bestScore);
- localStorage.setItem("zen_best_combo",bestCombo);
- localStorage.setItem("zen_games",games);
- localStorage.setItem("zen_categorie",categorie);
- localStorage.setItem("zen_mode",mode);
- localStorage.setItem("zen_cat_count",JSON.stringify(catCount));
- localStorage.setItem("zen_mode_count",JSON.stringify(modeCount));
-}
-
-function show(id){
- document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
- document.getElementById(id).classList.add("active");
-
- if(id==="home") updateHome();
- if(id==="progression") updateProgression();
- if(id==="stats") updateStats();
- if(id==="badges") updateBadges();
-}
-
-function toast(txt){
- const t=document.getElementById("toast");
- t.textContent=txt;
- t.classList.add("show");
- setTimeout(()=>t.classList.remove("show"),1800);
+ localStorage.setItem("ZEN6_STATE",JSON.stringify(state));
+ updateHome();
 }
 
 function updateHome(){
- homeScore.textContent=score;
- homeCoins.textContent=coins;
- homeLevel.textContent=niveau;
- homeCombo.textContent=combo;
-}
-
-function randomItem(arr){
- return arr[Math.floor(Math.random()*arr.length)];
-}
-
-function getWords(){
- if(categorie==="TOUTES"){
-  return Object.values(donnees).flat();
- }
- return donnees[categorie]||donnees.TOUTES;
-}
-
-function shuffleArray(arr){
- return [...arr].sort(()=>Math.random()-.5);
-}
-
-function melangerTexte(text){
- return shuffleArray(text.split(""));
+ document.getElementById("homeScore").textContent=state.score;
+ document.getElementById("homeCoins").textContent=state.coins;
+ document.getElementById("homeLevel").textContent=state.level;
+ document.getElementById("homeBest").textContent=state.bestCombo;
+ document.getElementById("homeProgress").style.width=Math.min(100,state.xp)+"%";
+ document.getElementById("progressText").textContent=state.xp+" / 100 XP";
 }
 
 /* =========================
-   CATEGORIES
+   NAVIGATION
 ========================= */
 
-function ouvrirCategories(){
- const grid=document.getElementById("catGrid");
- grid.innerHTML="";
+function showScreen(id){
+ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
 
- categories.forEach(c=>{
-  const b=document.createElement("button");
-  b.className="category"+(categorie===c[0]?" selected":"");
-  b.innerHTML=`<span>${c[1]}</span><b>${c[2]}</b>`;
-  b.onclick=()=>{
-   categorie=c[0];
-   localStorage.setItem("zen_categorie",categorie);
-   toast("Catégorie : "+c[2]);
-   ouvrirCategories();
-  };
-  grid.appendChild(b);
- });
-
- show("categories");
+ if(id==="home")updateHome();
+ if(id==="modes")renderModes();
+ if(id==="categories")renderCategories();
+ if(id==="missions")renderMissions();
+ if(id==="badges")renderBadges();
+ if(id==="shop")renderShop();
+ if(id==="stats")renderStats();
 }
 
 /* =========================
    MODES
 ========================= */
 
-function ouvrirModes(){
- updateModeUI();
- show("modes");
+function renderModes(){
+ const box=document.getElementById("modeList");
+ box.innerHTML="";
+ Object.entries(MODES).forEach(([id,m])=>{
+  const b=document.createElement("button");
+  b.className="card mode "+(state.mode===id?"selected":"");
+  b.style.width="100%";
+  b.innerHTML="<span style='font-size:30px'>"+m.icon+"</span><h3>"+m.name+"</h3><p class='small'>"+m.time+" secondes • x"+m.mult+" points</p>";
+  b.onclick=()=>{state.mode=id;save();renderModes();toast("Mode "+m.name+" sélectionné")};
+  box.appendChild(b);
+ });
 }
 
-function choisirMode(m){
- mode=m;
- localStorage.setItem("zen_mode",mode);
- updateModeUI();
-}
+/* =========================
+   CATÉGORIES
+========================= */
 
-function updateModeUI(){
- document.querySelectorAll(".mode").forEach(x=>x.classList.remove("selected"));
- const el=document.getElementById("mode"+mode);
- if(el)el.classList.add("selected");
-
- const cat=categories.find(x=>x[0]===categorie);
- selectedCategoryTitle.textContent=cat?cat[1]+" "+cat[2]:"Toutes";
-}
-
-function demarrerJeu(){
-
- lives=3;
- combo=0;
- sessionWords=0;
-
- if(mode==="DEFI") sessionGoal=5;
- else sessionGoal=0;
-
- if(mode==="RAPIDE") maxTime=10;
- else if(mode==="COMBO") maxTime=18;
- else if(mode==="DEFI") maxTime=16;
- else maxTime=22;
-
- games++;
-
- modeCount[mode]=(modeCount[mode]||0)+1;
- save();
-
- document.getElementById("gameModeTitle").textContent=mode;
- const cat=categories.find(x=>x[0]===categorie);
- document.getElementById("gameCategory").textContent=cat?cat[1]+" "+cat[2]:"TOUTES";
-
- show("game");
- nouveauMot();
+function renderCategories(){
+ const box=document.getElementById("catList");
+ box.innerHTML="";
+ Object.keys(WORDS).forEach(cat=>{
+  const b=document.createElement("button");
+  b.className="cat "+(state.category===cat?"selected":"");
+  b.textContent=cat;
+  b.onclick=()=>{
+   state.category=cat;save();renderCategories();
+   toast("Catégorie : "+cat);
+  };
+  box.appendChild(b);
+ });
 }
 
 /* =========================
    JEU
 ========================= */
 
-function nouveauMot(){
+function startGame(){
+ state.lives=3;
+ showScreen("game");
+ document.getElementById("gameMode").textContent=MODES[state.mode].name.toUpperCase();
+ nextWord();
+}
 
- clearInterval(timer);
+function leaveGame(){
+ clearInterval(timerInterval);
+ save();
+ showScreen("home");
+}
 
- const words=getWords();
- currentWord=randomItem(words);
+function nextWord(){
+ const list=WORDS[state.category]||WORDS.Toutes;
+ currentWord=list[Math.floor(Math.random()*list.length)].toUpperCase();
+ selected=[];
+ wordPool=currentWord.split("");
+ renderWord();
+ renderLetters();
+ startTimer();
+ updateGameUI();
+}
 
- /* évite les mots trop longs sur petit écran */
- if(currentWord.length>14){
-  const courts=words.filter(w=>w.length<=14);
-  if(courts.length)currentWord=randomItem(courts);
+function renderWord(){
+ const box=document.getElementById("wordBoxes");
+ box.innerHTML="";
+ for(let i=0;i<currentWord.length;i++){
+  const d=document.createElement("div");
+  d.className="box";
+  d.textContent=selected[i]||"";
+  box.appendChild(d);
+ }
+}
+
+function renderLetters(){
+ const box=document.getElementById("letters");
+ box.innerHTML="";
+ let arr=currentWord.split("");
+
+ while(arr.length<Math.max(8,currentWord.length+3)){
+  arr.push(String.fromCharCode(65+Math.floor(Math.random()*26)));
  }
 
- currentLetters=melangerTexte(currentWord);
- answer=[];
- used=new Array(currentWord.length).fill(false);
+ arr.sort(()=>Math.random()-.5);
 
- renderGame();
- startTimer();
-}
-
-function renderGame(){
-
- document.getElementById("wordNumber").textContent=
-  mode==="DEFI"
-  ? `Défi ${sessionWords+1} / ${sessionGoal}`
-  : `Mot ${sessionWords+1}`;
-
- document.getElementById("scrambled").textContent=
-  currentLetters.join(" ");
-
- const answerBox=document.getElementById("answer");
- answerBox.innerHTML="";
-
- currentWord.split("").forEach((x,i)=>{
-  const slot=document.createElement("div");
-  slot.className="slot";
-  slot.textContent=answer[i]||"";
-  answerBox.appendChild(slot);
- });
-
- const letters=document.getElementById("letters");
- letters.innerHTML="";
-
- currentLetters.forEach((letter,index)=>{
+ arr.forEach((letter,index)=>{
   const b=document.createElement("button");
-  b.className="letter"+(used[index]?" used":"");
+  b.className="letter";
   b.textContent=letter;
-
   b.onclick=()=>{
-   if(used[index])return;
-
-   used[index]=true;
-   answer.push(letter);
-
-   renderGame();
-
-   if(answer.length===currentWord.length){
-    verifier();
-   }
+   if(b.classList.contains("used"))return;
+   if(selected.length>=currentWord.length)return;
+   b.classList.add("used");
+   selected.push(letter);
+   renderWord();
+   if(selected.join("")===currentWord)correctWord();
+   else if(selected.length===currentWord.length)wrongWord();
   };
-
-  letters.appendChild(b);
+  box.appendChild(b);
  });
-
- document.getElementById("score").textContent=score;
- document.getElementById("coins").textContent=coins;
- document.getElementById("lives").textContent=lives;
- document.getElementById("combo").textContent=combo;
 }
 
-/* =========================
-   TIMER
-========================= */
+function shuffleLetters(){renderLetters()}
 
 function startTimer(){
+ clearInterval(timerInterval);
+ timeLeft=MODES[state.mode].time;
+ document.getElementById("timer").textContent=timeLeft;
 
- timeLeft=maxTime;
- updateTimer();
-
- timer=setInterval(()=>{
-  timeLeft-=.1;
-  updateTimer();
-
+ timerInterval=setInterval(()=>{
+  timeLeft--;
+  document.getElementById("timer").textContent=timeLeft;
   if(timeLeft<=0){
-   clearInterval(timer);
-   perdreVie("⏱️ Temps écoulé !");
+   clearInterval(timerInterval);
+   wrongWord(true);
   }
- },100);
+ },1000);
 }
 
-function updateTimer(){
- const percent=Math.max(0,(timeLeft/maxTime)*100);
- document.getElementById("timerBar").style.width=percent+"%";
-}
+function correctWord(){
+ clearInterval(timerInterval);
 
-/* =========================
-   VERIFICATION
-========================= */
+ const mode=MODES[state.mode];
+ const gained=Math.round((10+currentWord.length*2+state.combo*2)*mode.mult);
 
-function verifier(){
+ state.score+=gained;
+ state.coins+=5+Math.min(state.combo,10);
+ state.combo++;
+ state.bestCombo=Math.max(state.bestCombo,state.combo);
+ state.words++;
+ state.xp+=10;
 
- clearInterval(timer);
+ if(state.mode==="DEFI")state.xp+=5;
 
- const proposition=answer.join("");
-
- if(proposition===currentWord){
-
-  sessionWords++;
-  motsTrouves++;
-
-  combo++;
-  if(combo>bestCombo)bestCombo=combo;
-
-  let gain=10+niveau*2;
-
-  if(mode==="RAPIDE")gain+=5;
-  if(mode==="COMBO")gain+=combo*2;
-  if(mode==="DEFI")gain+=10;
-
-  score+=gain;
-  coins+=5;
-
-  if(categorie!=="TOUTES"){
-   catCount[categorie]=(catCount[categorie]||0)+1;
-  }
-
-  const niveauAvant=niveau;
-
-  recalculerNiveau();
-
-  document.getElementById("scrambled").classList.add("win");
-  setTimeout(()=>{
-   document.getElementById("scrambled").classList.remove("win");
-  },900);
-
-  save();
-  renderGame();
-
-  if(niveau>niveauAvant){
-   setTimeout(()=>levelUp(niveau),400);
-   return;
-  }
-
-  if(mode==="DEFI" && sessionWords>=sessionGoal){
-   setTimeout(defiComplete,400);
-   return;
-  }
-
-  setTimeout(nouveauMot,650);
-
+ if(state.xp>=100){
+  state.xp-=100;
+  state.level++;
+  state.coins+=25;
+  showModal("🎉","NIVEAU "+state.level+" !","Tu viens de monter de niveau et tu gagnes 25 pièces.");
  }else{
-  perdreVie("❌ Mauvais mot !");
+  toast("+"+gained+" points • 🔥 Combo "+state.combo);
  }
-}
 
-function recalculerNiveau(){
-
- const nouveauNiveau=Math.floor(motsTrouves/5)+1;
-
- if(nouveauNiveau>niveau){
-  niveau=nouveauNiveau;
-  coins+=25+niveau*5;
- }
-}
-
-function perdreVie(message){
-
- lives--;
- combo=0;
+ checkBadges();
  save();
+ updateGameUI();
 
- document.getElementById("lives").textContent=lives;
- document.getElementById("combo").textContent=combo;
-
- toast(message);
-
- if(lives<=0){
-  setTimeout(gameOver,400);
- }else{
-  setTimeout(nouveauMot,500);
- }
+ setTimeout(nextWord,650);
 }
 
-function passerMot(){
- perdreVie("⏭️ Mot passé : -1 vie");
-}
+function wrongWord(timeout=false){
+ clearInterval(timerInterval);
+ state.lives--;
+ state.combo=0;
 
-function indice(){
-
- if(coins<20){
-  toast("🪙 Pas assez de pièces");
+ if(state.lives<=0){
+  save();
+  showModal("💔","Partie terminée","Score : "+state.score+"<br>Meilleur combo : "+state.bestCombo);
   return;
  }
 
- coins-=20;
+ toast(timeout?"⏰ Temps écoulé !":"❌ Mauvaise réponse !");
+ save();
+ updateGameUI();
+ setTimeout(nextWord,700);
+}
 
- const index=currentWord.split("").findIndex((_,i)=>!used[i]);
+function updateGameUI(){
+ document.getElementById("score").textContent=state.score;
+ document.getElementById("coins").textContent=state.coins;
+ document.getElementById("lives").textContent=state.lives;
+ document.getElementById("combo").textContent=state.combo;
+ document.getElementById("levelTitle").textContent="Niveau "+state.level;
+ document.getElementById("categoryName").textContent=state.category;
+ document.getElementById("levelProgress").style.width=state.xp+"%";
+}
 
- if(index>=0){
-  used[index]=true;
-  answer[index]=currentWord[index];
-  renderGame();
+/* =========================
+   INDICE
+========================= */
 
-  if(answer.filter(Boolean).length===currentWord.length){
-   verifier();
-  }
+function useHint(){
+ if(state.coins<20){
+  toast("Pas assez de pièces !");
+  return;
  }
- save();
-}
 
-function melanger(){
+ if(selected.length>=currentWord.length){
+  toast("Aucun indice nécessaire");
+  return;
+ }
 
- currentLetters=melangerTexte(currentWord);
- used=new Array(currentWord.length).fill(false);
- answer=[];
- renderGame();
-}
+ state.coins-=20;
 
-/* =========================
-   DEFI
-========================= */
+ const target=currentWord[selected.length];
+ const buttons=[...document.querySelectorAll(".letter")];
 
-function defiComplete(){
+ const b=buttons.find(x=>x.textContent===target&&!x.classList.contains("used"));
 
- clearInterval(timer);
+ if(b){
+  b.classList.add("used");
+  selected.push(target);
+  renderWord();
 
- const bonus=50+niveau*10;
- coins+=bonus;
- score+=bonus;
-
- save();
-
- showModal(
-  "🎯",
-  "DÉFI RÉUSSI !",
-  "Tu as trouvé les 5 mots.",
-  `+${bonus} 🪙  •  +${bonus} ⭐`
- );
-}
-
-/* =========================
-   LEVEL UP
-========================= */
-
-function levelUp(n){
-
- save();
-
- showModal(
-  "🚀",
-  "NIVEAU "+n,
-  "Tu viens de franchir un nouveau niveau !",
-  `🎁 Récompense : +${25+n*5} 🪙`
- );
-}
-
-/* =========================
-   GAME OVER
-========================= */
-
-function gameOver(){
-
- clearInterval(timer);
-
- if(score>bestScore)bestScore=score;
-
- save();
-
- showModal(
-  "💚",
-  "PARTIE TERMINÉE",
-  `Score : ${score} • Niveau : ${niveau}`,
-  `🏆 Meilleur score : ${bestScore}`
- );
-}
-
-function quitterJeu(){
-
- clearInterval(timer);
- save();
- show("home");
-}
-
-function showModal(icon,title,text,reward){
-
- document.getElementById("modalIcon").textContent=icon;
- document.getElementById("modalTitle").textContent=title;
- document.getElementById("modalText").textContent=text;
- document.getElementById("modalReward").textContent=reward;
-
- document.getElementById("modal").classList.add("show");
-}
-
-function fermerModal(){
-
- document.getElementById("modal").classList.remove("show");
-
- if(mode==="DEFI" && sessionWords>=sessionGoal){
-  show("home");
+  if(selected.join("")===currentWord)correctWord();
+  else toast("💡 Lettre révélée !");
  }else{
-  show("home");
+  state.coins+=20;
  }
+
+ save();
+ updateGameUI();
 }
 
 /* =========================
-   PROGRESSION
+   MISSIONS
 ========================= */
 
-function ouvrirProgression(){
- show("progression");
-}
+const MISSIONS=[
+ ["🔥","Faire un combo de 5","Atteindre 5 de combo",()=>state.bestCombo>=5],
+ ["🧠","Trouver 10 mots","Trouver 10 mots",()=>state.words>=10],
+ ["⭐","Gagner 1000 points","Obtenir 1000 points",()=>state.score>=1000],
+ ["🪙","Économiser","Posséder 300 pièces",()=>state.coins>=300],
+ ["🏆","Niveau supérieur","Atteindre le niveau 5",()=>state.level>=5]
+];
 
-function updateProgression(){
-
- progressLevel.textContent=niveau;
-
- const base=(niveau-1)*5;
- const dansNiveau=motsTrouves-base;
- const objectif=5;
-
- levelWords.textContent=Math.min(dansNiveau,objectif);
- nextGoal.textContent=objectif;
-
- levelBar.style.width=Math.min(100,(dansNiveau/objectif)*100)+"%";
-
- const map=document.getElementById("levelMap");
- map.innerHTML="";
-
- const debut=Math.max(1,niveau-3);
- const fin=niveau+5;
-
- for(let i=debut;i<=fin;i++){
-
-  const node=document.createElement("div");
-  node.className="levelnode";
-
-  if(i===niveau)node.classList.add("current");
-  if(i<niveau)node.classList.add("done");
-
-  const reward=25+i*5;
-
-  node.innerHTML=`
-   <div class="levelcircle">${i<niveau?"✓":i}</div>
-   <div style="flex:1">
-    <b>Niveau ${i}</b><br>
-    <small>${i<niveau?"Terminé":"Récompense : "+reward+" 🪙"}</small>
-   </div>
-  `;
-
-  map.appendChild(node);
- }
-}
-
-/* =========================
-   STATISTIQUES
-========================= */
-
-function ouvrirStats(){
- show("stats");
-}
-
-function getFavorite(obj){
-
- let best=null;
- let value=0;
-
- Object.entries(obj).forEach(([k,v])=>{
-  if(v>value){
-   value=v;
-   best=k;
-  }
+function renderMissions(){
+ const box=document.getElementById("missionList");
+ box.innerHTML="";
+ MISSIONS.forEach((m,i)=>{
+  const done=m[3]();
+  const d=document.createElement("div");
+  d.className="item";
+  d.innerHTML="<div><span style='font-size:30px'>"+m[0]+"</span><br><b>"+m[1]+"</b><br><span class='small'>"+m[2]+"</span></div><strong>"+(done?"✅":"🔒")+"</strong>";
+  box.appendChild(d);
  });
-
- return best||null;
-}
-
-function updateStats(){
-
- statScore.textContent=bestScore;
- statWords.textContent=motsTrouves;
- statCombo.textContent=bestCombo;
- statGames.textContent=games;
-
- const fc=getFavorite(catCount);
- const fm=getFavorite(modeCount);
-
- if(fc){
-  const c=categories.find(x=>x[0]===fc);
-  favoriteCat.textContent=c?`${c[1]} ${c[2]}`:fc;
- }else favoriteCat.textContent="Aucune donnée";
-
- favoriteMode.textContent=fm||"Aucune donnée";
 }
 
 /* =========================
    BADGES
 ========================= */
 
-const badges=[
- {
-  id:"premier",
-  icon:"🌱",
-  name:"Premier pas",
-  desc:"Trouver ton premier mot",
-  ok:()=>motsTrouves>=1
- },
- {
-  id:"combo5",
-  icon:"🔥",
-  name:"Combo 5",
-  desc:"Atteindre un combo de 5",
-  ok:()=>bestCombo>=5
- },
- {
-  id:"mots25",
-  icon:"🧩",
-  name:"Collectionneur",
-  desc:"Trouver 25 mots",
-  ok:()=>motsTrouves>=25
- },
- {
-  id:"mots100",
-  icon:"💯",
-  name:"Connaisseur",
-  desc:"Trouver 100 mots",
-  ok:()=>motsTrouves>=100
- },
- {
-  id:"niveau10",
-  icon:"🚀",
-  name:"Maître ZEN",
-  desc:"Atteindre le niveau 10",
-  ok:()=>niveau>=10
- },
- {
-  id:"score1000",
-  icon:"🏆",
-  name:"Champion",
-  desc:"Atteindre 1000 points",
-  ok:()=>bestScore>=1000
- },
- {
-  id:"defi",
-  icon:"🎯",
-  name:"Maître des défis",
-  desc:"Réussir un défi",
-  ok:()=>modeCount.DEFI>=1
- },
- {
-  id:"explorateur",
-  icon:"🌍",
-  name:"Explorateur",
-  desc:"Jouer dans 5 catégories",
-  ok:()=>Object.keys(catCount).length>=5
- }
-];
-
-function ouvrirBadges(){
- show("badges");
+function badgeUnlocked(key){
+ return {
+  first:state.words>=1,
+  combo5:state.bestCombo>=5,
+  coins500:state.coins>=500,
+  score1000:state.score>=1000,
+  missions3:MISSIONS.filter(x=>x[3]()).length>=3,
+  words50:state.words>=50,
+  level10:state.level>=10,
+  level20:state.level>=20
+ }[key];
 }
 
-function updateBadges(){
-
+function renderBadges(){
  const box=document.getElementById("badgeList");
  box.innerHTML="";
-
- badges.forEach(b=>{
-  const unlocked=b.ok();
-
-  const div=document.createElement("div");
-  div.className="badge"+(unlocked?"":" locked");
-
-  div.innerHTML=`
-   <div class="badgeIcon">${unlocked?b.icon:"🔒"}</div>
-   <div style="flex:1">
-    <b>${b.name}</b><br>
-    <small>${b.desc}</small>
-   </div>
-   <div>${unlocked?"✓":""}</div>
-  `;
-
-  box.appendChild(div);
+ BADGES.forEach(b=>{
+  const unlocked=badgeUnlocked(b[3]);
+  const d=document.createElement("div");
+  d.className="item";
+  d.innerHTML="<div class='badge'>"+b[0]+"</div><div style='flex:1'><b>"+b[1]+"</b><br><span class='small'>"+b[2]+"</span></div><strong>"+(unlocked?"🏆":"🔒")+"</strong>";
+  box.appendChild(d);
  });
 }
 
+function checkBadges(){
+ save();
+}
+
 /* =========================
-   INITIALISATION
+   BOUTIQUE
 ========================= */
 
+const SHOP=[
+ ["❤️","Vie supplémentaire",50,"life"],
+ ["💡","3 indices",60,"hint"],
+ ["🔥","Boost combo",100,"boost"],
+ ["🪙","Bonus 100 pièces",0,"bonus"]
+];
+
+function renderShop(){
+ document.getElementById("shopCoins").textContent=state.coins;
+ const box=document.getElementById("shopList");
+ box.innerHTML="";
+
+ SHOP.forEach(item=>{
+  const d=document.createElement("div");
+  d.className="item";
+
+  const price=item[3]==="bonus"?200:item[2];
+
+  d.innerHTML="<div style='font-size:28px'>"+item[0]+"</div><div style='flex:1'><b>"+item[1]+"</b><br><span class='small'>"+(item[3]==="bonus"?"Prix 200":"Prix "+price+" 🪙")+"</span></div>";
+
+  const b=document.createElement("button");
+  b.textContent="Acheter";
+  b.onclick=()=>buyItem(item[3],price);
+
+  d.appendChild(b);
+  box.appendChild(d);
+ });
+}
+
+function buyItem(type,price){
+ if(state.coins<price){
+  toast("Pas assez de pièces !");
+  return;
+ }
+
+ state.coins-=price;
+
+ if(type==="life")state.lives=Math.min(5,state.lives+1);
+ if(type==="hint")state.hints+=3;
+ if(type==="bonus")state.coins+=100;
+ if(type==="boost")state.combo+=2;
+
+ save();
+ renderShop();
+ toast("✅ Achat effectué !");
+}
+
+/* =========================
+   STATS
+========================= */
+
+function renderStats(){
+ document.getElementById("statsContent").innerHTML=`
+ <div class="card center">
+  <div class="big">⭐ ${state.score}</div>
+  <p>Score total</p>
+ </div>
+ <div class="grid">
+  <div class="card center">🧩<h2>${state.words}</h2><span class="small">Mots trouvés</span></div>
+  <div class="card center">🔥<h2>${state.bestCombo}</h2><span class="small">Meilleur combo</span></div>
+  <div class="card center">🏆<h2>${state.level}</h2><span class="small">Niveau</span></div>
+  <div class="card center">🪙<h2>${state.coins}</h2><span class="small">Pièces</span></div>
+ </div>
+ <div class="card">
+  <h3>🎮 Mode préféré</h3>
+  <p>${MODES[state.mode].icon} ${MODES[state.mode].name}</p>
+ </div>
+ <button class="red" style="width:100%" onclick="resetGame()">Réinitialiser la progression</button>
+ `;
+}
+
+function resetGame(){
+ if(confirm("Réinitialiser toute la progression ?")){
+  localStorage.removeItem("ZEN6_STATE");
+  location.reload();
+ }
+}
+
+/* =========================
+   MODALE / TOAST
+========================= */
+
+function showModal(icon,title,text){
+ document.getElementById("modalIcon").textContent=icon;
+ document.getElementById("modalTitle").textContent=title;
+ document.getElementById("modalText").innerHTML=text;
+ document.getElementById("modal").classList.add("show");
+}
+
+function closeModal(){
+ document.getElementById("modal").classList.remove("show");
+ showScreen("home");
+}
+
+function toast(text){
+ const t=document.getElementById("toast");
+ t.textContent=text;
+ t.style.display="block";
+ setTimeout(()=>t.style.display="none",1800);
+}
+
+/* INITIALISATION */
 updateHome();
-
-setTimeout(()=>{
- document.getElementById("splash").style.display="none";
-},1400);
-
+renderModes();
+renderCategories();
 </script>
 </body>
-   </html>
+ </html>
