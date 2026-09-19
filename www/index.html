@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZEN - Mots Cachés</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f2f5f9;
+      font-family: Arial, sans-serif;
+    }
+
+    .game {
+      text-align: center;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .grid {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 30px 0;
+    }
+
+    .case {
+      width: 65px;
+      height: 65px;
+      border: 3px solid #222;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      font-weight: bold;
+      background: #fafafa;
+    }
+
+    .letters {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .letter {
+      width: 60px;
+      height: 60px;
+      border: none;
+      border-radius: 50%;
+      background: #222;
+      color: white;
+      font-size: 25px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .letter:active {
+      transform: scale(0.9);
+    }
+
+    #message {
+      margin-top: 25px;
+      font-size: 22px;
+      font-weight: bold;
+      min-height: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="game">
+
+    <h1>🔤 Mots Cachés</h1>
+
+    <!-- Grille de 3 cases -->
+    <div class="grid">
+      <div class="case" id="case1"></div>
+      <div class="case" id="case2"></div>
+      <div class="case" id="case3"></div>
+    </div>
+
+    <!-- Lettres -->
+    <div class="letters">
+      <button class="letter" onclick="choisirLettre('Z')">Z</button>
+      <button class="letter" onclick="choisirLettre('E')">E</button>
+      <button class="letter" onclick="choisirLettre('N')">N</button>
+    </div>
+
+    <div id="message"></div>
+
+  </div>
+
+  <script>
+    let mot = "";
+    const solution = "ZEN";
+
+    function choisirLettre(lettre) {
+
+      // Empêche de dépasser 3 lettres
+      if (mot.length >= 3) {
+        return;
+      }
+
+      mot += lettre;
+
+      // Afficher la lettre dans la prochaine case
+      document.getElementById("case" + mot.length).textContent = lettre;
+
+      // Vérifier la réponse
+      if (mot.length === 3) {
+
+        if (mot === solution) {
+          document.getElementById("message").textContent =
+            "🎉 Victoire ! Tu as trouvé ZEN !";
+        } else {
+          document.getElementById("message").textContent =
+            "❌ Mauvais mot !";
+        }
+
+      }
+    }
+  </script>
+
+</body>
+</html>
