@@ -1,144 +1,638 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZEN - Mots Cachés</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZEN - Jeu de mots</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #f2f5f9;
-      font-family: Arial, sans-serif;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(160deg, #081c15, #1b4332, #2d6a4f);
+  color: white;
+  display: flex;
+  justify-content: center;
+}
 
-    .game {
-      text-align: center;
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-      width: 90%;
-      max-width: 400px;
-    }
+.app {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  text-align: center;
+}
 
-    h1 {
-      margin-top: 0;
-    }
+.logo {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 8px;
+  margin-top: 15px;
+}
 
-    .grid {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 30px 0;
-    }
+.subtitle {
+  opacity: .75;
+  margin-bottom: 25px;
+}
 
-    .case {
-      width: 65px;
-      height: 65px;
-      border: 3px solid #222;
-      border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 32px;
-      font-weight: bold;
-      background: #fafafa;
-    }
+.stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 25px;
+}
 
-    .letters {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
+.stat {
+  flex: 1;
+  background: rgba(255,255,255,.12);
+  padding: 12px 8px;
+  border-radius: 15px;
+}
 
-    .letter {
-      width: 60px;
-      height: 60px;
-      border: none;
-      border-radius: 50%;
-      background: #222;
-      color: white;
-      font-size: 25px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.stat small {
+  display: block;
+  opacity: .7;
+  font-size: 12px;
+}
 
-    .letter:active {
-      transform: scale(0.9);
-    }
+.stat strong {
+  font-size: 20px;
+}
 
-    #message {
-      margin-top: 25px;
-      font-size: 22px;
-      font-weight: bold;
-      min-height: 30px;
-    }
-  </style>
+.card {
+  background: rgba(255,255,255,.1);
+  border-radius: 25px;
+  padding: 25px 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+.level {
+  font-size: 15px;
+  opacity: .8;
+  margin-bottom: 8px;
+}
+
+.message {
+  min-height: 25px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.word {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-height: 65px;
+  margin: 15px 0 30px;
+}
+
+.case {
+  width: 48px;
+  height: 55px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.15);
+  border: 2px solid rgba(255,255,255,.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.case.filled {
+  background: white;
+  color: #1b4332;
+}
+
+.letters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.letter {
+  border: none;
+  border-radius: 15px;
+  padding: 17px 5px;
+  font-size: 23px;
+  font-weight: bold;
+  color: #1b4332;
+  background: white;
+  box-shadow: 0 5px 0 rgba(0,0,0,.2);
+  cursor: pointer;
+}
+
+.letter:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+.letter.used {
+  opacity: .3;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.action {
+  flex: 1;
+  border: none;
+  padding: 13px;
+  border-radius: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.delete {
+  background: #ffcc00;
+  color: #222;
+}
+
+.reset {
+  background: rgba(255,255,255,.15);
+  color: white;
+}
+
+.progress {
+  height: 8px;
+  background: rgba(255,255,255,.15);
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 15px 0 20px;
+}
+
+.progressBar {
+  height: 100%;
+  width: 0%;
+  background: white;
+  transition: width .4s;
+}
+
+.win {
+  animation: victoire .5s ease;
+}
+
+@keyframes victoire {
+  0% { transform: scale(.8); }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="game">
+<div class="app">
 
-    <h1>🔤 Mots Cachés</h1>
+  <div class="logo">ZEN</div>
+  <div class="subtitle">Trouve les mots • Progresse • Gagne</div>
 
-    <!-- Grille de 3 cases -->
-    <div class="grid">
-      <div class="case" id="case1"></div>
-      <div class="case" id="case2"></div>
-      <div class="case" id="case3"></div>
+  <div class="stats">
+    <div class="stat">
+      <small>NIVEAU</small>
+      <strong id="niveau">1</strong>
     </div>
 
-    <!-- Lettres -->
-    <div class="letters">
-      <button class="letter" onclick="choisirLettre('Z')">Z</button>
-      <button class="letter" onclick="choisirLettre('E')">E</button>
-      <button class="letter" onclick="choisirLettre('N')">N</button>
+    <div class="stat">
+      <small>SCORE</small>
+      <strong id="score">0</strong>
     </div>
 
-    <div id="message"></div>
+    <div class="stat">
+      <small>MOTS</small>
+      <strong id="motsTrouves">0</strong>
+    </div>
+  </div>
+
+  <div class="card">
+
+    <div class="level" id="difficulte">
+      Facile
+    </div>
+
+    <div class="progress">
+      <div class="progressBar" id="progressBar"></div>
+    </div>
+
+    <div class="message" id="message">
+      Trouve le mot !
+    </div>
+
+    <div class="word" id="word"></div>
+
+    <div class="letters" id="letters"></div>
+
+    <div class="actions">
+      <button class="action delete" onclick="effacer()">⌫ Effacer</button>
+      <button class="action reset" onclick="nouvellePartie()">↻ Recommencer</button>
+    </div>
 
   </div>
 
-  <script>
-    let mot = "";
-    const solution = "ZEN";
+</div>
 
-    function choisirLettre(lettre) {
+<script>
 
-      // Empêche de dépasser 3 lettres
-      if (mot.length >= 3) {
-        return;
-      }
+/* ============================
+   500 MOTS DE ZEN
+============================ */
 
-      mot += lettre;
+const mots = [
 
-      // Afficher la lettre dans la prochaine case
-      document.getElementById("case" + mot.length).textContent = lettre;
+"ZEN","AIR","EAU","FEU","MER","LAC","RUE","CHAT","LUNE","ROSE",
+"LIVRE","TABLE","PORTE","MAISON","JARDIN","ARBRE","FLEUR","SOLEIL",
+"ETOILE","NUAGE","PLUIE","VENT","TERRE","MONDE","VILLE","ECOLE",
+"CLASSE","AMOUR","PAIX","FORCE","SPORT","BALLON","MATCH","BUT",
+"JOUEUR","EQUIPE","COACH","STADE","MUSIQUE","DANSE","CHANT","PHOTO",
+"VIDEO","FILM","ARTISTE","MAMAN","PAPA","FRERE","SOEUR","FAMILLE",
 
-      // Vérifier la réponse
-      if (mot.length === 3) {
+"CAFE","PAIN","RIZ","LAIT","SUCRE","SEL","POISSON","VIANDE","FRUIT",
+"MANGUE","BANANE","ORANGE","CITRON","ANANAS","PAPAYE","TOMATE",
+"OIGNON","CAROTTE","POMME","RAISIN","NOIX","MIEL","BEURRE","FROMAGE",
+"REPAS","CUISINE","ASSIETTE","CUILLERE","FOURCHETTE","COUTEAU",
 
-        if (mot === solution) {
-          document.getElementById("message").textContent =
-            "🎉 Victoire ! Tu as trouvé ZEN !";
-        } else {
-          document.getElementById("message").textContent =
-            "❌ Mauvais mot !";
-        }
+"TELEPHONE","ORDINATEUR","CLAVIER","ECRAN","SOURIS","INTERNET",
+"RESEAU","MESSAGE","PHOTO","CAMERA","VIDEO","APPLICATION","PROGRAMME",
+"LOGICIEL","SYSTEME","ANDROID","MOBILE","TABLETTE","CHARGEUR","BATTERIE",
+"CAPTEUR","CABLE","ELECTRONIQUE","ROBOT","MACHINE","TECHNOLOGIE",
+"INNOVATION","NUMERIQUE","DONNEE","SERVEUR","SITE","PAGE","COMPTE",
 
-      }
+"ARGENT","BANQUE","COMMERCE","ENTREPRISE","TRAVAIL","METIER","PROJET",
+"BUSINESS","CLIENT","VENTE","ACHAT","MARCHE","PRIX","PRODUIT","SERVICE",
+"ARGENT","RICHESSE","SUCCES","IDEES","PLAN","OBJECTIF","REVE","AVENIR",
+"ECONOMIE","GESTION","CHEF","PATRON","EQUIPE","CONTRAT","SALAIRE",
+
+"AFRIQUE","IVOIRE","BOUAKE","ABIDJAN","YAMOUSSOUKRO","AFRICAIN","PAYS",
+"VILLE","VILLAGE","ROUTE","PONT","RIVIERE","MONTAGNE","FORET","SAVANE",
+"PLAGE","OCEAN","DESERT","ILE","CONTINENT","NATION","PEUPLE","CULTURE",
+"LANGUE","HISTOIRE","TRADITION","FESTIVAL","MARCHE","QUARTIER",
+
+"FOOTBALL","BASKET","TENNIS","BOXE","CYCLISME","NATATION","ATHLETE",
+"ENTRAINEUR","DEFENSE","ATTAQUE","MILIEU","GARDIEN","ARBITRE","CHAMPION",
+"VICTOIRE","DEFAITE","TOURNOI","LIGUE","COUPE","EQUIPE","TACTIQUE",
+"PASSELLE","DRIBBLE","VITESSE","TIR","PASSE","CORNER","PENALTY","BUT",
+
+"MATIN","MIDI","SOIR","NUIT","JOUR","SEMAINE","MOIS","ANNEE","HEURE",
+"MINUTE","SECONDE","AUJOURD","HIER","DEMAIN","MAINTENANT","TOUJOURS",
+"JAMAIS","PARFOIS","TARD","TOT","LUNDI","MARDI","MERCREDI","JEUDI",
+"VENDREDI","SAMEDI","DIMANCHE","JANVIER","FEVRIER","MARS","AVRIL",
+
+"MAI","JUIN","JUILLET","AOUT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DECEMBRE",
+"PRINTEMPS","ETE","AUTOMNE","HIVER","SAISON","VACANCES","WEEKEND",
+
+"BEAU","GRAND","PETIT","FORT","RAPIDE","LENT","CHAUD","FROID","NOUVEAU",
+"ANCIEN","JEUNE","LONG","COURT","HAUT","BAS","BON","MAUVAIS","JOYEUX",
+"TRISTE","CALME","ENERGIQUE","LIBRE","POSSIBLE","IMPOSSIBLE","SIMPLE",
+"DIFFICILE","FACILE","IMPORTANT","SPECIAL","NORMAL","DIFFERENT",
+
+"INTELLIGENT","COURAGEUX","PATIENT","HONNETE","GENTIL","SERIEUX",
+"CREATIF","CURIEUX","FORTUNE","POSITIF","ACTIF","MOTIVE","PASSION",
+"RESPECT","CONFIANCE","ESPOIR","COURAGE","TRAVAIL","EFFORT","DISCIPLINE",
+"REUSSITE","PROGRES","FORCE","VOLONTE","DECISION","ACTION","RESULTAT",
+
+"AMIS","AMI","FILLE","GARCON","ENFANT","PARENT","FAMILLE","PERSONNE",
+"HOMME","FEMME","VOISIN","PROFESSEUR","ELEVE","DOCTEUR","POLICIER",
+"ARTISTE","CHANTEUR","ACTEUR","COACH","INGENIEUR","VENDEUR","CLIENT",
+
+"MAISON","CHAMBRE","SALON","CUISINE","JARDIN","TOIT","MUR","FENETRE",
+"ESCALIER","CHAISON","TABLE","CHAISE","LIT","ARMOIRE","MIROIR","LAMPE",
+"PORTE","CLE","SAC","CHAUSSURE","CHEMISE","PANTALON","VESTE","ROBE",
+
+"ANIMAL","CHIEN","CHAT","CHEVAL","VACHE","MOUTON","CHEVRE","COCHON",
+"POULE","CANARD","POISSON","OISEAU","AIGLE","LION","TIGRE","ELEPHANT",
+"SINGE","SERPENT","TORTUE","LAPIN","FOURMI","ABEILLE","PAPILLON",
+
+"ROUGE","BLEU","VERT","JAUNE","NOIR","BLANC","ORANGE","VIOLET","ROSE",
+"GRIS","MARRON","COULEUR","LUMIERE","OMBRE","SOLEIL","CIEL","NUAGE",
+"ETOILE","LUNE","FEU","EAU","GLACE","NEIGE","SABLE","PIERRE",
+
+"ECOUTER","PARLER","MARCHER","COURIR","SAUTER","DANSER","CHANTER",
+"JOUER","LIRE","ECRIRE","PENSER","APPRENDRE","COMPRENDRE","ENSEIGNER",
+"TRAVAILLER","CREER","CONSTRUIRE","VENDRE","ACHETER","CHERCHER",
+"TROUVER","GAGNER","AIDER","AIMER","PARTAGER","REUSSIR","COMMENCER",
+
+"FINIR","CONTINUER","CHANGER","CHOISIR","DECIDER","ESSAYER","AVANCER",
+"ATTENDRE","REGARDER","ENTENDRE","TOUCHER","SENTIR","MANGER","BOIRE",
+"DORMIR","VIVRE","GRANDIR","REVER","IMAGINER","INVENTER",
+
+"QUESTION","REPONSE","PROBLEME","SOLUTION","SECRET","MYSTERE","HISTOIRE",
+"IDEES","PENSEE","PAROLE","VERITE","MENSONGE","CHOIX","CHANCE","RISQUE",
+"DEFI","MISSION","NIVEAU","JEU","JOUEUR","POINT","SCORE","RECORD",
+"PRIX","MEDAILLE","TROPHEE","CHAMPION",
+
+"ROUTE","VOITURE","MOTO","VELO","BUS","TRAIN","AVION","BATEAU","TAXI",
+"VOYAGE","VACANCES","HOTEL","AEROPORT","GARE","PORT","PASSEPORT",
+"VALISE","BILLET","DESTINATION","DEPART","ARRIVEE","CARTE",
+
+"TELE","RADIO","LIVRE","JOURNAL","MAGAZINE","ACTUALITE","INFORMATION",
+"INTERNET","RESEAU","EMAIL","CHAT","APPEL","MESSAGE","CONTACT",
+"PHOTO","MUSIQUE","FILM","SERIE","JEU","VIDEO","CHAINE","PAGE",
+
+"CHANT","SON","RYTHME","BATTERIE","GUITARE","PIANO","MICRO","DANSE",
+"SCENE","CONCERT","ART","TABLEAU","DESSIN","PEINTURE","CINEMA",
+"THEATRE","ACTEUR","ROLE","HISTOIRE","ROMAN","AUTEUR","LIVRE",
+
+"ETUDE","ECOLE","COLLEGE","LYCEE","UNIVERSITE","CLASSE","COURS",
+"EXAMEN","NOTE","PROFESSEUR","ELEVE","CAHIER","STYLO","CRAYON",
+"REGLE","LIVRE","LECON","DEVOIR","QUESTION","REPONSE","DIPLOME",
+"FORMATION","METIER","CARRIERE","AVENIR",
+
+"CORPS","TETE","MAIN","PIED","BRAS","JAMBE","YEUX","OREILLE","NEZ",
+"BOUCHE","DENT","COEUR","DOS","VENTRE","SANTE","SPORT","REPOS",
+"SOMMEIL","ENERGIE","FORCE","SOUFFLE","SOURIRE",
+
+"NATURE","ARBRE","FORET","FLEUR","HERBE","FEUILLE","RACINE","GRAINE",
+"FRUIT","RIVIERE","LAC","MER","OCEAN","MONTAGNE","ROCHER","SABLE",
+"SOLEIL","PLUIE","VENT","ORAGE","NUAGE","CIEL","ETOILE","LUNE",
+
+"BONHEUR","LIBERTE","PAIX","AMOUR","AMITIE","RESPECT","ESPOIR",
+"COURAGE","CONFIANCE","PARDON","JOIE","SOURIRE","RIRE","REVE",
+"SUCCES","FORCE","FOI","GRACE","PRIERE","LUMIERE","VIE","AVENIR",
+
+"AFRIQUE","IVOIRE","BAOULE","SENOUFO","DIOULA","AKAN","ABIDJAN",
+"BOUAKE","KORHOGO","MAN","DALOA","SANPEDRO","YAMOUSSOUKRO","BONDOUKOU",
+"ODIENNE","ABENGOUROU","GAGNOA","DIVO","ADZOPE","GRAND BASSAM",
+
+"GOAL","FOOT","MATCH","BALLON","STADE","COACH","JOUEUR","EQUIPE",
+"DEFENSE","ATTAQUE","PASSE","TIR","BUT","DRIBBLE","VITESSE","FORCE",
+"TACTIQUE","FORMATION","VICTOIRE","CHAMPION","COUPE","LIGUE","FINAL",
+"SUPPORTER","PUBLIC","ARBITRE","CARTON","FAUTE","CORNER","PENALTY",
+
+"SMARTPHONE","ANDROID","IPHONE","APPLICATION","JEU","CODE","HTML",
+"CSS","JAVASCRIPT","SITE","WEB","SERVEUR","DONNEE","IA","INTELLIGENCE",
+"ROBOT","TECHNOLOGIE","ORDINATEUR","PROGRAMME","LOGICIEL","SYSTEME",
+"RESEAU","INTERNET","WIFI","BLUETOOTH","CAMERA","ECRAN","BATTERIE",
+
+"PROJET","IDEES","PLAN","OBJECTIF","TRAVAIL","BUSINESS","ENTREPRISE",
+"ARGENT","CLIENT","MARCHE","VENTE","PROFIT","PRODUIT","SERVICE","MARQUE",
+"PUBLICITE","SUCCES","EQUIPE","CHEF","GESTION","CAPITAL","INVESTISSEMENT",
+"COMMERCE","BOUTIQUE","MAGASIN","PRIX","QUALITE","VALEUR",
+
+"PUISSANCE","ENERGIE","ELECTRICITE","CIRCUIT","TENSION","COURANT",
+"RESISTANCE","MOTEUR","LED","LAMPE","CABLE","BATTERIE","CHARGEUR",
+"SON","RADIO","SIGNAL","ANTENNE","CAPTEUR","CARTE","COMPOSANT",
+"REPARATION","TEST","MESURE","MULTIMETRE","ELECTRONIQUE","TECHNICIEN",
+
+"BOIRE","MANGER","DORMIR","COURIR","MARCHER","SAUTER","JOUER","LIRE",
+"ECRIRE","CHANTER","DANSER","RIRE","SOURIRE","AIMER","VIVRE","REVER",
+"APPRENDRE","CREER","GAGNER","REUSSIR","AVANCER","CHANGER","GRANDIR",
+"TRAVAILLER","AIDER","PARTAGER","DONNER","RECEVOIR","ECOUTER","PARLER"
+
+];
+
+/* ============================
+   VARIABLES DU JEU
+============================ */
+
+let niveau = Number(localStorage.getItem("zen_niveau")) || 1;
+let score = Number(localStorage.getItem("zen_score")) || 0;
+let motsTrouves = Number(localStorage.getItem("zen_mots")) || 0;
+
+let motActuel = "";
+let lettresMelangees = [];
+let motJoueur = [];
+
+/* ============================
+   ELEMENTS
+============================ */
+
+const wordDiv = document.getElementById("word");
+const lettersDiv = document.getElementById("letters");
+const messageDiv = document.getElementById("message");
+const niveauDiv = document.getElementById("niveau");
+const scoreDiv = document.getElementById("score");
+const motsDiv = document.getElementById("motsTrouves");
+const difficulteDiv = document.getElementById("difficulte");
+const progressBar = document.getElementById("progressBar");
+
+/* ============================
+   MELANGE
+============================ */
+
+function melanger(tableau) {
+  return [...tableau].sort(() => Math.random() - 0.5);
+}
+
+/* ============================
+   NOUVEAU MOT
+============================ */
+
+function nouveauMot() {
+
+  motJoueur = [];
+
+  let index = (niveau - 1) % mots.length;
+
+  motActuel = mots[index].toUpperCase();
+
+  lettresMelangees = melanger(motActuel.split(""));
+
+  afficherMot();
+  afficherLettres();
+  afficherInfos();
+
+  messageDiv.textContent = "Trouve le mot !";
+  messageDiv.style.color = "white";
+}
+
+/* ============================
+   AFFICHER CASES
+============================ */
+
+function afficherMot() {
+
+  wordDiv.innerHTML = "";
+
+  for (let i = 0; i < motActuel.length; i++) {
+
+    const div = document.createElement("div");
+
+    div.className = "case";
+
+    if (motJoueur[i]) {
+      div.textContent = motJoueur[i];
+      div.classList.add("filled");
     }
-  </script>
+
+    wordDiv.appendChild(div);
+  }
+}
+
+/* ============================
+   AFFICHER LETTRES
+============================ */
+
+function afficherLettres() {
+
+  lettersDiv.innerHTML = "";
+
+  lettresMelangees.forEach((lettre, index) => {
+
+    const button = document.createElement("button");
+
+    button.className = "letter";
+    button.textContent = lettre;
+
+    if (motJoueur.filter(x => x !== "").length >= motActuel.length) {
+      button.disabled = true;
+    }
+
+    button.onclick = () => choisirLettre(lettre, index);
+
+    lettersDiv.appendChild(button);
+  });
+}
+
+/* ============================
+   CHOISIR UNE LETTRE
+============================ */
+
+function choisirLettre(lettre, index) {
+
+  if (motJoueur.length >= motActuel.length) return;
+
+  motJoueur.push(lettre);
+
+  afficherMot();
+
+  if (motJoueur.length === motActuel.length) {
+
+    const proposition = motJoueur.join("");
+
+    if (proposition === motActuel) {
+
+      gagner();
+
+    } else {
+
+      messageDiv.textContent = "❌ Mauvais mot !";
+      messageDiv.style.color = "#ffcc00";
+
+      setTimeout(() => {
+        motJoueur = [];
+        afficherMot();
+        messageDiv.textContent = "Essaie encore !";
+        afficherLettres();
+      }, 900);
+    }
+
+  }
+
+  afficherLettres();
+}
+
+/* ============================
+   VICTOIRE
+============================ */
+
+function gagner() {
+
+  const bonus = motActuel.length * 10;
+
+  score += bonus;
+  motsTrouves++;
+
+  niveau++;
+
+  localStorage.setItem("zen_score", score);
+  localStorage.setItem("zen_mots", motsTrouves);
+  localStorage.setItem("zen_niveau", niveau);
+
+  messageDiv.textContent = `🎉 Bravo ! +${bonus} points`;
+  messageDiv.style.color = "#7CFF9B";
+
+  wordDiv.classList.add("win");
+
+  setTimeout(() => {
+
+    wordDiv.classList.remove("win");
+
+    nouveauMot();
+
+  }, 1200);
+}
+
+/* ============================
+   EFFACER
+============================ */
+
+function effacer() {
+
+  if (motJoueur.length > 0) {
+
+    motJoueur.pop();
+
+    afficherMot();
+    afficherLettres();
+
+  }
+}
+
+/* ============================
+   INFOS
+============================ */
+
+function afficherInfos() {
+
+  niveauDiv.textContent = niveau;
+  scoreDiv.textContent = score;
+  motsDiv.textContent = motsTrouves;
+
+  if (motActuel.length <= 4) {
+    difficulteDiv.textContent = "🟢 Facile";
+  } 
+  else if (motActuel.length <= 6) {
+    difficulteDiv.textContent = "🟡 Moyen";
+  } 
+  else {
+    difficulteDiv.textContent = "🔴 Difficile";
+  }
+
+  const progression = ((niveau - 1) % 10) * 10;
+
+  progressBar.style.width = progression + "%";
+}
+
+/* ============================
+   RECOMMENCER
+============================ */
+
+function nouvellePartie() {
+
+  const confirmer = confirm(
+    "Recommencer remettra ton niveau et ton score à zéro. Continuer ?"
+  );
+
+  if (!confirmer) return;
+
+  niveau = 1;
+  score = 0;
+  motsTrouves = 0;
+
+  localStorage.removeItem("zen_niveau");
+  localStorage.removeItem("zen_score");
+  localStorage.removeItem("zen_mots");
+
+  nouveauMot();
+}
+
+/* ============================
+   LANCEMENT
+============================ */
+
+nouveauMot();
+
+</script>
 
 </body>
 </html>
