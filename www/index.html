@@ -2,302 +2,204 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZEN 3.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ZEN 4.0</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  min-height:100vh;
-  background:linear-gradient(145deg,#061b16,#0b3b2d,#06251d);
-  color:white;
-  display:flex;
-  justify-content:center;
+ margin:0;font-family:Arial,sans-serif;color:#fff;
+ min-height:100vh;
+ background:linear-gradient(145deg,#04130f,#073b2b,#061c16)
+}
+button{font-family:inherit}
+.app{max-width:520px;margin:auto;padding:18px;min-height:100vh}
+.hidden{display:none!important}
+
+header{
+ display:flex;justify-content:space-between;align-items:center;
+ margin-bottom:18px
+}
+.logo{font-size:34px;font-weight:900;letter-spacing:4px}
+.version{font-size:11px;opacity:.55}
+
+.card{
+ background:rgba(255,255,255,.075);
+ border:1px solid rgba(255,255,255,.1);
+ border-radius:24px;padding:20px;
+ box-shadow:0 18px 50px rgba(0,0,0,.25);
+ margin-bottom:14px
 }
 
-.app{
-  width:100%;
-  max-width:520px;
-  min-height:100vh;
-  padding:18px;
-}
+.hero{text-align:center;padding:30px 20px}
+.hero h1{font-size:45px;margin:0 0 5px}
+.hero p{opacity:.65;margin:0 0 25px}
 
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:15px;
+.main-btn{
+ width:100%;border:0;border-radius:17px;
+ padding:17px;margin:6px 0;
+ font-size:16px;font-weight:900;
+ background:#35e39a;color:#062118;
+ box-shadow:0 5px 0 #1b8d61
 }
+.main-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #1b8d61}
 
-.logo{
-  font-size:32px;
-  font-weight:900;
-  letter-spacing:3px;
-}
-
-.version{
-  font-size:11px;
-  opacity:.6;
+.secondary{
+ background:rgba(255,255,255,.1);
+ color:#fff;box-shadow:none
 }
 
 .stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-bottom:12px;
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:8px;margin-bottom:12px
 }
-
 .stat{
-  background:rgba(255,255,255,.09);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:15px;
-  padding:10px 6px;
-  text-align:center;
+ text-align:center;padding:11px 5px;
+ background:rgba(255,255,255,.08);
+ border-radius:15px
+}
+.stat b{font-size:18px}
+.stat small{display:block;opacity:.55;font-size:9px;margin-top:3px}
+
+.section-title{font-size:18px;font-weight:900;margin:4px 0 13px}
+
+.grid{
+ display:grid;grid-template-columns:1fr 1fr;gap:10px
+}
+.category{
+ border:1px solid rgba(255,255,255,.1);
+ background:rgba(255,255,255,.07);
+ color:#fff;border-radius:18px;
+ padding:17px 8px;font-weight:800;font-size:14px
+}
+.category span{display:block;font-size:27px;margin-bottom:7px}
+.category.selected{
+ border:2px solid #35e39a;
+ background:rgba(53,227,154,.12)
 }
 
-.stat-value{
-  font-size:19px;
-  font-weight:bold;
+.mode{
+ padding:16px;border-radius:17px;
+ background:rgba(255,255,255,.07);
+ border:1px solid rgba(255,255,255,.08);
+ margin-bottom:9px;text-align:left;color:white;width:100%
+}
+.mode strong{display:block;font-size:16px}
+.mode small{display:block;opacity:.55;margin-top:4px}
+.mode.selected{border:2px solid #35e39a}
+
+.topbar{
+ display:flex;justify-content:space-between;
+ align-items:center;margin-bottom:12px
+}
+.back{
+ border:0;background:rgba(255,255,255,.1);
+ color:white;border-radius:12px;padding:10px 14px
 }
 
-.stat-label{
-  font-size:10px;
-  opacity:.65;
-  margin-top:3px;
+.game-stats{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:7px;margin-bottom:12px
 }
-
-.card{
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:25px;
-  padding:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,.2);
+.game-stat{
+ background:rgba(255,255,255,.08);
+ border-radius:14px;padding:9px 4px;text-align:center
 }
-
-.level{
-  text-align:center;
-  font-size:14px;
-  opacity:.8;
-  margin-bottom:8px;
-}
+.game-stat b{font-size:16px}
+.game-stat small{display:block;font-size:9px;opacity:.55}
 
 .timer-box{
-  height:9px;
-  background:rgba(255,255,255,.1);
-  border-radius:20px;
-  overflow:hidden;
-  margin-bottom:18px;
+ height:8px;background:rgba(255,255,255,.1);
+ border-radius:10px;overflow:hidden;margin:10px 0 18px
 }
-
 .timer{
-  height:100%;
-  width:100%;
-  background:#36e59a;
-  transition:width 1s linear;
+ height:100%;width:100%;background:#35e39a;
+ transition:width 1s linear
 }
+.timer.danger{background:#ff5252}
 
-.timer.danger{
-  background:#ff5252;
+.category-name{
+ text-align:center;font-size:12px;opacity:.6
 }
-
-.word-title{
-  text-align:center;
-  font-size:13px;
-  opacity:.7;
-}
+.word-title{text-align:center;font-size:13px;opacity:.6}
 
 .word{
-  min-height:70px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap;
-  margin:14px 0 22px;
+ min-height:70px;display:flex;justify-content:center;
+ align-items:center;gap:7px;flex-wrap:wrap;margin:14px 0 20px
 }
-
 .slot{
-  width:42px;
-  height:48px;
-  border-radius:12px;
-  background:rgba(255,255,255,.08);
-  border:2px solid rgba(255,255,255,.16);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px;
-  font-weight:bold;
+ width:40px;height:48px;border-radius:11px;
+ background:rgba(255,255,255,.06);
+ border:2px solid rgba(255,255,255,.15);
+ display:flex;justify-content:center;align-items:center;
+ font-size:23px;font-weight:900
 }
-
-.slot.filled{
-  background:#36e59a;
-  color:#052018;
-  border-color:#36e59a;
-  animation:pop .18s ease;
-}
-
-.slot.hint{
-  border-color:#ffd54a;
-  color:#ffd54a;
-}
-
-@keyframes pop{
-  0%{transform:scale(.7)}
-  100%{transform:scale(1)}
-}
+.slot.filled{background:#35e39a;color:#062118;border-color:#35e39a}
+.slot.hint{border-color:#ffd54a;color:#ffd54a}
 
 .message{
-  text-align:center;
-  min-height:25px;
-  font-size:14px;
-  margin-bottom:12px;
+ min-height:24px;text-align:center;
+ font-size:13px;margin-bottom:12px
 }
 
 .letters{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
+ display:grid;grid-template-columns:repeat(4,1fr);gap:9px
 }
-
 .letter{
-  height:58px;
-  border:none;
-  border-radius:15px;
-  background:#ffffff;
-  color:#08271e;
-  font-size:23px;
-  font-weight:900;
-  box-shadow:0 5px 0 rgba(0,0,0,.15);
+ height:55px;border:0;border-radius:14px;
+ background:#fff;color:#08251d;
+ font-size:21px;font-weight:900;
+ box-shadow:0 4px 0 rgba(0,0,0,.2)
 }
-
-.letter:active{
-  transform:translateY(3px);
-  box-shadow:0 2px 0 rgba(0,0,0,.15);
-}
-
-.letter.used{
-  opacity:.22;
-  transform:none;
-}
+.letter.used{opacity:.2}
 
 .actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:14px;
+ display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px
 }
-
-button.action{
-  border:none;
-  border-radius:14px;
-  padding:14px;
-  font-size:14px;
-  font-weight:bold;
-  background:rgba(255,255,255,.1);
-  color:white;
+.action{
+ border:0;border-radius:14px;padding:13px;
+ background:rgba(255,255,255,.1);color:white;font-weight:bold
 }
+.hint{background:#e9b916;color:#171000}
 
-button.hint-btn{
-  background:#f0b90b;
-  color:#171000;
+.progress{margin-top:15px}
+.progress-line{
+ display:flex;justify-content:space-between;
+ font-size:10px;opacity:.55;margin-bottom:5px
 }
-
-.progress{
-  margin-top:18px;
-}
-
-.progress-top{
-  display:flex;
-  justify-content:space-between;
-  font-size:11px;
-  opacity:.65;
-  margin-bottom:6px;
-}
-
 .progress-bar{
-  height:7px;
-  background:rgba(255,255,255,.1);
-  border-radius:10px;
-  overflow:hidden;
+ height:7px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden
 }
+.progress-fill{height:100%;background:#35e39a;width:0%}
 
-.progress-fill{
-  height:100%;
-  width:0%;
-  background:#36e59a;
-  transition:.3s;
+.badge{
+ display:flex;align-items:center;gap:13px;
+ padding:13px;background:rgba(255,255,255,.06);
+ border-radius:15px;margin-bottom:9px
 }
+.badge-icon{font-size:29px}
+.badge.locked{opacity:.35}
+.badge small{display:block;opacity:.55;margin-top:3px}
 
-.footer{
-  text-align:center;
-  font-size:11px;
-  opacity:.45;
-  margin-top:18px;
+.challenge{
+ background:linear-gradient(135deg,rgba(53,227,154,.16),rgba(255,213,74,.08));
+ border-radius:18px;padding:16px;margin-bottom:10px
 }
+.challenge b{font-size:16px}
+.challenge p{font-size:12px;opacity:.65}
 
 .overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.72);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:25px;
-  z-index:10;
+ position:fixed;inset:0;background:rgba(0,0,0,.78);
+ display:flex;align-items:center;justify-content:center;
+ padding:22px;z-index:20
 }
-
-.overlay.show{
-  display:flex;
+.modal{
+ width:100%;max-width:390px;
+ background:#0b3025;border-radius:25px;
+ padding:28px;text-align:center
 }
-
-.gameover{
-  width:100%;
-  max-width:380px;
-  background:#0d3026;
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:25px;
-  padding:30px;
-  text-align:center;
-}
-
-.gameover h2{
-  font-size:30px;
-  margin-top:0;
-}
-
-.big-score{
-  font-size:40px;
-  font-weight:900;
-  margin:15px 0;
-}
-
-.restart{
-  width:100%;
-  border:0;
-  padding:15px;
-  border-radius:15px;
-  background:#36e59a;
-  color:#052018;
-  font-weight:900;
-  font-size:16px;
-}
-
-@media(max-width:360px){
-  .slot{
-    width:36px;
-    height:43px;
-  }
-
-  .letter{
-    height:52px;
-  }
-}
+.modal h2{font-size:28px;margin-top:0}
+.final-score{font-size:42px;font-weight:900;margin:14px}
 </style>
 </head>
 
@@ -305,663 +207,986 @@ button.hint-btn{
 
 <div class="app">
 
-  <div class="header">
-    <div class="logo">ZEN</div>
-    <div class="version">VERSION 3.0</div>
+<header>
+ <div class="logo">ZEN</div>
+ <div class="version">4.0</div>
+</header>
+
+<!-- ACCUEIL -->
+<section id="home">
+
+ <div class="stats">
+  <div class="stat">
+   <b id="homeScore">0</b>
+   <small>SCORE</small>
+  </div>
+  <div class="stat">
+   <b id="homeCoins">🪙 0</b>
+   <small>PIÈCES</small>
+  </div>
+  <div class="stat">
+   <b id="homeLevel">1</b>
+   <small>NIVEAU</small>
+  </div>
+ </div>
+
+ <div class="card hero">
+  <h1>ZEN</h1>
+  <p>Le jeu des mots qui te fait progresser.</p>
+
+  <button class="main-btn" onclick="ouvrirJeu()">
+   ▶️ JOUER
+  </button>
+
+  <button class="main-btn secondary" onclick="ouvrirCategories()">
+   🧩 CATÉGORIES
+  </button>
+
+  <button class="main-btn secondary" onclick="ouvrirDefis()">
+   🎯 DÉFIS
+  </button>
+
+  <button class="main-btn secondary" onclick="ouvrirBadges()">
+   🏆 BADGES
+  </button>
+ </div>
+
+ <div class="card">
+  <div class="section-title">📊 Ta progression</div>
+  <p style="opacity:.6;font-size:13px">
+   Mots trouvés : <b id="homeWords">0</b>
+  </p>
+  <div class="progress-bar">
+   <div class="progress-fill" id="homeProgress"></div>
+  </div>
+ </div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+<section id="categories" class="hidden">
+
+ <div class="topbar">
+  <button class="back" onclick="accueil()">← Retour</button>
+  <b>🧩 Catégories</b>
+ </div>
+
+ <div class="card">
+
+  <div class="section-title">Choisis une catégorie</div>
+
+  <div class="grid">
+
+   <button class="category selected" onclick="choisirCategorie('TOUTES',this)">
+    <span>🌎</span> Toutes
+   </button>
+
+   <button class="category" onclick="choisirCategorie('FOOTBALL',this)">
+    <span>⚽</span> Football
+   </button>
+
+   <button class="category" onclick="choisirCategorie('ANIMAUX',this)">
+    <span>🐾</span> Animaux
+   </button>
+
+   <button class="category" onclick="choisirCategorie('NOURRITURE',this)">
+    <span>🍔</span> Nourriture
+   </button>
+
+   <button class="category" onclick="choisirCategorie('CI',this)">
+    <span>🇨🇮</span> Côte d'Ivoire
+   </button>
+
+   <button class="category" onclick="choisirCategorie('TECH',this)">
+    <span>💻</span> Technologie
+   </button>
+
+   <button class="category" onclick="choisirCategorie('NATURE',this)">
+    <span>🌿</span> Nature
+   </button>
+
+   <button class="category" onclick="choisirCategorie('MUSIQUE',this)">
+    <span>🎵</span> Musique
+   </button>
+
   </div>
 
-  <div class="stats">
+ </div>
 
-    <div class="stat">
-      <div class="stat-value" id="lives">❤️❤️❤️</div>
-      <div class="stat-label">VIES</div>
-    </div>
+ <button class="main-btn" onclick="ouvrirJeu()">
+  ▶️ Jouer cette catégorie
+ </button>
 
-    <div class="stat">
-      <div class="stat-value" id="coins">🪙 0</div>
-      <div class="stat-label">PIÈCES</div>
-    </div>
+</section>
 
-    <div class="stat">
-      <div class="stat-value" id="combo">🔥 0</div>
-      <div class="stat-label">COMBO</div>
-    </div>
 
+<!-- DEFIS -->
+<section id="defis" class="hidden">
+
+ <div class="topbar">
+  <button class="back" onclick="accueil()">← Retour</button>
+  <b>🎯 Défis</b>
+ </div>
+
+ <div class="card">
+
+  <div class="challenge">
+   <b>🔥 Série de 5</b>
+   <p>Trouve 5 mots à la suite sans perdre de vie.</p>
+   <strong id="challengeCombo">0 / 5</strong>
   </div>
 
-  <div class="card">
-
-    <div class="level">
-      NIVEAU <b id="level">1</b> · SCORE <b id="score">0</b>
-    </div>
-
-    <div class="timer-box">
-      <div class="timer" id="timer"></div>
-    </div>
-
-    <div class="word-title">
-      TROUVE LE MOT
-    </div>
-
-    <div class="word" id="word"></div>
-
-    <div class="message" id="message">
-      Forme le mot avec les lettres ci-dessous.
-    </div>
-
-    <div class="letters" id="letters"></div>
-
-    <div class="actions">
-      <button class="action" onclick="effacer()">
-        ⌫ Effacer
-      </button>
-
-      <button class="action hint-btn" onclick="indice()">
-        💡 Indice · 20 🪙
-      </button>
-    </div>
-
-    <div class="progress">
-
-      <div class="progress-top">
-        <span>Progression</span>
-        <span id="progressText">0%</span>
-      </div>
-
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-
-    </div>
-
+  <div class="challenge">
+   <b>⚡ Éclair</b>
+   <p>Trouve 3 mots avant la fin du chrono.</p>
+   <strong id="challengeSpeed">0 / 3</strong>
   </div>
 
-  <div class="footer">
-    ZEN · Trouve les mots · Progresse · Maîtrise
+  <div class="challenge">
+   <b>🪙 Collectionneur</b>
+   <p>Accumule 100 pièces.</p>
+   <strong id="challengeCoins">0 / 100</strong>
   </div>
+
+  <div class="challenge">
+   <b>🧠 Explorateur</b>
+   <p>Trouve 25 mots.</p>
+   <strong id="challengeWords">0 / 25</strong>
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- BADGES -->
+<section id="badges" class="hidden">
+
+ <div class="topbar">
+  <button class="back" onclick="accueil()">← Retour</button>
+  <b>🏆 Badges</b>
+ </div>
+
+ <div class="card">
+
+  <div class="badge" id="badge1">
+   <div class="badge-icon">🌱</div>
+   <div>
+    <b>Premier pas</b>
+    <small>Trouver ton premier mot</small>
+   </div>
+  </div>
+
+  <div class="badge" id="badge2">
+   <div class="badge-icon">🔥</div>
+   <div>
+    <b>Combo 5</b>
+    <small>Faire une série de 5</small>
+   </div>
+  </div>
+
+  <div class="badge" id="badge3">
+   <div class="badge-icon">🪙</div>
+   <div>
+    <b>Collectionneur</b>
+    <small>Posséder 100 pièces</small>
+   </div>
+  </div>
+
+  <div class="badge" id="badge4">
+   <div class="badge-icon">🧠</div>
+   <div>
+    <b>Connaisseur</b>
+    <small>Trouver 25 mots</small>
+   </div>
+  </div>
+
+  <div class="badge" id="badge5">
+   <div class="badge-icon">👑</div>
+   <div>
+    <b>Maître ZEN</b>
+    <small>Atteindre le niveau 10</small>
+   </div>
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- JEU -->
+<section id="game" class="hidden">
+
+ <div class="topbar">
+  <button class="back" onclick="accueil()">← Menu</button>
+  <b id="gameMode">CLASSIQUE</b>
+ </div>
+
+ <div class="game-stats">
+
+  <div class="game-stat">
+   <b id="lives">❤️❤️❤️</b>
+   <small>VIES</small>
+  </div>
+
+  <div class="game-stat">
+   <b id="coins">🪙 0</b>
+   <small>PIÈCES</small>
+  </div>
+
+  <div class="game-stat">
+   <b id="combo">🔥 0</b>
+   <small>COMBO</small>
+  </div>
+
+ </div>
+
+ <div class="card">
+
+  <div style="text-align:center;font-size:13px;opacity:.6">
+   NIVEAU <b id="level">1</b> · SCORE <b id="score">0</b>
+  </div>
+
+  <div class="category-name" id="categoryName">
+   🌎 Toutes
+  </div>
+
+  <div class="timer-box">
+   <div class="timer" id="timer"></div>
+  </div>
+
+  <div class="word-title">TROUVE LE MOT</div>
+
+  <div class="word" id="word"></div>
+
+  <div class="message" id="message">
+   Forme le mot avec les lettres.
+  </div>
+
+  <div class="letters" id="letters"></div>
+
+  <div class="actions">
+   <button class="action" onclick="effacer()">⌫ Effacer</button>
+   <button class="action hint" onclick="indice()">💡 Indice · 20 🪙</button>
+  </div>
+
+  <div class="progress">
+   <div class="progress-line">
+    <span>Progression</span>
+    <span id="progressText">0 / 5</span>
+   </div>
+
+   <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+   </div>
+  </div>
+
+ </div>
+
+</section>
 
 </div>
 
-<div class="overlay" id="gameOver">
 
-  <div class="gameover">
+<!-- GAME OVER -->
+<div class="overlay hidden" id="gameOver">
 
-    <h2>💔 Partie terminée</h2>
+ <div class="modal">
 
-    <p>Tu as utilisé toutes tes vies.</p>
+  <h2>💔 Partie terminée</h2>
 
-    <div class="big-score" id="finalScore">0</div>
+  <p>Toutes tes vies sont utilisées.</p>
 
-    <p>Score final</p>
+  <div class="final-score" id="finalScore">0</div>
 
-    <button class="restart" onclick="nouvellePartie()">
-      🔄 Recommencer
-    </button>
+  <p>Score</p>
 
-  </div>
+  <button class="main-btn" onclick="nouvellePartie()">
+   🔄 Recommencer
+  </button>
+
+  <button class="main-btn secondary" onclick="fermerGameOver()">
+   🏠 Menu
+  </button>
+
+ </div>
 
 </div>
+
 
 <script>
 
 /* =========================================================
-   ZEN 3.0
+   ZEN 4.0
    ========================================================= */
 
-/* Banque de mots */
-const motsBruts = [
+/* -------- DONNÉES -------- */
 
-"CHAT","CHIEN","LION","TIGRE","OURS","LOUP","RENARD","CHEVAL",
-"VACHE","MOUTON","CHEVRE","COCHON","SINGE","GORILLE","ZEBRE",
-"GIRAFE","ELEPHANT","HIPPOPOTAME","CROCODILE","SERPENT","TORTUE",
-"LAPIN","RAT","SOURIS","POULE","COQ","CANARD","AIGLE","PIGEON",
-"PERROQUET","POISSON","REQUIN","BALEINE","DAUPHIN","CRABE",
-"CREVETTE","FOURMI","ABEILLE","PAPILLON","ARAIGNEE","MOUSTIQUE",
+const donnees = {
 
-"MAISON","ECOLE","EGLISE","MARCHE","BOUTIQUE","JARDIN","PORTE",
-"FENETRE","TABLE","CHAISE","LIVRE","STYLO","CAHIER","SAC",
-"TELEPHONE","ORDINATEUR","RADIO","CAMERA","LAMPE","MOTEUR",
-"VOITURE","MOTO","VELO","BUS","TRAIN","AVION","BATEAU",
-"ROUTE","PONT","VILLE","VILLAGE","QUARTIER","PAYS","MONDE",
+FOOTBALL:[
+"FOOTBALL","BALLON","JOUEUR","ENTRAINEUR","EQUIPE",
+"STADE","BUT","PASSE","TIR","CORNER","DEFENSE",
+"ATTAQUE","GARDIEN","MILIEU","CAPITAINE","ARBITRE",
+"MATCH","LIGUE","COUPE","CHAMPION","VICTOIRE",
+"DEFAITE","TACTIQUE","SYSTEME","COACH","DRIBBLE",
+"VITESSE","FORCE","TECHNIQUE","SPORT","ATHLETE",
+"MEDAILLE","TOURNOI","FINAL","SELECTION","NATION",
+"MONDIAL","PELOUSE","MAILLOT","CHAUSSURE","SIFFLET"
+],
 
-"EAU","PAIN","RIZ","POMME","BANANE","ORANGE","MANGUE","ANANAS",
-"CITRON","PAPAYE","PASTEQUE","RAISIN","NOIX","CAFE","THE",
-"SUCRE","SEL","POIVRE","VIANDE","POULET","POISSON","OEUF",
-"FROMAGE","LAIT","BEURRE","GATEAU","CHOCOLAT","GLACE","PIZZA",
-"BURGER","SANDWICH","SALAD","SOUPE","SAUCE","IGNAME","MANIOC",
-"BANANE","MAIS","HARICOT","ARACHIDE","ATIEKE","ALLOCO","FOUTOU",
+ANIMAUX:[
+"CHAT","CHIEN","LION","TIGRE","OURS","LOUP","RENARD",
+"CHEVAL","VACHE","MOUTON","CHEVRE","COCHON","SINGE",
+"GORILLE","ZEBRE","GIRAFE","ELEPHANT","CROCODILE",
+"SERPENT","TORTUE","LAPIN","RAT","SOURIS","POULE",
+"COQ","CANARD","AIGLE","PIGEON","PERROQUET","POISSON",
+"REQUIN","BALEINE","DAUPHIN","CRABE","CREVETTE",
+"FOURMI","ABEILLE","PAPILLON","ARAIGNEE","MOUSTIQUE"
+],
 
-"FOOTBALL","BALLON","JOUEUR","ENTRAINEUR","EQUIPE","STADE",
-"BUT","PASSE","TIR","CORNER","DEFENSE","ATTAQUE","GARDIEN",
-"MILIEU","CAPITAINE","ARBITRE","MATCH","LIGUE","COUPE","CHAMPION",
-"VICTOIRE","DEFAITE","TACTIQUE","SYSTEME","COACH","DRIBBLE",
-"VITESSE","FORCE","TECHNIQUE","SPORT","ATHLETE","MEDAILLE",
-"TOURNOI","FINAL","SELECTION","NATION","CAN","MONDIAL",
+NOURRITURE:[
+"PAIN","RIZ","POMME","BANANE","ORANGE","MANGUE","ANANAS",
+"CITRON","PAPAYE","PASTEQUE","RAISIN","CAFE","THE",
+"SUCRE","SEL","POIVRE","VIANDE","POULET","POISSON",
+"OEUF","FROMAGE","LAIT","BEURRE","GATEAU","CHOCOLAT",
+"GLACE","PIZZA","BURGER","SANDWICH","SALADE","SOUPE",
+"IGNAME","MANIOC","BANANE","MAIS","HARICOT","ARACHIDE",
+"ATIEKE","ALLOCO","FOUTOU"
+],
 
-"AFRIQUE","IVOIRE","BOUAKE","ABIDJAN","YAMOUSSOUKRO","KORHOGO",
-"DALOA","MAN","SANPEDRO","BONDOUKOU","DIVO","GAGNOA","AGBOVILLE",
-"ODIENNE","BINGERVILLE","GRANDBASSAM","ASSINIE","COMOE","SAVANE",
-"FORET","LAGUNE","MONTAGNE","PLAGE","RIVIERE","FLEUVE","PAYSAGE",
+CI:[
+"IVOIRE","BOUAKE","ABIDJAN","YAMOUSSOUKRO","KORHOGO",
+"DALOA","MAN","SANPEDRO","BONDOUKOU","DIVO","GAGNOA",
+"AGBOVILLE","ODIENNE","BINGERVILLE","GRANDBASSAM","ASSINIE",
+"COMOE","SAVANE","FORET","LAGUNE","MONTAGNE","PLAGE",
+"RIVIERE","FLEUVE","PAYSAGE","ATTIEKE","ALLOCO","FOUTOU",
+"BAOULE","SENOUFO","DAN","ABIDJI","BANDAMA","COTE"
+],
 
-"SOLEIL","LUNE","ETOILE","CIEL","NUAGE","PLUIE","VENT","ORAGE",
-"TONNERRE","FOUDRE","ARBRE","FLEUR","HERBE","FEUILLE","FRUIT",
-"RACINE","GRAINE","TERRE","SABLE","ROCHE","PIERRE","FEU","EAU",
-"MER","OCEAN","SOURCE","NATURE","PLANETE","ESPACE","GALAXIE",
+TECH:[
+"SCIENCE","MATH","FRANCAIS","ANGLAIS","PHYSIQUE","CHIMIE",
+"ELECTRONIQUE","ELECTRICITE","CIRCUIT","RESISTANCE","TENSION",
+"COURANT","MOTEUR","DIODE","TRANSISTOR","CAPTEUR","BATTERIE",
+"ENERGIE","ORDINATEUR","PROGRAMME","CODE","APPLICATION",
+"JEU","INTERNET","RESEAU","SERVEUR","DONNEE","CLAVIER",
+"ECRAN","SOURIS","TELEPHONE","CAMERA","ROBOT","LOGICIEL"
+],
 
-"AMOUR","AMITIE","FAMILLE","FRERE","SOEUR","PERE","MERE","ENFANT",
-"AMI","BONHEUR","JOIE","PAIX","ESPOIR","COURAGE","FORCE","REVE",
-"SUCCES","TRAVAIL","EFFORT","PATIENCE","RESPECT","HONNEUR",
-"CONFIANCE","SOURIRE","RIRE","MOTIVATION","PASSION","TALENT",
-"IDEe","OBJECTIF","PROJET","AVENIR","LIBERTE","VERITE","SAGESSE",
+NATURE:[
+"SOLEIL","LUNE","ETOILE","CIEL","NUAGE","PLUIE","VENT",
+"ORAGE","TONNERRE","FOUDRE","ARBRE","FLEUR","HERBE",
+"FEUILLE","FRUIT","RACINE","GRAINE","TERRE","SABLE",
+"ROCHE","PIERRE","FEU","EAU","MER","OCEAN","SOURCE",
+"NATURE","PLANETE","ESPACE","GALAXIE","MONTAGNE","FORET",
+"RIVIERE","JARDIN","OISEAU","LUMIERE"
+],
 
-"ROUGE","BLEU","VERT","JAUNE","NOIR","BLANC","ORANGE","VIOLET",
-"ROSE","MARRON","GRIS","COULEUR","LUMIERE","OMBRE","BRILLANT",
-"RAPIDE","LENT","GRAND","PETIT","FORT","FAIBLE","CHAUD","FROID",
-"JEUNE","VIEUX","NOUVEAU","ANCIEN","BEAU","SIMPLE","FACILE","DIFFICILE",
+MUSIQUE:[
+"MUSIQUE","CHANSON","ARTISTE","CHANTEUR","DANSE","GUITARE",
+"PIANO","BATTERIE","MICRO","STUDIO","CONCERT","RYTHME",
+"MELODIE","SON","VOIX","VIDEO","FILM","ACTEUR","ACTRICE",
+"CINEMA","THEATRE","ROMAN","LIVRE","AUTEUR","POEME",
+"DESSIN","PHOTO","SCENE","ALBUM","RAP","AFROBEAT",
+"DJ","INSTRUMENT","SPECTACLE"
+],
 
-"UN","DEUX","TROIS","QUATRE","CINQ","SIX","SEPT","HUIT","NEUF","DIX",
-"PREMIER","SECOND","DERNIER","DEBUT","MILIEU","FIN","TEMPS","JOUR",
-"NUIT","MATIN","SOIR","SEMAINE","MOIS","ANNEE","HEURE","MINUTE",
+TOUTES:[
+"CHAT","CHIEN","LION","TIGRE","MAISON","ECOLE","LIVRE",
+"TABLE","CHAISE","PORTE","FENETRE","JARDIN","TELEPHONE",
+"ORDINATEUR","VOITURE","MOTO","AVION","BATEAU","VILLE",
+"VILLAGE","EAU","PAIN","RIZ","POMME","BANANE","ORANGE",
+"MANGUE","ANANAS","CITRON","CAFE","THE","SUCRE","POULET",
+"POISSON","OEUF","GATEAU","CHOCOLAT","FOOTBALL","BALLON",
+"JOUEUR","EQUIPE","STADE","BUT","PASSE","TIR","COACH",
+"SPORT","AFRIQUE","IVOIRE","BOUAKE","ABIDJAN","SOLEIL",
+"LUNE","ETOILE","CIEL","NUAGE","PLUIE","ARBRE","FLEUR",
+"TERRE","MER","NATURE","PLANETE","AMOUR","AMITIE","FAMILLE",
+"BONHEUR","JOIE","PAIX","ESPOIR","COURAGE","FORCE","REVE",
+"SUCCES","TRAVAIL","PATIENCE","RESPECT","SOURIRE","MUSIQUE",
+"CHANSON","ARTISTE","GUITARE","PIANO","CONCERT","SCIENCE",
+"ELECTRONIQUE","ELECTRICITE","CIRCUIT","MOTEUR","BATTERIE",
+"PROGRAMME","CODE","APPLICATION","INTERNET","RESEAU","BUSINESS",
+"ARGENT","BANQUE","ENTREPRISE","COMMERCE","CLIENT","PRODUIT",
+"SERVICE","PROFIT","CAPITAL","PROJET","AVENIR"
+]
+};
 
-"SCIENCE","MATH","FRANCAIS","ANGLAIS","HISTOIRE","GEOGRAPHIE",
-"PHYSIQUE","CHIMIE","ELECTRONIQUE","ELECTRICITE","CIRCUIT",
-"RESISTANCE","TENSION","COURANT","MOTEUR","LED","DIODE","TRANSISTOR",
-"CAPTEUR","BATTERIE","ENERGIE","ORDINATEUR","PROGRAMME","CODE",
-"APPLICATION","JEU","INTERNET","RESEAU","SERVEUR","DONNEE",
 
-"MUSIQUE","CHANSON","ARTISTE","CHANTEUR","DANSE","GUITARE","PIANO",
-"BATTERIE","MICRO","STUDIO","CONCERT","RYTHME","MELODIE","SON",
-"VOIX","VIDEO","FILM","ACTEUR","ACTRICE","CINEMA","THEATRE",
-"HISTOIRE","ROMAN","LIVRE","AUTEUR","POEME","DESSIN","PHOTO",
+/* -------- VARIABLES -------- */
 
-"BUSINESS","ARGENT","BANQUE","ENTREPRISE","COMMERCE","VENTE",
-"CLIENT","PRODUIT","SERVICE","MARCHE","PRIX","PROFIT","CAPITAL",
-"TRAVAIL","EMPLOI","METIER","PATRON","EQUIPE","PROJET","IDEe",
-"INVESTISSEMENT","ECONOMIE","RICHESSE","SUCCES","LEADER","MARQUE",
-"VENTEUR","ACHAT","REVENU","OBJECTIF"
+let score=Number(localStorage.getItem("zen_score")||0);
+let niveau=Number(localStorage.getItem("zen_niveau")||1);
+let pieces=Number(localStorage.getItem("zen_coins")||30);
+let vies=Number(localStorage.getItem("zen_lives")||3);
+let combo=Number(localStorage.getItem("zen_combo")||0);
+let motsTrouves=Number(localStorage.getItem("zen_mots")||0);
 
-];
+let categorie=localStorage.getItem("zen_categorie")||"TOUTES";
+let mode=localStorage.getItem("zen_mode")||"CLASSIQUE";
 
-/* Nettoyage des mots */
-const mots = [...new Set(
-  motsBruts
-  .map(m => m.normalize("NFD")
-  .replace(/[\u0300-\u036f]/g,"")
-  .replace(/[^A-Z]/g,""))
-  .filter(m => m.length >= 3)
-)];
+let motActuel="";
+let lettres=[];
+let selection=[];
+let indicesUtilises=[];
+let hintIndex=-1;
 
-/* Variables du jeu */
-let score = Number(localStorage.getItem("zen_score") || 0);
-let niveau = Number(localStorage.getItem("zen_niveau") || 1);
-let pieces = Number(localStorage.getItem("zen_coins") || 30);
-let vies = Number(localStorage.getItem("zen_lives") || 3);
-let combo = Number(localStorage.getItem("zen_combo") || 0);
-let motsTrouves = Number(localStorage.getItem("zen_mots") || 0);
+let tempsMax=20;
+let temps=20;
+let timerInterval=null;
+let verrouille=false;
 
-let motActuel = "";
-let lettresMelangees = [];
-let selection = [];
-let indicesUtilises = [];
-let hintIndex = -1;
 
-let tempsMax = 20;
-let temps = tempsMax;
-let timerInterval = null;
-let verrouille = false;
+/* -------- OUTILS -------- */
 
-/* Mélange */
-function melanger(tableau){
-  const copie = [...tableau];
-
-  for(let i=copie.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [copie[i],copie[j]]=[copie[j],copie[i]];
-  }
-
-  return copie;
+function nettoyer(mot){
+ return mot.normalize("NFD")
+ .replace(/[\u0300-\u036f]/g,"")
+ .replace(/[^A-Z]/g,"");
 }
 
-/* Choisir un mot */
-function choisirMot(){
+function melanger(tab){
+ let a=[...tab];
 
-  const disponibles = mots.filter(m => m !== motActuel);
+ for(let i=a.length-1;i>0;i--){
+  let j=Math.floor(Math.random()*(i+1));
+  [a[i],a[j]]=[a[j],a[i]];
+ }
 
-  motActuel =
-    disponibles[Math.floor(Math.random()*disponibles.length)];
-
-  lettresMelangees = melanger(
-    motActuel.split("")
-  );
-
-  selection = [];
-  indicesUtilises = [];
-  hintIndex = -1;
-
-  tempsMax = Math.max(
-    10,
-    25 - Math.floor(niveau/5)
-  );
-
-  temps = tempsMax;
-
-  afficher();
-  demarrerTimer();
+ return a;
 }
 
-/* Affichage */
-function afficher(){
+function afficherSection(id){
 
-  document.getElementById("level").textContent = niveau;
-  document.getElementById("score").textContent = score;
-  document.getElementById("coins").textContent = "🪙 " + pieces;
-  document.getElementById("combo").textContent = "🔥 " + combo;
+ document.querySelectorAll("section")
+ .forEach(s=>s.classList.add("hidden"));
 
-  afficherVies();
-  afficherMot();
-  afficherLettres();
-  afficherProgression();
+ document.getElementById(id)
+ .classList.remove("hidden");
 }
 
-/* Vies */
+function accueil(){
+
+ arreterTimer();
+ afficherSection("home");
+ mettreAJourAccueil();
+}
+
+function mettreAJourAccueil(){
+
+ document.getElementById("homeScore").textContent=score;
+ document.getElementById("homeCoins").textContent="🪙 "+pieces;
+ document.getElementById("homeLevel").textContent=niveau;
+ document.getElementById("homeWords").textContent=motsTrouves;
+
+ let p=(motsTrouves%5)/5*100;
+ document.getElementById("homeProgress").style.width=p+"%";
+
+ mettreAJourBadges();
+ mettreAJourDefis();
+}
+
+
+/* -------- CATEGORIES -------- */
+
+function ouvrirCategories(){
+ afficherSection("categories");
+}
+
+function choisirCategorie(cat,element){
+
+ categorie=cat;
+
+ localStorage.setItem("zen_categorie",categorie);
+
+ document.querySelectorAll(".category")
+ .forEach(x=>x.classList.remove("selected"));
+
+ element.classList.add("selected");
+}
+
+
+/* -------- JEU -------- */
+
+function ouvrirJeu(){
+
+ afficherSection("game");
+
+ document.getElementById("gameMode").textContent=
+ mode==="RAPIDE" ? "⚡ RAPIDE" :
+ mode==="COMBO" ? "🔥 COMBO" :
+ "CLASSIQUE";
+
+ nouveauMot();
+}
+
+function nouveauMot(){
+
+ let liste=donnees[categorie]||donnees.TOUTES;
+
+ liste=liste
+ .map(nettoyer)
+ .filter(m=>m.length>=3);
+
+ let choix;
+
+ do{
+  choix=liste[Math.floor(Math.random()*liste.length)];
+ }while(choix===motActuel && liste.length>1);
+
+ motActuel=choix;
+
+ lettres=melanger(motActuel.split(""));
+
+ selection=[];
+ indicesUtilises=[];
+ hintIndex=-1;
+
+ if(mode==="RAPIDE"){
+  tempsMax=12;
+ }else if(mode==="COMBO"){
+  tempsMax=17;
+ }else{
+  tempsMax=Math.max(10,22-Math.floor(niveau/5));
+ }
+
+ temps=tempsMax;
+
+ afficherJeu();
+ demarrerTimer();
+}
+
+function afficherJeu(){
+
+ document.getElementById("score").textContent=score;
+ document.getElementById("level").textContent=niveau;
+ document.getElementById("coins").textContent="🪙 "+pieces;
+ document.getElementById("combo").textContent="🔥 "+combo;
+
+ afficherVies();
+ afficherMot();
+ afficherLettres();
+ afficherProgression();
+
+ let noms={
+  TOUTES:"🌎 Toutes",
+  FOOTBALL:"⚽ Football",
+  ANIMAUX:"🐾 Animaux",
+  NOURRITURE:"🍔 Nourriture",
+  CI:"🇨🇮 Côte d'Ivoire",
+  TECH:"💻 Technologie",
+  NATURE:"🌿 Nature",
+  MUSIQUE:"🎵 Musique"
+ };
+
+ document.getElementById("categoryName").textContent=
+ noms[categorie]||"🌎 Toutes";
+}
+
 function afficherVies(){
 
-  let texte = "";
+ let texte="";
 
-  for(let i=0;i<3;i++){
-    texte += i < vies ? "❤️" : "🖤";
-  }
+ for(let i=0;i<3;i++){
+  texte+=i<vies?"❤️":"🖤";
+ }
 
-  document.getElementById("lives").textContent = texte;
+ document.getElementById("lives").textContent=texte;
 }
 
-/* Mot */
 function afficherMot(){
 
-  const zone = document.getElementById("word");
-  zone.innerHTML = "";
+ let zone=document.getElementById("word");
+ zone.innerHTML="";
 
-  for(let i=0;i<motActuel.length;i++){
+ for(let i=0;i<motActuel.length;i++){
 
-    const slot = document.createElement("div");
-    slot.className = "slot";
+  let slot=document.createElement("div");
+  slot.className="slot";
 
-    if(selection[i]){
-      slot.textContent = selection[i];
-      slot.classList.add("filled");
-    }
-
-    if(i === hintIndex && !selection[i]){
-      slot.textContent = "?";
-      slot.classList.add("hint");
-    }
-
-    zone.appendChild(slot);
+  if(selection[i]){
+   slot.textContent=selection[i];
+   slot.classList.add("filled");
   }
+
+  if(i===hintIndex&&!selection[i]){
+   slot.textContent="?";
+   slot.classList.add("hint");
+  }
+
+  zone.appendChild(slot);
+ }
 }
 
-/* Lettres */
 function afficherLettres(){
 
-  const zone = document.getElementById("letters");
-  zone.innerHTML = "";
+ let zone=document.getElementById("letters");
+ zone.innerHTML="";
 
-  lettresMelangees.forEach((lettre,index)=>{
+ lettres.forEach((lettre,index)=>{
 
-    const bouton = document.createElement("button");
+  let b=document.createElement("button");
+  b.className="letter";
+  b.textContent=lettre;
 
-    bouton.className = "letter";
-
-    bouton.textContent = lettre;
-
-    if(indicesUtilises.includes(index)){
-      bouton.classList.add("used");
-    }
-
-    if(index === getHintButtonIndex()){
-      bouton.style.outline = "3px solid #ffd54a";
-    }
-
-    bouton.onclick = () => choisirLettre(index);
-
-    zone.appendChild(bouton);
-  });
-}
-
-/* Trouver la lettre correspondant à l'indice */
-function getHintButtonIndex(){
-
-  if(hintIndex < 0) return -1;
-
-  const lettreRecherchee = motActuel[hintIndex];
-
-  for(let i=0;i<lettresMelangees.length;i++){
-
-    if(
-      lettresMelangees[i] === lettreRecherchee &&
-      !indicesUtilises.includes(i)
-    ){
-      return i;
-    }
+  if(indicesUtilises.includes(index)){
+   b.classList.add("used");
   }
 
-  return -1;
+  if(index===indiceBouton()){
+   b.style.outline="3px solid #ffd54a";
+  }
+
+  b.onclick=()=>choisirLettre(index);
+
+  zone.appendChild(b);
+ });
 }
 
-/* Choisir une lettre */
-function choisirLettre(index){
+function indiceBouton(){
 
-  if(verrouille) return;
+ if(hintIndex<0)return -1;
 
-  if(indicesUtilises.includes(index)) return;
+ let recherche=motActuel[hintIndex];
 
-  if(selection.length >= motActuel.length) return;
-
-  const lettre = lettresMelangees[index];
-
-  indicesUtilises.push(index);
-  selection.push(lettre);
+ for(let i=0;i<lettres.length;i++){
 
   if(
-    hintIndex >= 0 &&
-    selection.length-1 === hintIndex
+   lettres[i]===recherche &&
+   !indicesUtilises.includes(i)
   ){
-    hintIndex = -1;
+   return i;
   }
+ }
 
-  afficherMot();
-  afficherLettres();
-
-  if(selection.length === motActuel.length){
-    verifierMot();
-  }
+ return -1;
 }
 
-/* Effacer */
+function choisirLettre(index){
+
+ if(verrouille)return;
+ if(indicesUtilises.includes(index))return;
+ if(selection.length>=motActuel.length)return;
+
+ selection.push(lettres[index]);
+ indicesUtilises.push(index);
+
+ if(hintIndex===selection.length-1){
+  hintIndex=-1;
+ }
+
+ afficherMot();
+ afficherLettres();
+
+ if(selection.length===motActuel.length){
+  verifier();
+ }
+}
+
 function effacer(){
 
-  if(verrouille) return;
+ if(verrouille)return;
+ if(selection.length===0)return;
 
-  if(selection.length === 0) return;
+ let position=selection.length-1;
 
-  const position = selection.length-1;
+ if(position===hintIndex)return;
 
-  if(position === hintIndex){
-    return;
-  }
+ selection.pop();
+ indicesUtilises.pop();
 
-  selection.pop();
-  indicesUtilises.pop();
-
-  afficherMot();
-  afficherLettres();
+ afficherMot();
+ afficherLettres();
 }
 
-/* Vérifier */
-function verifierMot(){
 
-  const proposition = selection.join("");
+/* -------- VALIDATION -------- */
 
-  if(proposition === motActuel){
+function verifier(){
 
-    verrouille = true;
+ let proposition=selection.join("");
 
-    arreterTimer();
+ if(proposition!==motActuel){
 
-    combo++;
+  perdreVie();
+  return;
+ }
 
-    const bonusCombo = combo * 2;
-    const bonusLongueur = motActuel.length * 2;
+ verrouille=true;
+ arreterTimer();
 
-    const gain = 5 + bonusCombo + bonusLongueur;
+ combo++;
 
-    score += gain;
-    pieces += gain;
-    motsTrouves++;
+ let gain=5+(motActuel.length*2)+(combo*2);
 
-    if(combo % 5 === 0){
-      pieces += 15;
-      score += 15;
+ score+=gain;
+ pieces+=gain;
+ motsTrouves++;
 
-      message(
-        "🔥 SUPER COMBO ! +15 🪙"
-      );
-    }else{
-      message(
-        "✅ Bravo ! +" + gain + " 🪙"
-      );
-    }
+ if(combo%5===0){
+  score+=15;
+  pieces+=15;
+  message("🔥 COMBO DE "+combo+" ! +15 bonus !");
+ }else{
+  message("✅ Bravo ! +"+gain+" pièces");
+ }
 
-    niveau =
-      Math.floor(motsTrouves / 5) + 1;
+ niveau=Math.floor(motsTrouves/5)+1;
 
-    sauvegarder();
-    afficher();
+ sauvegarder();
+ afficherJeu();
 
-    setTimeout(()=>{
-
-      verrouille = false;
-      choisirMot();
-
-    },900);
-
-  }else{
-
-    perdreVie();
-  }
+ setTimeout(()=>{
+  verrouille=false;
+  nouveauMot();
+ },900);
 }
 
-/* Mauvaise réponse */
 function perdreVie(){
 
-  vies--;
-  combo = 0;
+ vies--;
+ combo=0;
 
-  sauvegarder();
-  afficher();
+ selection=[];
+ indicesUtilises=[];
+ hintIndex=-1;
 
-  message("❌ Mauvais mot ! -1 ❤️");
+ sauvegarder();
+ afficherJeu();
 
-  selection = [];
-  indicesUtilises = [];
-  hintIndex = -1;
+ message("❌ Mauvaise réponse ! -1 ❤️");
 
-  afficherMot();
-  afficherLettres();
-
-  if(vies <= 0){
-
-    arreterTimer();
-
-    setTimeout(()=>{
-      document.getElementById("finalScore").textContent = score;
-      document.getElementById("gameOver").classList.add("show");
-    },500);
-
-    return;
-  }
-
-  temps = tempsMax;
-}
-
-/* Indice */
-function indice(){
-
-  if(verrouille) return;
-
-  if(pieces < 20){
-
-    message("🪙 Il te faut 20 pièces.");
-
-    return;
-  }
-
-  const position = selection.length;
-
-  if(position >= motActuel.length){
-    return;
-  }
-
-  pieces -= 20;
-
-  hintIndex = position;
-
-  sauvegarder();
-
-  afficher();
-  message("💡 Indice : la lettre dorée est la bonne.");
-
-}
-
-/* Timer */
-function demarrerTimer(){
+ if(vies<=0){
 
   arreterTimer();
 
-  timerInterval = setInterval(()=>{
+  setTimeout(()=>{
 
-    if(verrouille) return;
+   document.getElementById("finalScore").textContent=score;
+   document.getElementById("gameOver")
+   .classList.remove("hidden");
 
-    temps--;
+  },500);
 
-    afficherTimer();
+  return;
+ }
 
-    if(temps <= 0){
+ temps=tempsMax;
+}
 
-      arreterTimer();
 
-      vies--;
-      combo = 0;
+/* -------- INDICE -------- */
 
-      sauvegarder();
-      afficher();
+function indice(){
 
-      message("⏰ Temps écoulé ! -1 ❤️");
+ if(verrouille)return;
 
-      if(vies <= 0){
+ if(pieces<20){
+  message("🪙 Il te faut 20 pièces.");
+  return;
+ }
 
-        document.getElementById("finalScore").textContent = score;
-        document.getElementById("gameOver").classList.add("show");
+ if(selection.length>=motActuel.length)return;
 
-        return;
-      }
+ pieces-=20;
+ hintIndex=selection.length;
 
-      setTimeout(()=>{
-        choisirMot();
-      },700);
-    }
+ sauvegarder();
+ afficherJeu();
 
-  },1000);
+ message("💡 La lettre dorée est la bonne.");
+}
+
+
+/* -------- TIMER -------- */
+
+function demarrerTimer(){
+
+ arreterTimer();
+
+ timerInterval=setInterval(()=>{
+
+  if(verrouille)return;
+
+  temps--;
 
   afficherTimer();
+
+  if(temps<=0){
+
+   arreterTimer();
+
+   vies--;
+   combo=0;
+
+   selection=[];
+   indicesUtilises=[];
+   hintIndex=-1;
+
+   sauvegarder();
+   afficherJeu();
+
+   message("⏰ Temps écoulé ! -1 ❤️");
+
+   if(vies<=0){
+
+    document.getElementById("finalScore").textContent=score;
+
+    document.getElementById("gameOver")
+    .classList.remove("hidden");
+
+   }else{
+
+    setTimeout(()=>nouveauMot(),700);
+   }
+  }
+
+ },1000);
+
+ afficherTimer();
 }
 
-/* Arrêter timer */
 function arreterTimer(){
 
-  if(timerInterval){
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
+ if(timerInterval){
+  clearInterval(timerInterval);
+  timerInterval=null;
+ }
 }
 
-/* Afficher timer */
 function afficherTimer(){
 
-  const element = document.getElementById("timer");
+ let p=Math.max(0,(temps/tempsMax)*100);
 
-  const pourcentage =
-    Math.max(0,(temps/tempsMax)*100);
+ let t=document.getElementById("timer");
 
-  element.style.width = pourcentage + "%";
+ t.style.width=p+"%";
 
-  if(pourcentage <= 30){
-    element.classList.add("danger");
-  }else{
-    element.classList.remove("danger");
-  }
+ if(p<=30)t.classList.add("danger");
+ else t.classList.remove("danger");
 }
 
-/* Message */
-function message(texte){
 
-  document.getElementById("message").textContent = texte;
-}
+/* -------- PROGRESSION -------- */
 
-/* Progression */
 function afficherProgression(){
 
-  const dansNiveau = motsTrouves % 5;
+ let n=motsTrouves%5;
+ let p=n/5*100;
 
-  const pourcentage =
-    (dansNiveau / 5) * 100;
+ document.getElementById("progressFill")
+ .style.width=p+"%";
 
-  document.getElementById("progressFill")
-    .style.width = pourcentage + "%";
-
-  document.getElementById("progressText")
-    .textContent =
-      dansNiveau + " / 5";
+ document.getElementById("progressText")
+ .textContent=n+" / 5";
 }
 
-/* Sauvegarde */
+function message(t){
+ document.getElementById("message").textContent=t;
+}
+
+
+/* -------- BADGES -------- */
+
+function mettreAJourBadges(){
+
+ document.getElementById("badge1")
+ .classList.toggle("locked",motsTrouves<1);
+
+ document.getElementById("badge2")
+ .classList.toggle("locked",combo<5);
+
+ document.getElementById("badge3")
+ .classList.toggle("locked",pieces<100);
+
+ document.getElementById("badge4")
+ .classList.toggle("locked",motsTrouves<25);
+
+ document.getElementById("badge5")
+ .classList.toggle("locked",niveau<10);
+}
+
+function ouvrirBadges(){
+
+ afficherSection("badges");
+ mettreAJourBadges();
+}
+
+
+/* -------- DEFIS -------- */
+
+function mettreAJourDefis(){
+
+ document.getElementById("challengeCombo")
+ .textContent=Math.min(combo,5)+" / 5";
+
+ document.getElementById("challengeSpeed")
+ .textContent=Math.min(motsTrouves,3)+" / 3";
+
+ document.getElementById("challengeCoins")
+ .textContent=Math.min(pieces,100)+" / 100";
+
+ document.getElementById("challengeWords")
+ .textContent=Math.min(motsTrouves,25)+" / 25";
+}
+
+function ouvrirDefis(){
+
+ afficherSection("defis");
+ mettreAJourDefis();
+}
+
+
+/* -------- SAUVEGARDE -------- */
+
 function sauvegarder(){
 
-  localStorage.setItem(
-    "zen_score",
-    score
-  );
-
-  localStorage.setItem(
-    "zen_niveau",
-    niveau
-  );
-
-  localStorage.setItem(
-    "zen_coins",
-    pieces
-  );
-
-  localStorage.setItem(
-    "zen_lives",
-    vies
-  );
-
-  localStorage.setItem(
-    "zen_combo",
-    combo
-  );
-
-  localStorage.setItem(
-    "zen_mots",
-    motsTrouves
-  );
+ localStorage.setItem("zen_score",score);
+ localStorage.setItem("zen_niveau",niveau);
+ localStorage.setItem("zen_coins",pieces);
+ localStorage.setItem("zen_lives",vies);
+ localStorage.setItem("zen_combo",combo);
+ localStorage.setItem("zen_mots",motsTrouves);
+ localStorage.setItem("zen_categorie",categorie);
+ localStorage.setItem("zen_mode",mode);
 }
 
-/* Nouvelle partie */
+
+/* -------- NOUVELLE PARTIE -------- */
+
 function nouvellePartie(){
 
-  document
-    .getElementById("gameOver")
-    .classList.remove("show");
+ document.getElementById("gameOver")
+ .classList.add("hidden");
 
-  score = 0;
-  niveau = 1;
-  pieces = 30;
-  vies = 3;
-  combo = 0;
-  motsTrouves = 0;
+ score=0;
+ niveau=1;
+ pieces=30;
+ vies=3;
+ combo=0;
+ motsTrouves=0;
 
-  sauvegarder();
+ sauvegarder();
 
-  choisirMot();
+ afficherSection("game");
+ nouveauMot();
 }
 
-/* Démarrage */
-afficher();
-choisirMot();
+function fermerGameOver(){
+
+ document.getElementById("gameOver")
+ .classList.add("hidden");
+
+ accueil();
+}
+
+
+/* -------- DÉMARRAGE -------- */
+
+mettreAJourAccueil();
 
 </script>
 
 </body>
-</html>
+  </html>
