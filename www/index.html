@@ -3,171 +3,229 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ZEN 7.0</title>
+<title>ZEN — Trouve le mot</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#111827,#312e81,#0f766e);
-color:white;
-min-height:100vh;
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  color:white;
+  background:linear-gradient(145deg,#111827,#312e81,#0f766e);
 }
 
 .app{
-max-width:520px;
-margin:auto;
-padding:18px;
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  padding:18px;
 }
 
 header{
-text-align:center;
-padding:18px 0;
+  text-align:center;
+  padding:20px 0;
 }
 
 .logo{
-font-size:44px;
-font-weight:900;
-letter-spacing:4px;
+  font-size:48px;
+  font-weight:900;
+  letter-spacing:5px;
 }
 
-.subtitle{
-opacity:.75;
+.slogan{
+  opacity:.75;
+  margin-top:5px;
 }
 
 .card{
-background:rgba(255,255,255,.1);
-border:1px solid rgba(255,255,255,.15);
-border-radius:24px;
-padding:20px;
-margin-bottom:16px;
-backdrop-filter:blur(10px);
-box-shadow:0 12px 35px rgba(0,0,0,.2);
-}
-
-h2{
-margin-top:0;
-}
-
-button{
-width:100%;
-border:0;
-border-radius:16px;
-padding:15px;
-margin:7px 0;
-font-size:16px;
-font-weight:bold;
-background:white;
-color:#172033;
-cursor:pointer;
-transition:.2s;
-}
-
-button:active{
-transform:scale(.97);
-}
-
-.option{
-background:rgba(255,255,255,.12);
-color:white;
-border:1px solid rgba(255,255,255,.15);
-}
-
-.option.correct{
-background:#16a34a;
-}
-
-.option.wrong{
-background:#dc2626;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-}
-
-.small{
-font-size:13px;
-opacity:.7;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:25px;
+  padding:20px;
+  margin-bottom:16px;
+  backdrop-filter:blur(12px);
+  box-shadow:0 15px 35px rgba(0,0,0,.20);
 }
 
 .hidden{
-display:none;
+  display:none!important;
+}
+
+h2{
+  margin-top:0;
+}
+
+button{
+  width:100%;
+  border:0;
+  border-radius:17px;
+  padding:15px;
+  margin:7px 0;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.15s;
+}
+
+button:active{
+  transform:scale(.96);
+}
+
+.mainBtn{
+  background:white;
+  color:#172033;
+}
+
+.secondaryBtn{
+  background:rgba(255,255,255,.13);
+  color:white;
+  border:1px solid rgba(255,255,255,.15);
 }
 
 .stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-text-align:center;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
 }
 
 .stat{
-background:rgba(255,255,255,.08);
-padding:12px;
-border-radius:15px;
+  background:rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:12px 5px;
+  text-align:center;
 }
 
-.value{
-font-size:22px;
-font-weight:bold;
+.stat strong{
+  display:block;
+  font-size:21px;
+  margin-bottom:4px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.level{
+  background:#facc15;
+  color:#111827;
+  border-radius:20px;
+  padding:6px 11px;
+  font-weight:bold;
 }
 
 .progress{
-height:9px;
-background:rgba(255,255,255,.15);
-border-radius:20px;
-overflow:hidden;
-margin:12px 0;
+  height:9px;
+  background:rgba(255,255,255,.15);
+  border-radius:20px;
+  overflow:hidden;
+  margin:15px 0;
 }
 
-.progress div{
-height:100%;
-background:#facc15;
-width:0%;
-transition:.3s;
+.progressBar{
+  height:100%;
+  width:0%;
+  background:#facc15;
+  transition:.3s;
 }
 
-.timer{
-text-align:center;
-font-size:30px;
-font-weight:bold;
+.wordBox{
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  margin:25px 0;
+  min-height:65px;
 }
 
-#question{
-font-size:22px;
-line-height:1.4;
+.letterBox{
+  width:58px;
+  height:58px;
+  border-radius:15px;
+  background:rgba(255,255,255,.12);
+  border:2px solid rgba(255,255,255,.25);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  font-weight:900;
+}
+
+.letters{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin-top:20px;
+}
+
+.letterBtn{
+  width:55px;
+  height:55px;
+  padding:0;
+  margin:0;
+  border-radius:15px;
+  background:white;
+  color:#172033;
+  font-size:21px;
+}
+
+.letterBtn.used{
+  opacity:.25;
+  transform:scale(.9);
+}
+
+.hint{
+  text-align:center;
+  min-height:24px;
+  opacity:.8;
+  margin:12px 0;
 }
 
 .message{
-text-align:center;
-font-weight:bold;
-min-height:25px;
-margin-top:10px;
+  text-align:center;
+  min-height:27px;
+  font-weight:bold;
+  margin-top:10px;
 }
 
-.badge{
-display:inline-block;
-background:#facc15;
-color:#111827;
-padding:6px 10px;
-border-radius:20px;
-font-weight:bold;
+.bigScore{
+  font-size:52px;
+  font-weight:900;
+  text-align:center;
+  margin:15px;
 }
 
-.mode-selected,
-.category-selected{
-outline:3px solid #facc15;
+.center{
+  text-align:center;
 }
 
-.levelBox{
-text-align:center;
-font-size:14px;
-opacity:.85;
+.small{
+  font-size:13px;
+  opacity:.7;
 }
+
+.menuGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.menuBtn{
+  background:rgba(255,255,255,.10);
+  color:white;
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.menuBtn.selected{
+  outline:3px solid #facc15;
+}
+
 </style>
 </head>
 
@@ -176,8 +234,8 @@ opacity:.85;
 <div class="app">
 
 <header>
-<div class="logo">ZEN</div>
-<div class="subtitle">Réfléchis. Réponds. Progresse.</div>
+  <div class="logo">ZEN</div>
+  <div class="slogan">Trouve le mot. Progresse. Gagne.</div>
 </header>
 
 
@@ -187,100 +245,64 @@ opacity:.85;
 
 <div class="card">
 
-<h2>🎮 Catégorie</h2>
+<h2>🧠 Prêt à jouer ?</h2>
 
-<div class="grid">
-
-<button id="catCulture" onclick="selectCategory('culture')">
-🌍 Culture
-</button>
-
-<button id="catScience" onclick="selectCategory('science')">
-🔬 Science
-</button>
-
-<button id="catSport" onclick="selectCategory('sport')">
-⚽ Sport
-</button>
-
-<button id="catLogique" onclick="selectCategory('logique')">
-🧠 Logique
-</button>
-
-</div>
-
-<p id="categoryName" class="small">
-Catégorie : Toutes
+<p>
+Retrouve le mot en utilisant les lettres proposées.
+Plus tu réussis, plus tu progresses.
 </p>
-
-</div>
-
-
-<div class="card">
-
-<h2>⚡ Mode</h2>
-
-<button id="modeClassic" onclick="selectMode('classic')">
-🎯 Classique
-</button>
-
-<button id="modeChrono" onclick="selectMode('chrono')">
-⏱️ Chrono
-</button>
-
-<button id="modeSurvie" onclick="selectMode('survie')">
-🔥 Survie
-</button>
-
-<button id="modeChallenge" onclick="selectMode('challenge')">
-💥 Défi
-</button>
-
-<p id="modeName" class="small">
-Mode : Classique
-</p>
-
-</div>
-
-
-<div class="card">
-
-<div class="levelBox">
-Niveau <strong id="homeLevel">1</strong>
-<br>
-<span id="homeXP">0</span> XP
-</div>
-
-<br>
 
 <div class="stats">
 
 <div class="stat">
-<div class="value" id="homeCoins">0</div>
+<strong id="homeLevel">1</strong>
+Niveau
+</div>
+
+<div class="stat">
+<strong id="homeScore">0</strong>
+Score
+</div>
+
+<div class="stat">
+<strong id="homeCoins">0</strong>
 💰
 </div>
 
-<div class="stat">
-<div class="value" id="homeGames">0</div>
-Parties
-</div>
-
-<div class="stat">
-<div class="value" id="homeBest">0</div>
-Record
-</div>
-
 </div>
 
 </div>
 
 
-<button onclick="startGame()">
+<div class="card">
+
+<h2>🎮 Mode</h2>
+
+<div class="menuGrid">
+
+<button id="normalMode"
+class="menuBtn selected"
+onclick="chooseMode('normal')">
+🎯 Normal
+</button>
+
+<button id="timeMode"
+class="menuBtn"
+onclick="chooseMode('time')">
+⏱️ Chrono
+</button>
+
+</div>
+
+</div>
+
+
+<button class="mainBtn" onclick="startGame()">
 🚀 COMMENCER
 </button>
 
-<button onclick="showStats()">
-📊 Mes statistiques
+<button class="secondaryBtn" onclick="showStats()">
+📊 STATISTIQUES
 </button>
 
 </section>
@@ -293,39 +315,64 @@ Record
 
 <div class="card">
 
-<div style="display:flex;justify-content:space-between;align-items:center">
+<div class="top">
 
-<span id="questionNumber">
-Question 1
+<span id="wordNumber">
+Mot 1
 </span>
 
-<span class="badge">
-🔥 <span id="combo">0</span>
+<span class="level">
+Niv. <span id="gameLevel">1</span>
 </span>
 
 </div>
 
 
 <div class="progress">
-<div id="progress"></div>
+<div id="progressBar"
+class="progressBar"></div>
 </div>
 
 
-<div id="timer" class="timer hidden">
-15
+<div id="timer"
+class="center hidden"
+style="font-size:30px;font-weight:bold">
+20
 </div>
 
 
-<p id="question"></p>
+<div class="wordBox" id="wordBox"></div>
 
-<div id="answers"></div>
 
-<div id="message" class="message"></div>
+<div id="hint" class="hint">
+Trouve le mot...
+</div>
+
+
+<div id="letters"
+class="letters">
+</div>
+
+
+<div id="message"
+class="message">
+</div>
 
 </div>
 
 
-<button onclick="quitGame()">
+<button class="secondaryBtn"
+onclick="clearWord()">
+↩️ Effacer
+</button>
+
+<button class="secondaryBtn"
+onclick="giveHint()">
+💡 Indice
+</button>
+
+<button class="secondaryBtn"
+onclick="quitGame()">
 ⬅️ Quitter
 </button>
 
@@ -333,18 +380,18 @@ Question 1
 
 
 
-<!-- RESULTAT -->
+<!-- FIN -->
 
 <section id="result" class="hidden">
 
-<div class="card" style="text-align:center">
+<div class="card center">
 
 <h2>🎉 Partie terminée !</h2>
 
-<p>Score</p>
+<p>Ton score</p>
 
 <div id="finalScore"
-style="font-size:48px;font-weight:bold">
+class="bigScore">
 0
 </div>
 
@@ -353,18 +400,18 @@ style="font-size:48px;font-weight:bold">
 <div class="stats">
 
 <div class="stat">
-<div class="value" id="finalXP">0</div>
-XP
+<strong id="finalWords">0</strong>
+Mots trouvés
 </div>
 
 <div class="stat">
-<div class="value" id="finalCoins">0</div>
+<strong id="finalCoins">0</strong>
 💰
 </div>
 
 <div class="stat">
-<div class="value" id="finalCorrect">0</div>
-✓
+<strong id="finalLevel">1</strong>
+Niveau
 </div>
 
 </div>
@@ -372,12 +419,14 @@ XP
 </div>
 
 
-<button onclick="startGame()">
-🔄 Rejouer
+<button class="mainBtn"
+onclick="startGame()">
+🔄 REJOUER
 </button>
 
-<button onclick="goHome()">
-🏠 Accueil
+<button class="secondaryBtn"
+onclick="goHome()">
+🏠 ACCUEIL
 </button>
 
 </section>
@@ -395,17 +444,17 @@ XP
 <div class="stats">
 
 <div class="stat">
-<div class="value" id="sGames">0</div>
+<strong id="statGames">0</strong>
 Parties
 </div>
 
 <div class="stat">
-<div class="value" id="sCorrect">0</div>
-Bonnes
+<strong id="statWords">0</strong>
+Mots
 </div>
 
 <div class="stat">
-<div class="value" id="sBest">0</div>
+<strong id="statBest">0</strong>
 Record
 </div>
 
@@ -416,17 +465,17 @@ Record
 <div class="stats">
 
 <div class="stat">
-<div class="value" id="sLevel">1</div>
+<strong id="statLevel">1</strong>
 Niveau
 </div>
 
 <div class="stat">
-<div class="value" id="sXP">0</div>
+<strong id="statXP">0</strong>
 XP
 </div>
 
 <div class="stat">
-<div class="value" id="sCoins">0</div>
+<strong id="statCoins">0</strong>
 💰
 </div>
 
@@ -435,12 +484,9 @@ XP
 </div>
 
 
-<button onclick="goHome()">
+<button class="secondaryBtn"
+onclick="goHome()">
 🏠 Retour
-</button>
-
-<button onclick="resetData()">
-🗑️ Réinitialiser
 </button>
 
 </section>
@@ -448,173 +494,167 @@ XP
 </div>
 
 
-
 <script>
 
+// ========================================
+// MOTS
+// ========================================
 
-// ================================
-// QUESTIONS
-// ================================
-
-const questions=[
+const words = [
 
 {
-c:"culture",
-q:"Quelle est la capitale de la Côte d’Ivoire ?",
-a:["Bouaké","Yamoussoukro","Abidjan","Korhogo"],
-x:1
+word:"SOLEIL",
+hint:"Il brille dans le ciel.",
+category:"Nature"
 },
 
 {
-c:"culture",
-q:"Combien de continents compte-t-on généralement ?",
-a:["5","6","7","8"],
-x:2
+word:"MAISON",
+hint:"On y habite.",
+category:"Vie"
 },
 
 {
-c:"culture",
-q:"Quelle langue est principalement parlée au Brésil ?",
-a:["Espagnol","Portugais","Français","Anglais"],
-x:1
+word:"ECOLE",
+hint:"On y apprend.",
+category:"Éducation"
 },
 
 {
-c:"culture",
-q:"Quel océan borde la Côte d’Ivoire ?",
-a:["Atlantique","Pacifique","Indien","Arctique"],
-x:0
+word:"BALLON",
+hint:"On peut jouer au football avec.",
+category:"Sport"
 },
 
 {
-c:"science",
-q:"Quelle planète est la plus proche du Soleil ?",
-a:["Mars","Vénus","Mercure","Jupiter"],
-x:2
+word:"AMOUR",
+hint:"Un sentiment très fort.",
+category:"Émotion"
 },
 
 {
-c:"science",
-q:"Combien de pattes possède une araignée ?",
-a:["6","8","10","12"],
-x:1
+word:"MUSIQUE",
+hint:"On peut l'écouter.",
+category:"Art"
 },
 
 {
-c:"science",
-q:"Quel organe pompe le sang dans le corps humain ?",
-a:["Poumon","Foie","Cœur","Rein"],
-x:2
+word:"VOITURE",
+hint:"Elle permet de se déplacer.",
+category:"Transport"
 },
 
 {
-c:"science",
-q:"Quelle est la formule chimique de l’eau ?",
-a:["CO2","H2O","O2","NaCl"],
-x:1
+word:"RIVIERE",
+hint:"L'eau y coule.",
+category:"Nature"
 },
 
 {
-c:"sport",
-q:"Combien de joueurs une équipe de football a-t-elle sur le terrain ?",
-a:["9","10","11","12"],
-x:2
+word:"LIVRE",
+hint:"On le lit.",
+category:"Culture"
 },
 
 {
-c:"sport",
-q:"Quel sport utilise un panier ?",
-a:["Football","Basketball","Tennis","Rugby"],
-x:1
+word:"ARBRE",
+hint:"Il possède des branches.",
+category:"Nature"
 },
 
 {
-c:"sport",
-q:"Combien de minutes dure normalement un match de football ?",
-a:["60","80","90","100"],
-x:2
+word:"EGLISE",
+hint:"Lieu de prière pour les chrétiens.",
+category:"Lieu"
 },
 
 {
-c:"sport",
-q:"Dans quel sport utilise-t-on une raquette ?",
-a:["Tennis","Football","Boxe","Natation"],
-x:0
+word:"ORDINATEUR",
+hint:"On peut travailler avec.",
+category:"Technologie"
 },
 
 {
-c:"logique",
-q:"Quel nombre vient ensuite : 2, 4, 6, 8, ?",
-a:["9","10","11","12"],
-x:1
+word:"TELEPHONE",
+hint:"On peut appeler quelqu'un avec.",
+category:"Technologie"
 },
 
 {
-c:"logique",
-q:"Si 5 + 5 = 10, combien font 10 + 10 ?",
-a:["15","20","25","30"],
-x:1
+word:"SOLEIL",
+hint:"Il éclaire la Terre.",
+category:"Nature"
 },
 
 {
-c:"logique",
-q:"Quel nombre est différent des autres ?",
-a:["2","4","6","9"],
-x:3
+word:"OCEAN",
+hint:"Une immense étendue d'eau.",
+category:"Nature"
 },
 
 {
-c:"logique",
-q:"Tous les chats sont des animaux. Mimi est un chat. Mimi est-elle un animal ?",
-a:["Oui","Non","Impossible","Seulement parfois"],
-x:0
+word:"VICTOIRE",
+hint:"Le contraire de la défaite.",
+category:"Motivation"
+},
+
+{
+word:"COURAGE",
+hint:"Force face aux difficultés.",
+category:"Motivation"
+},
+
+{
+word:"ESPOIR",
+hint:"Croire que quelque chose de positif peut arriver.",
+category:"Émotion"
 }
 
 ];
 
 
-// ================================
+// ========================================
 // DONNÉES
-// ================================
+// ========================================
 
-let data=JSON.parse(
-localStorage.getItem("zenData")
-)||{
+let data =
+JSON.parse(localStorage.getItem("zenWordsData"))
+||
+{
 level:1,
 xp:0,
+score:0,
 coins:0,
 games:0,
-correct:0,
+words:0,
 best:0
 };
 
 
-// ================================
-// VARIABLES DU JEU
-// ================================
+// ========================================
+// VARIABLES
+// ========================================
 
-let category="all";
-let mode="classic";
+let mode="normal";
 
-let gameQuestions=[];
-
+let gameWords=[];
 let current=0;
-let score=0;
-let correct=0;
-let combo=0;
 
-let timer=null;
-let time=15;
+let currentWord="";
+let selectedLetters=[];
+
+let timerInterval=null;
+let timeLeft=20;
 
 
-// ================================
+// ========================================
 // SAUVEGARDE
-// ================================
+// ========================================
 
-function save(){
+function saveData(){
 
 localStorage.setItem(
-"zenData",
+"zenWordsData",
 JSON.stringify(data)
 );
 
@@ -623,109 +663,56 @@ updateHome();
 }
 
 
-// ================================
+// ========================================
 // ACCUEIL
-// ================================
+// ========================================
 
 function updateHome(){
 
 document.getElementById("homeLevel")
 .textContent=data.level;
 
-document.getElementById("homeXP")
-.textContent=data.xp;
+document.getElementById("homeScore")
+.textContent=data.score;
 
 document.getElementById("homeCoins")
 .textContent=data.coins;
 
-document.getElementById("homeGames")
-.textContent=data.games;
-
-document.getElementById("homeBest")
-.textContent=data.best;
-
 }
 
 
-// ================================
-// CATÉGORIE
-// ================================
-
-function selectCategory(c){
-
-category=c;
-
-document.querySelectorAll(
-".grid button"
-).forEach(b=>{
-b.classList.remove("category-selected");
-});
-
-const ids={
-culture:"catCulture",
-science:"catScience",
-sport:"catSport",
-logique:"catLogique"
-};
-
-document
-.getElementById(ids[c])
-.classList.add("category-selected");
-
-const names={
-culture:"🌍 Culture",
-science:"🔬 Science",
-sport:"⚽ Sport",
-logique:"🧠 Logique"
-};
-
-document.getElementById("categoryName")
-.textContent="Catégorie : "+names[c];
-
-}
-
-
-// ================================
+// ========================================
 // MODE
-// ================================
+// ========================================
 
-function selectMode(m){
+function chooseMode(m){
 
 mode=m;
 
-document.querySelectorAll(
-'[id^="mode"]'
-).forEach(b=>{
-b.classList.remove("mode-selected");
-});
+document.getElementById("normalMode")
+.classList.remove("selected");
 
-const ids={
-classic:"modeClassic",
-chrono:"modeChrono",
-survie:"modeSurvie",
-challenge:"modeChallenge"
-};
+document.getElementById("timeMode")
+.classList.remove("selected");
 
-document
-.getElementById(ids[m])
-.classList.add("mode-selected");
+if(m==="normal"){
 
-const names={
-classic:"🎯 Classique",
-chrono:"⏱️ Chrono",
-survie:"🔥 Survie",
-challenge:"💥 Défi"
-};
+document.getElementById("normalMode")
+.classList.add("selected");
 
-document.getElementById("modeName")
-.textContent="Mode : "+names[m];
+}else{
+
+document.getElementById("timeMode")
+.classList.add("selected");
+
+}
 
 }
 
 
-// ================================
-// AFFICHAGE DES SECTIONS
-// ================================
+// ========================================
+// AFFICHAGE
+// ========================================
 
 function hideAll(){
 
@@ -735,149 +722,143 @@ function hideAll(){
 "result",
 "statistics"
 ].forEach(id=>{
-document
-.getElementById(id)
+
+document.getElementById(id)
 .classList.add("hidden");
+
 });
 
 }
 
 
-// ================================
-// QUESTIONS DISPONIBLES
-// ================================
+// ========================================
+// MÉLANGE
+// ========================================
 
-function getQuestions(){
+function shuffle(array){
 
-let list=questions.filter(q=>
-category==="all"||q.c===category
-);
-
-return [...list].sort(
+return [...array].sort(
 ()=>Math.random()-.5
 );
 
 }
 
 
-// ================================
+// ========================================
 // COMMENCER
-// ================================
+// ========================================
 
 function startGame(){
 
 hideAll();
 
-document
-.getElementById("game")
+document.getElementById("game")
 .classList.remove("hidden");
 
+gameWords=shuffle(words);
+
 current=0;
-score=0;
-correct=0;
-combo=0;
 
-// IMPORTANT : on prépare les questions
-// à chaque nouvelle partie
-gameQuestions=getQuestions();
+selectedLetters=[];
 
-showQuestion();
+showWord();
 
 }
 
 
-// ================================
-// AFFICHER QUESTION
-// ================================
+// ========================================
+// AFFICHER MOT
+// ========================================
 
-function showQuestion(){
+function showWord(){
 
-if(current>=gameQuestions.length){
+clearInterval(timerInterval);
+
+if(current>=gameWords.length){
 
 endGame();
+
 return;
 
 }
 
-const q=gameQuestions[current];
+const item=gameWords[current];
 
-document.getElementById("questionNumber")
+currentWord=item.word;
+
+selectedLetters=[];
+
+document.getElementById("wordNumber")
 .textContent=
-"Question "+
-(current+1)+
-" / "+
-gameQuestions.length;
+"Mot "+(current+1)+" / "+gameWords.length;
 
-document.getElementById("progress")
+document.getElementById("gameLevel")
+.textContent=data.level;
+
+document.getElementById("progressBar")
 .style.width=
-((current/gameQuestions.length)*100)+"%";
+((current/gameWords.length)*100)+"%";
 
-document.getElementById("combo")
-.textContent=combo;
-
-document.getElementById("question")
-.textContent=q.q;
-
-
-const answers=
-document.getElementById("answers");
-
-answers.innerHTML="";
-
-
-q.a.forEach((answer,i)=>{
-
-const button=
-document.createElement("button");
-
-button.className="option";
-
-button.textContent=answer;
-
-button.onclick=()=>{
-answerQuestion(i,button);
-};
-
-answers.appendChild(button);
-
-});
-
+document.getElementById("hint")
+.textContent=
+"💡 "+item.hint;
 
 document.getElementById("message")
 .textContent="";
 
 
-if(
-mode==="chrono"||
-mode==="challenge"
-){
+// cases du mot
 
-document
-.getElementById("timer")
+const box=
+document.getElementById("wordBox");
+
+box.innerHTML="";
+
+for(let i=0;i<currentWord.length;i++){
+
+const letter=
+document.createElement("div");
+
+letter.className="letterBox";
+
+letter.dataset.index=i;
+
+box.appendChild(letter);
+
+}
+
+
+// lettres disponibles
+
+createLetters();
+
+
+// chrono
+
+if(mode==="time"){
+
+document.getElementById("timer")
 .classList.remove("hidden");
 
-time=
-mode==="challenge"
-?10
-:15;
+timeLeft=20;
 
 document.getElementById("timer")
-.textContent=time;
+.textContent=
+"⏱️ "+timeLeft;
 
-clearInterval(timer);
+timerInterval=setInterval(()=>{
 
-timer=setInterval(()=>{
-
-time--;
+timeLeft--;
 
 document.getElementById("timer")
-.textContent=time;
+.textContent=
+"⏱️ "+timeLeft;
 
-if(time<=0){
+if(timeLeft<=0){
 
-clearInterval(timer);
+clearInterval(timerInterval);
 
-answerQuestion(-1,null);
+wrongAnswer();
 
 }
 
@@ -885,8 +866,7 @@ answerQuestion(-1,null);
 
 }else{
 
-document
-.getElementById("timer")
+document.getElementById("timer")
 .classList.add("hidden");
 
 }
@@ -894,181 +874,302 @@ document
 }
 
 
-// ================================
-// RÉPONSE
-// ================================
+// ========================================
+// CRÉER LETTRES
+// ========================================
 
-function answerQuestion(index,button){
+function createLetters(){
 
-clearInterval(timer);
+const container=
+document.getElementById("letters");
 
-const q=gameQuestions[current];
-
-const buttons=
-document.querySelectorAll(".option");
-
-buttons.forEach(b=>{
-b.disabled=true;
-});
+container.innerHTML="";
 
 
-if(index===q.x){
+// lettres du mot
 
-correct++;
+let letters=currentWord.split("");
 
-combo++;
 
-let points=
-100+(combo*20);
+// quelques lettres supplémentaires
 
-if(mode==="chrono")
-points+=50;
+const extras=[
+"A","E","I","O","U",
+"R","S","T","N","L",
+"M","P","C","D"
+];
 
-if(mode==="challenge")
-points+=100;
+while(letters.length<
+currentWord.length+4){
 
-score+=points;
+const extra=
+extras[Math.floor(
+Math.random()*extras.length
+)];
 
-data.xp+=points;
-
-data.coins+=Math.max(
-1,
-Math.floor(points/100)
-);
-
-if(button)
-button.classList.add("correct");
-
-document.getElementById("message")
-.textContent=
-"✅ Bonne réponse ! +"+
-points+
-" XP";
-
-}else{
-
-combo=0;
-
-if(button)
-button.classList.add("wrong");
-
-if(buttons[q.x])
-buttons[q.x].classList.add("correct");
-
-document.getElementById("message")
-.textContent=
-"❌ Pas cette fois !";
+letters.push(extra);
 
 }
 
-checkLevel();
+
+// mélange
+
+letters=shuffle(letters);
+
+
+letters.forEach((letter,index)=>{
+
+const button=
+document.createElement("button");
+
+button.className="letterBtn";
+
+button.textContent=letter;
+
+button.dataset.index=index;
+
+button.onclick=()=>selectLetter(
+letter,
+button
+);
+
+container.appendChild(button);
+
+});
+
+}
+
+
+// ========================================
+// CHOISIR LETTRE
+// ========================================
+
+function selectLetter(letter,button){
+
+if(button.classList.contains("used"))
+return;
+
+if(
+selectedLetters.length>=currentWord.length
+)
+return;
+
+selectedLetters.push(letter);
+
+button.classList.add("used");
+
+updateWordBoxes();
+
+
+// vérification automatique
+
+if(
+selectedLetters.length===
+currentWord.length
+){
+
+const answer=
+selectedLetters.join("");
+
+if(answer===currentWord){
+
+correctAnswer();
+
+}else{
+
+wrongAnswer();
+
+}
+
+}
+
+}
+
+
+// ========================================
+// AFFICHER MOT EN COURS
+// ========================================
+
+function updateWordBoxes(){
+
+const boxes=
+document.querySelectorAll(".letterBox");
+
+boxes.forEach((box,i)=>{
+
+box.textContent=
+selectedLetters[i]||"";
+
+});
+
+}
+
+
+// ========================================
+// EFFACER
+// ========================================
+
+function clearWord(){
+
+selectedLetters=[];
+
+document.querySelectorAll(".letterBtn")
+.forEach(button=>{
+button.classList.remove("used");
+});
+
+updateWordBoxes();
+
+document.getElementById("message")
+.textContent="";
+
+}
+
+
+// ========================================
+// BONNE RÉPONSE
+// ========================================
+
+function correctAnswer(){
+
+clearInterval(timerInterval);
+
+const bonus=
+mode==="time"
+?timeLeft*5
+:0;
+
+const points=
+100+(data.level*10)+bonus;
+
+data.score+=points;
+data.xp+=points;
+
+data.words++;
+
+data.coins+=
+Math.max(1,Math.floor(points/100));
+
+
+// niveau
+
+data.level=
+Math.floor(data.xp/500)+1;
+
+
+document.getElementById("message")
+.textContent=
+"🎉 BRAVO ! +"+points+" points";
+
 
 setTimeout(()=>{
 
 current++;
 
-if(
-mode==="survie" &&
-index!==q.x
-){
+showWord();
 
-endGame();
-
-}else{
-
-showQuestion();
-
-}
-
-},700);
+},800);
 
 }
 
 
-// ================================
-// NIVEAU
-// ================================
+// ========================================
+// MAUVAISE RÉPONSE
+// ========================================
 
-function checkLevel(){
+function wrongAnswer(){
 
-const newLevel=
-Math.floor(data.xp/500)+1;
+clearInterval(timerInterval);
 
-if(newLevel>data.level){
+document.getElementById("message")
+.textContent=
+"❌ Ce n'est pas le bon mot.";
 
-data.level=newLevel;
+setTimeout(()=>{
+
+current++;
+
+showWord();
+
+},1000);
 
 }
 
+
+// ========================================
+// INDICE
+// ========================================
+
+function giveHint(){
+
+if(data.coins<=0){
+
+document.getElementById("message")
+.textContent=
+"💰 Tu n'as pas assez de pièces.";
+
+return;
+
+}
+
+data.coins--;
+
+saveData();
+
+document.getElementById("message")
+.textContent=
+"💡 "+gameWords[current].word[0]+
+" est la première lettre.";
+
 }
 
 
-// ================================
-// FIN DE PARTIE
-// ================================
+// ========================================
+// FIN
+// ========================================
 
 function endGame(){
 
-clearInterval(timer);
+clearInterval(timerInterval);
 
 hideAll();
 
-document
-.getElementById("result")
+document.getElementById("result")
 .classList.remove("hidden");
 
 
 data.games++;
 
-data.correct+=correct;
+if(data.score>data.best){
 
-if(score>data.best){
-
-data.best=score;
+data.best=data.score;
 
 }
 
-const earnedCoins=
-Math.max(
-1,
-Math.floor(score/100)
-);
-
-
-data.coins+=earnedCoins;
-
-
-save();
+saveData();
 
 
 document.getElementById("finalScore")
-.textContent=score;
+.textContent=data.score;
 
-document.getElementById("finalXP")
-.textContent=score;
+document.getElementById("finalWords")
+.textContent=data.words;
 
 document.getElementById("finalCoins")
-.textContent=earnedCoins;
+.textContent=data.coins;
 
-document.getElementById("finalCorrect")
-.textContent=correct;
+document.getElementById("finalLevel")
+.textContent=data.level;
 
 
-let message;
-
-if(score>=700){
-
-message="🔥 Excellent ! Tu maîtrises ZEN !";
-
-}else if(score>=400){
-
-message="👏 Très bon travail !";
-
-}else{
-
-message="💪 Continue, tu vas progresser !";
-
-}
+let message=
+data.score>=1000
+?"🔥 Incroyable !"
+:
+data.score>=500
+?"👏 Très bien joué !"
+:
+"💪 Continue, tu vas progresser !";
 
 document.getElementById("finalMessage")
 .textContent=message;
@@ -1076,111 +1177,74 @@ document.getElementById("finalMessage")
 }
 
 
-// ================================
+// ========================================
 // STATISTIQUES
-// ================================
+// ========================================
 
 function showStats(){
 
 hideAll();
 
-document
-.getElementById("statistics")
+document.getElementById("statistics")
 .classList.remove("hidden");
 
-
-document.getElementById("sGames")
+document.getElementById("statGames")
 .textContent=data.games;
 
-document.getElementById("sCorrect")
-.textContent=data.correct;
+document.getElementById("statWords")
+.textContent=data.words;
 
-document.getElementById("sBest")
+document.getElementById("statBest")
 .textContent=data.best;
 
-document.getElementById("sLevel")
+document.getElementById("statLevel")
 .textContent=data.level;
 
-document.getElementById("sXP")
+document.getElementById("statXP")
 .textContent=data.xp;
 
-document.getElementById("sCoins")
+document.getElementById("statCoins")
 .textContent=data.coins;
 
 }
 
 
-// ================================
+// ========================================
+// RETOUR ACCUEIL
+// ========================================
+
+function goHome(){
+
+clearInterval(timerInterval);
+
+hideAll();
+
+document.getElementById("home")
+.classList.remove("hidden");
+
+updateHome();
+
+}
+
+
+// ========================================
 // QUITTER
-// ================================
+// ========================================
 
 function quitGame(){
-
-clearInterval(timer);
 
 goHome();
 
 }
 
 
-// ================================
-// ACCUEIL
-// ================================
-
-function goHome(){
-
-clearInterval(timer);
-
-hideAll();
-
-document
-.getElementById("home")
-.classList.remove("hidden");
-
-updateHome();
-
-}
-
-
-// ================================
-// RÉINITIALISER
-// ================================
-
-function resetData(){
-
-if(
-confirm(
-"Réinitialiser toute ta progression ?"
-)
-){
-
-data={
-level:1,
-xp:0,
-coins:0,
-games:0,
-correct:0,
-best:0
-};
-
-save();
-
-showStats();
-
-}
-
-}
-
-
-// ================================
+// ========================================
 // INITIALISATION
-// ================================
+// ========================================
 
 updateHome();
-
-selectMode("classic");
 
 </script>
 
 </body>
- </html>
+</html>
